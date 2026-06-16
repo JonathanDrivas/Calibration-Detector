@@ -1,0 +1,50 @@
+Make one more tuning fix for the app’s AI engine.
+
+Right now, reflections where the student gives no real explanation, or only admits they are confused, are sometimes being scored as understanding 3. That is too high because no understanding is demonstrated. These should score 1 or 2.
+
+Keep everything else the same, including:
+
+* the labeling rule
+* the student confidence values
+* the topic descriptions
+* the misconception detection
+* the model response JSON format
+* the database schema
+* the dashboard layout and styling
+* the Evidence calculations
+* the Robustness Check calculations
+* the Student Reflection page
+* the About and Responsible Use page
+
+Update the understanding instructions sent to the model with this rule:
+
+If a reflection does not actually explain the concept, score understanding 1 or 2. This includes reflections where the student only says they are confused, unsure, or cannot explain the idea. No explanation means no demonstrated understanding.
+
+Use understanding 3 only when the reflection actually attempts to explain the concept but is partially correct, incomplete, or muddles something important.
+
+Important nuance:
+Do not automatically penalize a student just for saying they are unsure. If the student admits uncertainty but then gives a correct or mostly correct explanation, score the demonstrated explanation normally. Uncertainty alone should not lower the understanding score. The low score applies when the reflection admits confusion and gives no real explanation.
+
+Add this anchor example to the model prompt:
+
+Should score 1:
+"I am not sure I understand this and I cannot really explain it."
+
+Reason: it admits confusion and demonstrates no understanding, so it is a 1.
+
+Keep the model response format exactly the same as before. The engine should still parse the AI response as valid JSON with:
+
+{
+"understanding": 1,
+"misconception": "short phrase or none"
+}
+
+After changing the engine prompt:
+
+1. Clear only the existing rows in the results table.
+2. Do not delete or modify reflections.
+3. Do not delete or modify topics.
+4. Do not delete or modify ground_truth_label values.
+5. Re-run the engine over all reflections in the reflections table so every reflection is re-scored with the new criteria.
+6. Do not save adversarial robustness cases into the reflections table.
+7. Do not change any dashboard styling or layout in this task.

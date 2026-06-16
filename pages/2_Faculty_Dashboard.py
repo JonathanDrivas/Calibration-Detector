@@ -7,6 +7,7 @@ from db import (
     save_result,
     get_topic_summaries,
     get_cbw_details,
+    get_evidence_rows,
 )
 from ai import analyze_reflection, compute_label
 
@@ -252,3 +253,84 @@ for rank, (topic_name, d) in enumerate(sorted_topics, start=1):
                 st.markdown(f"- `{item['nickname']}` · *{display}*")
         else:
             st.success("No confident-but-wrong reflections on this topic.")
+
+st.divider()
+
+# ── Evidence section ──────────────────────────────────────────────────────────
+st.subheader("Evidence")
+st.caption(
+    "Compares computed labels against ground-truth labels from the simulated dataset. "
+    "Uses only reflections that have a ground-truth label and have been analyzed."
+)
+
+evidence_rows = get_evidence_rows()
+
+if not evidence_rows:
+    st.warning("No ground-truth rows found. Run the analysis first, or check that reflections have a ground_truth_label.")
+    st.stop()
+
+# Normalize both labels using the same function already defined above
+pairs = []
+for row in evidence_rows:
+    gt = normalize_label(row["ground_truth_label"])
+    pred = normalize_label(row["computed_label"])
+    pairs.append((gt, pred))
+
+total = len(pairs)
+correct = sum(1 for gt, pred in pairs if gt == pred)
+accuracy = correct / total if total else 0
+
+# ── Overall accuracy ─────────────────────────────────────────────────────────
+st.metric("Overall accuracy", f"{accuracy:.0%}", help=f"{correct} correct out of {total} ground-truth reflections")
+
+# ── Confident-but-wrong precision and recall ──────────────────────────────────
+CBW = "confident_but_wrong"
+tp  = sum(1 for gt, pred in pairs if gt == CBW and pred == CBW)
+fp  = sum(1 for gt, pred in pairs if gt != CBW and pred == CBW)
+fn  = sum(1 for gt, pred in pairs if gt == CBW and pred != CBW)
+
+precision = tp / (tp + fp) if (tp + fp) > 0 else 0.0
+recall    = tp / (tp + fn) if (tp + fn) > 0 else 0.0
+
+c1, c2 = st.columns(2)
+c1.metric(
+    "Confident-but-wrong precision",
+    f"{precision:.0%}",
+    help="Of all reflections the model flagged as confident-but-wrong, this share truly were.",
+)
+c2.metric(
+    "Confident-but-wrong recall",
+    f"{recall:.0%}",
+    help="Of all ground-truth confident-but-wrong reflections, this share the model caught.",
+)
+
+# ── Confusion matrix ─────────────────────────────────────────────────────────
+import pandas as pd
+
+st.markdown("**Confusion matrix** — rows: ground truth · columns: computed label")
+
+matrix: dict[str, dict[str, int]] = {l: {l2: 0 for l2 in ALL_LABELS} for l in ALL_LABELS}
+unknown_gt, unknown_pred = set(), set()
+
+for gt, pred in pairs:
+    if gt not in matrix:
+        unknown_gt.add(gt)
+        continue
+    if pred not in matrix[gt]:
+        unknown_pred.add(pred)
+        continue
+    matrix[gt][pred] += 1
+
+cm_df = pd.DataFrame(matrix).T.reindex(index=ALL_LABELS, columns=ALL_LABELS).fillna(0).astype(int)
+cm_df.index.name = "ground truth \\ computed"
+
+st.dataframe(
+    cm_df.style.background_gradient(cmap="Blues", axis=None),
+    use_container_width=True,
+)
+
+if unknown_gt or unknown_pred:
+    st.warning(
+        f"Unrecognized labels skipped — ground truth: {unknown_gt or 'none'} · "
+        f"computed: {unknown_pred or 'none'}"
+    )

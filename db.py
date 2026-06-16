@@ -163,6 +163,25 @@ def get_topic_summaries():
         conn.close()
 
 
+def get_evidence_rows():
+    """Return analyzed reflections that have a non-blank ground_truth_label."""
+    conn = get_connection()
+    try:
+        with conn.cursor(cursor_factory=RealDictCursor) as cur:
+            cur.execute("""
+                SELECT
+                    r.ground_truth_label,
+                    res.label AS computed_label
+                FROM reflections r
+                JOIN results res ON res.reflection_id = r.id
+                WHERE r.ground_truth_label IS NOT NULL
+                  AND TRIM(r.ground_truth_label) <> ''
+            """)
+            return cur.fetchall()
+    finally:
+        conn.close()
+
+
 def get_cbw_details():
     """Return confident_but_wrong reflections with nickname and misconception, ordered by topic."""
     conn = get_connection()

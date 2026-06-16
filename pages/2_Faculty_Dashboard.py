@@ -693,6 +693,15 @@ with tab_evidence:
         </div>""", unsafe_allow_html=True)
         st.markdown("<div style='margin-bottom:4px'></div>", unsafe_allow_html=True)
 
+        st.markdown(
+            "<p style='font-size:12px;color:#6b7280;line-height:1.5;margin:4px 0 12px 0;'>"
+            "These results are based on a simulated labeled dataset built to test whether the "
+            "system can classify calibration patterns consistently. In a real deployment, "
+            "instructor-labeled student reflections would be used to further validate the model."
+            "</p>",
+            unsafe_allow_html=True,
+        )
+
         st.markdown("""
         <div class="callout-card">
         <div style="font-size:13px;font-weight:700;color:#57068C;margin-bottom:5px;">

@@ -139,3 +139,45 @@ def get_all_results():
             return cur.fetchall()
     finally:
         conn.close()
+
+
+def get_topic_summaries():
+    """Return per-topic label counts, avg confidence, and avg understanding for analyzed reflections."""
+    conn = get_connection()
+    try:
+        with conn.cursor(cursor_factory=RealDictCursor) as cur:
+            cur.execute("""
+                SELECT
+                    r.topic_name,
+                    res.label,
+                    COUNT(*) AS count,
+                    AVG(r.student_confidence) AS avg_confidence,
+                    AVG(res.understanding) AS avg_understanding
+                FROM reflections r
+                JOIN results res ON res.reflection_id = r.id
+                GROUP BY r.topic_name, res.label
+                ORDER BY r.topic_name, res.label
+            """)
+            return cur.fetchall()
+    finally:
+        conn.close()
+
+
+def get_cbw_details():
+    """Return confident_but_wrong reflections with nickname and misconception, ordered by topic."""
+    conn = get_connection()
+    try:
+        with conn.cursor(cursor_factory=RealDictCursor) as cur:
+            cur.execute("""
+                SELECT
+                    r.topic_name,
+                    r.nickname,
+                    res.misconception
+                FROM reflections r
+                JOIN results res ON res.reflection_id = r.id
+                WHERE res.label = 'confident_but_wrong'
+                ORDER BY r.topic_name, r.id
+            """)
+            return cur.fetchall()
+    finally:
+        conn.close()

@@ -85,23 +85,54 @@ LABEL_DISPLAY = {
 }
 
 
-def stacked_bar_html(counts: dict) -> str:
+DISPLAY_TO_CANONICAL = {v: k for k, v in LABEL_DISPLAY.items()}
+
+
+def normalize_label(raw: str) -> str:
+    """Strip whitespace/emoji, lowercase, map display names back to canonical keys."""
+    cleaned = raw.strip().lower()
+    # Remove any leading emoji characters (non-ASCII)
+    cleaned = "".join(ch for ch in cleaned if ch.isascii()).strip()
+    # If it's already a canonical key, return it
+    if cleaned in LABEL_COLOR:
+        return cleaned
+    # Try matching a display name (lowercased)
+    for canonical, display in LABEL_DISPLAY.items():
+        if cleaned == display.lower():
+            return canonical
+    return cleaned  # unknown — caller will handle it
+
+
+def stacked_bar_html(raw_counts: dict) -> tuple[str, list[str]]:
+    """
+    Returns (html_string, list_of_unknown_labels).
+    Uses flexbox so segments fill exactly 100% — no grey rounding gap.
+    """
+    counts: dict[str, int] = {}
+    unknown: list[str] = []
+
+    for raw_lbl, n in raw_counts.items():
+        canonical = normalize_label(raw_lbl)
+        if canonical in LABEL_COLOR:
+            counts[canonical] = counts.get(canonical, 0) + int(n)
+        elif int(n) > 0:
+            unknown.append(f"{raw_lbl!r} ({n})")
+
     total = sum(counts.get(l, 0) for l in ALL_LABELS)
     if total == 0:
-        return ""
+        return "", unknown
 
+    # Flex-based bar: flex:N fills the container exactly, no rounding gaps
     segments = ""
     for lbl in ALL_LABELS:
         n = counts.get(lbl, 0)
         if n == 0:
             continue
-        pct = n / total * 100
         color = LABEL_COLOR[lbl]
         display = LABEL_DISPLAY[lbl]
         segments += (
             f'<div title="{display}: {n}" style="'
-            f'width:{pct:.1f}%;background:{color};height:100%;'
-            f'display:inline-block;"></div>'
+            f'flex:{n};background:{color};height:100%;"></div>'
         )
 
     legend_items = ""
@@ -117,13 +148,14 @@ def stacked_bar_html(counts: dict) -> str:
             f'flex-shrink:0;"></span>{display} ({n})</span>'
         )
 
-    return (
+    html = (
         f'<div style="width:100%;height:26px;border-radius:4px;'
-        f'overflow:hidden;background:#e5e7eb;margin-bottom:6px;">'
+        f'overflow:hidden;display:flex;margin-bottom:6px;">'
         f'{segments}</div>'
         f'<div style="display:flex;flex-wrap:wrap;margin-bottom:8px;">'
         f'{legend_items}</div>'
     )
+    return html, unknown
 
 
 # ── Topic-level results ───────────────────────────────────────────────────────
@@ -197,7 +229,10 @@ for rank, (topic_name, d) in enumerate(sorted_topics, start=1):
         c3.metric("Total analyzed", d["_total"])
 
         # ── Stacked bar (HTML/CSS) ────────────────────────────────────────
-        st.markdown(stacked_bar_html(counts), unsafe_allow_html=True)
+        bar_html, unknown_labels = stacked_bar_html(counts)
+        st.markdown(bar_html, unsafe_allow_html=True)
+        if unknown_labels:
+            st.warning(f"Unknown label(s) in data — shown in grey: {', '.join(unknown_labels)}")
 
         # ── Underconfident note ──────────────────────────────────────────
         if uc_count >= 2:

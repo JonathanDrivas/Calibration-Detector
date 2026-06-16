@@ -324,10 +324,7 @@ for gt, pred in pairs:
 cm_df = pd.DataFrame(matrix).T.reindex(index=ALL_LABELS, columns=ALL_LABELS).fillna(0).astype(int)
 cm_df.index.name = "ground truth \\ computed"
 
-st.dataframe(
-    cm_df.style.background_gradient(cmap="Blues", axis=None),
-    use_container_width=True,
-)
+st.dataframe(cm_df, use_container_width=True)
 
 if unknown_gt or unknown_pred:
     st.warning(

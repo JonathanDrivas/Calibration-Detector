@@ -1,0 +1,116 @@
+The Faculty Dashboard is now too plain and bland. Please improve the visual design while keeping the current clean tabbed structure. Do not change the database, saved results, calculations, model logic, Evidence metrics, or Robustness Check results. Do not rerun Claude/model analysis.
+
+Design direction:
+Make it look like a polished NYU-style analytics dashboard for a class presentation. It should feel modern and visually engaging, but not flashy or cluttered.
+
+Keep:
+
+* The four tabs: Overview, Topic Details, Evidence, Robustness Check
+* The existing data and calculations
+* The current no-horizontal-scroll goal
+* NYU Violet #57068C as the main accent color
+
+Improve the Overview tab:
+
+1. Header
+
+* Add a subtle header treatment, such as a light lavender gradient background or a soft card behind the title area.
+* Keep “Faculty Dashboard” large, but make the top area feel intentional instead of floating on a blank page.
+* Add a short subtitle under the title:
+  “Confidence vs. demonstrated understanding across simulated student reflections.”
+
+2. Main explanation box
+
+* Keep the high-confidence/low-understanding explanation, but make it look like a polished callout card:
+
+  * light lavender background
+  * NYU Violet left border
+  * small icon
+  * slightly tighter spacing
+
+3. Metric cards
+
+* Put the four metrics inside actual cards instead of plain text on the page.
+* Each metric card should have:
+
+  * subtle border
+  * slight shadow
+  * small icon
+  * big number
+  * short caption
+* Use subtle accent colors:
+
+  * Total analyzed: neutral/violet
+  * Confident but wrong: light red accent
+  * Avg calibration gap: amber/violet accent
+  * Underconfidence topics: blue accent
+
+4. Top Insight
+
+* Make the Top Insight box more visually distinct again, but not huge:
+
+  * light lavender background
+  * NYU Violet left border
+  * bold “Top insight”
+  * clear “What to do next” line
+* Do not make it full of heavy purple fill.
+
+5. Reteach First section
+
+* Add a clean section header card or divider before Reteach First.
+* Keep the table, but make it visually nicer:
+
+  * alternating very light row backgrounds
+  * action badges with soft background colors
+  * no giant red buttons
+  * no horizontal scrolling
+* Keep columns:
+
+  * Rank
+  * Topic
+  * Confident but wrong
+  * Gap
+  * Recommended action
+
+6. Add compact risk cards back, but only if they look clean
+
+* Add 3 compact “priority topic” cards above the Reteach First table, not 4 large cards.
+* They should be smaller and cleaner than before.
+* Each card should show:
+
+  * topic name
+  * confident-but-wrong count
+  * calibration gap
+  * recommended action badge
+* Do not use thick purple borders. Use soft backgrounds and subtle accent strips.
+
+Topic Details tab:
+
+* Keep topic expanders.
+* Make each topic card look polished with subtle borders and better spacing.
+* Keep outcome colors for the stacked bars.
+* Keep first topic open by default and others collapsed.
+
+Evidence tab:
+
+* Keep metrics and confusion matrix.
+* Put accuracy, precision, and recall into cards.
+* Add a short note emphasizing that confident-but-wrong recall is the key metric.
+* Make the confusion matrix table clean and readable.
+
+Robustness Check tab:
+
+* Keep pass rate and adversarial cases.
+* Use a polished card style for the pass rate.
+* Change the button to NYU Violet.
+* Make pass/fail indicators clear but not oversized.
+
+Overall style:
+
+* Use NYU Violet for accents, active tabs, subtle borders, and buttons.
+* Use semantic colors only where they mean something.
+* Add enough visual structure so the page does not feel bland.
+* Avoid giant empty spaces.
+* Keep everything readable at 100% browser zoom.
+* Do not optimize for 50% zoom.
+* Do not change the Student Reflection page or About and Responsible Use page unless only minor color consistency is needed.

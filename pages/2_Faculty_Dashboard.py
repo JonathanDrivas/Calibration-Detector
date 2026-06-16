@@ -21,7 +21,7 @@ st.set_page_config(
 # ── NYU Violet theme ──────────────────────────────────────────────────────────
 st.markdown("""
 <style>
-/* ── Constrain content width and center ─────────────────────────── */
+/* ── Content width ───────────────────────────────────────────────── */
 .block-container {
     max-width: 1240px !important;
     padding-left: 2rem !important;
@@ -30,45 +30,94 @@ st.markdown("""
     margin-right: auto !important;
 }
 
-/* ── Active tab underline only → NYU Violet ─────────────────────── */
-[data-baseweb="tab-highlight"] {
-    background-color: #57068C !important;
-}
+/* ── Active tab → NYU Violet ────────────────────────────────────── */
+[data-baseweb="tab-highlight"] { background-color: #57068C !important; }
 [data-testid="stTabs"] button[aria-selected="true"] {
-    color: #57068C !important;
-    font-weight: 600 !important;
+    color: #57068C !important; font-weight: 600 !important;
 }
 
 /* ── Primary buttons → NYU Violet ───────────────────────────────── */
 [data-testid="baseButton-primary"] {
     background-color: #57068C !important;
-    border-color: #57068C !important;
-    color: #ffffff !important;
+    border-color: #57068C !important; color: #ffffff !important;
 }
 [data-testid="baseButton-primary"]:hover {
-    background-color: #3d0466 !important;
-    border-color: #3d0466 !important;
+    background-color: #3d0466 !important; border-color: #3d0466 !important;
 }
 
-/* ── Reteach table: allow topic names to wrap ────────────────────── */
+/* ── Metric cards ────────────────────────────────────────────────── */
+.metric-card {
+    background: #ffffff; border: 1px solid #e5e7eb; border-radius: 10px;
+    padding: 18px 20px; box-shadow: 0 1px 4px rgba(0,0,0,0.07);
+    height: 100%; box-sizing: border-box;
+}
+.metric-value { font-size: 30px; font-weight: 800; line-height: 1.1; }
+.metric-sublabel { font-size: 11px; font-weight: 600; letter-spacing:.4px;
+    text-transform: uppercase; margin-bottom: 4px; }
+.metric-caption { font-size: 12px; color: #777; margin-top: 5px; }
+
+/* ── Callout / insight cards ─────────────────────────────────────── */
+.callout-card {
+    background: #f9f5ff; border-left: 4px solid #57068C;
+    border-radius: 0 8px 8px 0; padding: 14px 18px; margin: 12px 0;
+    box-shadow: 0 1px 3px rgba(87,6,140,0.08);
+}
+
+/* ── Priority topic cards ────────────────────────────────────────── */
+.pri-card {
+    background: #fff; border: 1px solid #e5e7eb; border-radius: 10px;
+    overflow: hidden; box-shadow: 0 1px 3px rgba(0,0,0,0.06); height: 100%;
+}
+.pri-card-body { padding: 14px 16px; }
+.pri-card-name {
+    font-size: 13px; font-weight: 700; color: #1a1a2e;
+    margin-bottom: 10px; line-height: 1.3;
+}
+.pri-card-num { font-size: 26px; font-weight: 800; line-height: 1; }
+.pri-card-sub { font-size: 11px; color: #888; margin-bottom: 6px; }
+.pri-card-gap { font-size: 12px; color: #555; margin-bottom: 10px; }
+
+/* ── Reteach First table ─────────────────────────────────────────── */
 .reteach-table { width: 100%; border-collapse: collapse; font-size: 14px; }
 .reteach-table th {
-    text-align: left; padding: 8px 12px; font-weight: 600;
-    color: #555; border-bottom: 2px solid #e5e7eb; background: #f9fafb;
+    text-align: left; padding: 9px 12px; font-weight: 600; font-size: 12px;
+    text-transform: uppercase; letter-spacing: .4px; color: #666;
+    border-bottom: 2px solid #e5e7eb; background: #f9fafb;
 }
 .reteach-table td {
-    padding: 8px 12px; border-bottom: 1px solid #f0f0f0;
-    vertical-align: top; word-break: break-word;
+    padding: 9px 12px; border-bottom: 1px solid #f0f0f0;
+    vertical-align: middle; word-break: break-word;
 }
-.reteach-table tr:hover td { background: #fafafa; }
+.reteach-table tbody tr:nth-child(even) td { background: #fafafa; }
+.reteach-table tbody tr:hover td { background: #f3f0ff; }
+
+/* ── Action badges ───────────────────────────────────────────────── */
 .badge {
-    display: inline-block; border-radius: 4px; padding: 2px 8px;
+    display: inline-block; border-radius: 4px; padding: 3px 9px;
     font-size: 12px; font-weight: 600; white-space: nowrap;
 }
+
+/* ── Evidence metric cards ───────────────────────────────────────── */
+.ev-card {
+    background: #fff; border: 1px solid #e5e7eb; border-radius: 10px;
+    padding: 16px 20px; box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+    text-align: center;
+}
+.ev-value { font-size: 32px; font-weight: 800; line-height: 1.1; }
+.ev-label { font-size: 12px; color: #666; margin-top: 4px; }
 </style>
 """, unsafe_allow_html=True)
 
-st.title("Faculty Dashboard")
+# ── Header card ───────────────────────────────────────────────────────────────
+st.markdown("""
+<div style="background:linear-gradient(135deg,#f5eeff 0%,#faf7ff 55%,#ffffff 100%);
+border:1px solid #ddd0ec;border-radius:12px;padding:22px 28px;margin-bottom:6px;">
+<div style="font-size:27px;font-weight:800;color:#1a1a2e;margin-bottom:4px;">
+Faculty Dashboard</div>
+<div style="font-size:14px;color:#666;">
+Confidence vs. demonstrated understanding across simulated student reflections.</div>
+</div>
+""", unsafe_allow_html=True)
 
 # ── Constants ─────────────────────────────────────────────────────────────────
 ALL_LABELS = ["understands", "underconfident", "partial", "knows_confused", "confident_but_wrong"]
@@ -267,11 +316,15 @@ tab_overview, tab_topics, tab_evidence, tab_robustness = st.tabs([
 # TAB 1 — Overview
 # ════════════════════════════════════════════════════════════════════════════
 with tab_overview:
-    st.info(
-        "**High confidence with low understanding is the highest-risk learning state** "
-        "because those students are unlikely to ask for help. This dashboard identifies "
-        "those topics first, so instructors know where reteaching will have the biggest impact."
-    )
+    st.markdown("""
+    <div class="callout-card">
+    <span style="font-size:13px;font-weight:700;color:#57068C;">⚠ Key risk signal</span><br>
+    <span style="font-size:13px;color:#333;">
+    <strong>High confidence with low understanding is the highest-risk learning state</strong>
+    because those students are unlikely to ask for help. This dashboard identifies those topics
+    first, so instructors know where reteaching will have the biggest impact.
+    </span></div>
+    """, unsafe_allow_html=True)
 
     st.divider()
 
@@ -332,18 +385,31 @@ with tab_overview:
         topics_with_uc = sum(1 for _, d in sorted_topics if d["label_counts"]["underconfident"] >= 2)
 
         m1, m2, m3, m4 = st.columns(4)
-        with m1:
-            st.metric("Total analyzed", total_analyzed)
-            st.caption("Reflections processed by the model")
-        with m2:
-            st.metric("Confident but wrong", total_cbw)
-            st.caption("Highest-priority learning risk")
-        with m3:
-            st.metric("Avg calibration gap", f"{avg_gap:+.2f}")
-            st.caption("Positive means students are overconfident")
-        with m4:
-            st.metric("Topics with underconfidence", topics_with_uc)
-            st.caption("May need reassurance, not reteaching")
+        m1.markdown(f"""
+        <div class="metric-card" style="border-top:3px solid #57068C;">
+        <div class="metric-sublabel" style="color:#57068C;">📋 Total analyzed</div>
+        <div class="metric-value" style="color:#1a1a2e;">{total_analyzed}</div>
+        <div class="metric-caption">Reflections processed by the model</div>
+        </div>""", unsafe_allow_html=True)
+        m2.markdown(f"""
+        <div class="metric-card" style="border-top:3px solid #dc2626;">
+        <div class="metric-sublabel" style="color:#dc2626;">⚠ Confident but wrong</div>
+        <div class="metric-value" style="color:#dc2626;">{total_cbw}</div>
+        <div class="metric-caption">Highest-priority learning risk</div>
+        </div>""", unsafe_allow_html=True)
+        m3.markdown(f"""
+        <div class="metric-card" style="border-top:3px solid #d97706;">
+        <div class="metric-sublabel" style="color:#d97706;">📈 Avg calibration gap</div>
+        <div class="metric-value" style="color:#d97706;">{avg_gap:+.2f}</div>
+        <div class="metric-caption">Positive means students are overconfident</div>
+        </div>""", unsafe_allow_html=True)
+        m4.markdown(f"""
+        <div class="metric-card" style="border-top:3px solid #2563eb;">
+        <div class="metric-sublabel" style="color:#2563eb;">🔵 Underconfidence topics</div>
+        <div class="metric-value" style="color:#2563eb;">{topics_with_uc}</div>
+        <div class="metric-caption">May need reassurance, not reteaching</div>
+        </div>""", unsafe_allow_html=True)
+        st.markdown("<div style='margin-bottom:4px'></div>", unsafe_allow_html=True)
 
         def gap_label(gap: float) -> str:
             if gap >= 1.0:  return "High overconfidence"
@@ -385,22 +451,51 @@ with tab_overview:
             )
             names_html = ", ".join(f"<strong>{n}</strong>" for n, _ in top_cbw_topics)
             st.markdown(
-                f"""<div style="background:#ffffff;border-left:3px solid #57068C;
-                border-radius:4px;padding:12px 16px;margin:12px 0;
-                box-shadow:0 1px 3px rgba(0,0,0,0.06);">
-                <div style="font-size:13px;font-weight:700;color:#57068C;
-                margin-bottom:6px;">Top insight</div>
+                f"""<div class="callout-card">
+                <div style="font-size:13px;font-weight:700;color:#57068C;margin-bottom:6px;">
+                🔍 Top insight</div>
                 <div style="font-size:13px;color:#333;margin-bottom:8px;">
                 {names_html} show the highest overconfidence risk ({count_desc}).
                 Review these topics first — see Topic Details for the detected misconceptions.
                 </div>
-                <div style="font-size:12px;color:#666;">
+                <div style="font-size:12px;color:#555;">
                 <strong>What to do next:</strong> Start with the top-ranked topics, review
                 the detected misconceptions, then decide whether students need reteaching
-                or reassurance.
-                </div></div>""",
+                or reassurance.</div></div>""",
                 unsafe_allow_html=True,
             )
+
+            # 3 compact priority cards
+            pri_topics = top_cbw_topics[:3]
+            def pri_accent(cbw: int, uc: int) -> str:
+                if cbw >= 3: return "#dc2626"
+                if cbw == 2: return "#d97706"
+                if uc >= 2:  return "#2563eb"
+                return "#6b7280"
+
+            st.markdown("<div style='margin-top:16px;margin-bottom:4px;font-size:12px;"
+                        "color:#888;font-weight:600;text-transform:uppercase;"
+                        "letter-spacing:.5px;'>Priority topics</div>",
+                        unsafe_allow_html=True)
+            pri_cols = st.columns(len(pri_topics))
+            for col, (name, d) in zip(pri_cols, pri_topics):
+                cbw  = d["label_counts"]["confident_but_wrong"]
+                uc   = d["label_counts"]["underconfident"]
+                gap  = d["calibration_gap"]
+                acc  = pri_accent(cbw, uc)
+                chip = action_chip_html(cbw, uc)
+                col.markdown(
+                    f"""<div class="pri-card">
+                    <div style="height:4px;background:{acc};"></div>
+                    <div class="pri-card-body">
+                    <div class="pri-card-name">{name}</div>
+                    <div class="pri-card-num" style="color:{acc};">{cbw}</div>
+                    <div class="pri-card-sub">confident but wrong</div>
+                    <div class="pri-card-gap">Gap: {gap:+.2f} · {gap_label(gap)}</div>
+                    {chip}
+                    </div></div>""",
+                    unsafe_allow_html=True,
+                )
 
         st.divider()
 
@@ -507,11 +602,6 @@ with tab_evidence:
         correct = sum(1 for gt, pred in evidence_pairs if gt == pred)
         accuracy = correct / total if total else 0
 
-        st.metric(
-            "Overall accuracy", f"{accuracy:.0%}",
-            help=f"{correct} correct out of {total} ground-truth reflections",
-        )
-
         CBW = "confident_but_wrong"
         tp  = sum(1 for gt, pred in evidence_pairs if gt == CBW and pred == CBW)
         fp  = sum(1 for gt, pred in evidence_pairs if gt != CBW and pred == CBW)
@@ -519,28 +609,40 @@ with tab_evidence:
         precision = tp / (tp + fp) if (tp + fp) > 0 else 0.0
         recall    = tp / (tp + fn) if (tp + fn) > 0 else 0.0
 
-        c1, c2 = st.columns(2)
-        c1.metric(
-            "Confident-but-wrong precision", f"{precision:.0%}",
-            help="Of all reflections the model flagged as confident-but-wrong, this share truly were.",
-        )
-        c2.metric(
-            "Confident-but-wrong recall", f"{recall:.0%}",
-            help="Of all ground-truth confident-but-wrong reflections, this share the model caught.",
-        )
+        ev1, ev2, ev3 = st.columns(3)
+        ev1.markdown(f"""
+        <div class="ev-card" style="border-top:3px solid #57068C;">
+        <div style="font-size:11px;font-weight:600;color:#57068C;text-transform:uppercase;
+        letter-spacing:.4px;margin-bottom:4px;">Overall accuracy</div>
+        <div class="ev-value" style="color:#1a1a2e;">{accuracy:.0%}</div>
+        <div class="ev-label">{correct} of {total} ground-truth reflections correct</div>
+        </div>""", unsafe_allow_html=True)
+        ev2.markdown(f"""
+        <div class="ev-card" style="border-top:3px solid #d97706;">
+        <div style="font-size:11px;font-weight:600;color:#d97706;text-transform:uppercase;
+        letter-spacing:.4px;margin-bottom:4px;">CBW precision</div>
+        <div class="ev-value" style="color:#d97706;">{precision:.0%}</div>
+        <div class="ev-label">Of flagged CBW, this share truly were</div>
+        </div>""", unsafe_allow_html=True)
+        ev3.markdown(f"""
+        <div class="ev-card" style="border-top:3px solid #dc2626;">
+        <div style="font-size:11px;font-weight:600;color:#dc2626;text-transform:uppercase;
+        letter-spacing:.4px;margin-bottom:4px;">CBW recall ← key metric</div>
+        <div class="ev-value" style="color:#dc2626;">{recall:.0%}</div>
+        <div class="ev-label">Of true CBW cases, this share were caught</div>
+        </div>""", unsafe_allow_html=True)
+        st.markdown("<div style='margin-bottom:4px'></div>", unsafe_allow_html=True)
 
-        st.markdown(
-            """<div style="background:#fdf4ff;border-left:4px solid #57068C;
-            border-radius:6px;padding:14px 18px;margin:12px 0;">
-            <span style="font-size:14px;font-weight:700;color:#57068C;">
-            About this panel</span><br>
-            <span style="font-size:13px;color:#333;">
-            The evidence panel checks whether computed labels match the simulated ground truth.
-            The most important metric is <strong>confident-but-wrong recall</strong>, because
-            the tool is designed to catch students who are confident but mistaken.
-            </span></div>""",
-            unsafe_allow_html=True,
-        )
+        st.markdown("""
+        <div class="callout-card">
+        <div style="font-size:13px;font-weight:700;color:#57068C;margin-bottom:5px;">
+        About this panel</div>
+        <div style="font-size:13px;color:#333;">
+        Compares computed labels against simulated ground truth. The most important metric is
+        <strong>confident-but-wrong recall</strong> — the tool is designed to catch students
+        who are confident but mistaken. Missing a CBW case (low recall) is a more serious
+        failure than a false positive.
+        </div></div>""", unsafe_allow_html=True)
 
         st.markdown("**Confusion matrix** — rows: ground truth · columns: computed label")
 
@@ -629,7 +731,16 @@ with tab_robustness:
             st.warning("Errors during check:\n" + "\n".join(adv_errors))
 
         passes = sum(1 for r in adv_results if r["Result"].startswith("✅"))
-        st.metric("Robustness pass rate", f"{passes}/{len(ADVERSARIAL_CASES)}")
+        total_cases = len(ADVERSARIAL_CASES)
+        rate_color = "#16a34a" if passes == total_cases else ("#d97706" if passes >= total_cases // 2 else "#dc2626")
+        st.markdown(f"""
+        <div class="ev-card" style="border-top:3px solid {rate_color};max-width:260px;
+        text-align:left;margin-bottom:12px;">
+        <div style="font-size:11px;font-weight:600;color:{rate_color};text-transform:uppercase;
+        letter-spacing:.4px;margin-bottom:4px;">Robustness pass rate</div>
+        <div class="ev-value" style="color:{rate_color};">{passes}/{total_cases}</div>
+        <div class="ev-label">adversarial cases correctly labeled confident_but_wrong</div>
+        </div>""", unsafe_allow_html=True)
 
         compact_df = pd.DataFrame([
             {

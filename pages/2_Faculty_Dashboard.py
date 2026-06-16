@@ -128,6 +128,36 @@ st.markdown("""
 }
 .callout-card { margin-top: 1rem !important; margin-bottom: 1rem !important; }
 [data-testid="stCaption"] { margin-bottom: 0.75rem !important; }
+
+/* ── Calibration Grid ────────────────────────────────────────── */
+.cal-cell {
+    background: #fff; border: 1px solid #e5e7eb; border-radius: 10px;
+    padding: 14px 16px; box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+}
+.cal-axis-label {
+    font-size: 10px; font-weight: 600; text-transform: uppercase;
+    letter-spacing: .4px; color: #888; margin-bottom: 6px;
+}
+.cal-outcome { font-size: 14px; font-weight: 700; margin-bottom: 4px; }
+.cal-count   { font-size: 34px; font-weight: 800; line-height: 1; }
+
+/* ── Ranked risk list ────────────────────────────────────────── */
+.risk-row {
+    display: flex; align-items: center; background: #fff;
+    border: 1px solid #e9e9ef; border-radius: 8px;
+    margin-bottom: 6px; overflow: hidden;
+}
+.risk-stripe { width: 5px; align-self: stretch; flex-shrink: 0; }
+.risk-rank   { font-size: 12px; font-weight: 700; color: #999;
+               width: 32px; text-align: center; flex-shrink: 0; }
+.risk-name   { flex: 1; font-size: 13px; font-weight: 600; color: #1a1a2e;
+               padding: 11px 10px; }
+.risk-cbw    { font-size: 14px; font-weight: 700; width: 90px;
+               text-align: center; flex-shrink: 0; }
+.risk-gap    { font-size: 12px; color: #555; width: 90px;
+               text-align: right; padding-right: 10px; flex-shrink: 0; }
+.risk-badge  { width: 140px; text-align: right;
+               padding: 11px 12px 11px 0; flex-shrink: 0; }
 </style>
 """, unsafe_allow_html=True)
 
@@ -498,6 +528,63 @@ with tab_overview:
             s = styles.get(label, "color:#333;background:#f3f4f6;")
             return f'<span class="badge" style="{s}">{label}</span>'
 
+        # ── Calibration Grid ──────────────────────────────────────────────
+        global_counts = {l: 0 for l in ALL_LABELS}
+        for _, _d in sorted_topics:
+            for _lbl, _cnt in _d["label_counts"].items():
+                if _lbl in global_counts:
+                    global_counts[_lbl] += _cnt
+
+        _cbw_n  = global_counts["confident_but_wrong"]
+        _uc_n   = global_counts["underconfident"]
+        _un_n   = global_counts["understands"]
+        _kc_n   = global_counts["knows_confused"]
+        _part_n = global_counts["partial"]
+
+        st.markdown(f"""
+<div style="margin:20px 0 4px 0;">
+<div style="font-size:15px;font-weight:700;color:#1a1a2e;margin-bottom:3px;">Calibration Grid</div>
+<div style="font-size:12px;color:#666;margin-bottom:12px;line-height:1.5;">
+Confidence and demonstrated understanding are measured separately.
+The gap between them shows where instruction should focus.</div>
+<div style="display:grid;grid-template-columns:1fr 160px;gap:8px;align-items:stretch;">
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
+    <div class="cal-cell" style="border-top:3px solid #3b82f6;">
+      <div class="cal-axis-label">Low confidence · High understanding</div>
+      <div class="cal-outcome" style="color:#3b82f6;">Underconfident</div>
+      <div class="cal-count" style="color:#3b82f6;">{_uc_n}</div>
+    </div>
+    <div class="cal-cell" style="border-top:3px solid #22c55e;">
+      <div class="cal-axis-label">High confidence · High understanding</div>
+      <div class="cal-outcome" style="color:#22c55e;">Understands</div>
+      <div class="cal-count" style="color:#22c55e;">{_un_n}</div>
+    </div>
+    <div class="cal-cell" style="border-top:3px solid #f59e0b;">
+      <div class="cal-axis-label">Low confidence · Low understanding</div>
+      <div class="cal-outcome" style="color:#f59e0b;">Knows confused</div>
+      <div class="cal-count" style="color:#f59e0b;">{_kc_n}</div>
+    </div>
+    <div class="cal-cell" style="border-top:4px solid #dc2626;background:#fff8f8;">
+      <div class="cal-axis-label">High confidence · Low understanding</div>
+      <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin-bottom:4px;">
+        <span class="cal-outcome" style="color:#dc2626;">Confident but wrong</span>
+        <span style="font-size:10px;font-weight:700;background:#dc2626;color:#fff;
+        border-radius:3px;padding:2px 6px;white-space:nowrap;flex-shrink:0;">HIGHEST RISK</span>
+      </div>
+      <div class="cal-count" style="color:#dc2626;">{_cbw_n}</div>
+    </div>
+  </div>
+  <div class="cal-cell" style="border-top:3px solid #a78bfa;display:flex;
+  flex-direction:column;justify-content:center;">
+    <div class="cal-axis-label">Mixed signals</div>
+    <div class="cal-outcome" style="color:#7c3aed;">Partial</div>
+    <div class="cal-count" style="color:#7c3aed;">{_part_n}</div>
+    <div style="font-size:11px;color:#888;margin-top:8px;line-height:1.5;">
+    Some understanding,<br>some gaps</div>
+  </div>
+</div>
+</div>""", unsafe_allow_html=True)
+
         # Top insight callout
         top_cbw_topics = [(name, d) for name, d in sorted_topics
                           if d["label_counts"]["confident_but_wrong"] > 0][:4]
@@ -526,73 +613,73 @@ with tab_overview:
                 unsafe_allow_html=True,
             )
 
-            # 3 compact priority cards
-            pri_topics = top_cbw_topics[:3]
-            def pri_accent(cbw: int, gap: float) -> str:
-                if cbw >= 3 and gap >= 0.0: return "#dc2626"
-                if gap <= -0.3 and cbw < 3: return "#2563eb"
-                return "#6b7280"
-
-            st.markdown("<div style='margin-top:16px;margin-bottom:4px;font-size:12px;"
-                        "color:#555;font-weight:600;text-transform:uppercase;"
-                        "letter-spacing:.5px;'>Priority topics</div>",
-                        unsafe_allow_html=True)
-            pri_cols = st.columns(len(pri_topics))
-            for col, (name, d) in zip(pri_cols, pri_topics):
-                cbw  = d["label_counts"]["confident_but_wrong"]
-                uc   = d["label_counts"]["underconfident"]
-                gap  = d["calibration_gap"]
-                acc  = pri_accent(cbw, gap)
-                chip = action_chip_html(cbw, gap)
-                col.markdown(
-                    f"""<div class="pri-card">
-                    <div style="height:4px;background:{acc};"></div>
-                    <div class="pri-card-body">
-                    <div class="pri-card-name">{name}</div>
-                    <div class="pri-card-num" style="color:{acc};">{cbw}</div>
-                    <div class="pri-card-sub">confident but wrong</div>
-                    <div class="pri-card-gap">Gap: {gap:+.2f} · {gap_label(gap)}</div>
-                    {chip}
-                    </div></div>""",
-                    unsafe_allow_html=True,
-                )
-
-        st.divider()
-
-        # Reteach First table
-        st.subheader("Reteach First")
-        st.caption(
-            "Sorted by confident-but-wrong count. "
-            "Calibration gap = avg student confidence − avg understanding. "
-            "This is a relative ranking. A topic can appear even if it only needs monitoring."
-        )
-
-        rows_html = ""
-        for rank, (topic_name, d) in enumerate(sorted_topics, start=1):
-            cbw = d["label_counts"]["confident_but_wrong"]
-            uc  = d["label_counts"]["underconfident"]
-            gap = d["calibration_gap"]
-            rows_html += (
-                f"<tr>"
-                f"<td style='width:44px;color:#5a5a5a;'>{rank}</td>"
-                f"<td>{topic_name}</td>"
-                f"<td style='width:130px;text-align:center;'>{cbw}</td>"
-                f"<td style='width:200px;'>{gap:+.2f} <span style='color:#5a5a5a;font-size:12px;'>"
-                f"{gap_label(gap)}</span></td>"
-                f"<td style='width:160px;'>{action_chip_html(cbw, gap)}</td>"
-                f"</tr>"
-            )
+        # ── Compact ranked risk list ──────────────────────────────────────
         st.markdown(
-            f"""<table class="reteach-table">
-            <thead><tr>
-            <th>#</th><th>Topic</th>
-            <th style="text-align:center;">Confident but wrong</th>
-            <th>Gap</th><th>Recommended action</th>
-            </tr></thead>
-            <tbody>{rows_html}</tbody>
-            </table>""",
+            "<div style='margin-top:20px;margin-bottom:4px;font-size:13px;font-weight:700;"
+            "color:#1a1a2e;letter-spacing:.3px;'>Priority topics</div>"
+            "<div style='font-size:11px;color:#666;margin-bottom:10px;'>"
+            "All topics ranked by confident-but-wrong count. "
+            "Stripe color reflects recommended action.</div>",
             unsafe_allow_html=True,
         )
+        _stripe_map = {
+            "Reteach first":     "#dc2626",
+            "Reassure students": "#2563eb",
+            "Monitor":           "#9ca3af",
+        }
+        risk_rows_html = ""
+        for _rank, (_tname, _td) in enumerate(sorted_topics, start=1):
+            _cbw  = _td["label_counts"]["confident_but_wrong"]
+            _gap  = _td["calibration_gap"]
+            _act  = action_label(_cbw, _gap)
+            _sc   = _stripe_map.get(_act, "#9ca3af")
+            _chip = action_chip_html(_cbw, _gap)
+            risk_rows_html += (
+                f'<div class="risk-row">'
+                f'<div class="risk-stripe" style="background:{_sc};"></div>'
+                f'<div class="risk-rank">{_rank}</div>'
+                f'<div class="risk-name">{_tname}</div>'
+                f'<div class="risk-cbw" style="color:#dc2626;">{_cbw}'
+                f'<span style="font-size:11px;color:#888;font-weight:400;'
+                f'margin-left:3px;">CBW</span></div>'
+                f'<div class="risk-gap">{_gap:+.2f}</div>'
+                f'<div class="risk-badge">{_chip}</div>'
+                f'</div>'
+            )
+        st.markdown(risk_rows_html, unsafe_allow_html=True)
+
+        # ── Full topic ranking ────────────────────────────────────────────
+        st.markdown("<div style='margin-top:20px'></div>", unsafe_allow_html=True)
+        with st.expander("Full topic ranking", expanded=True):
+            st.caption(
+                "Sorted by confident-but-wrong count. "
+                "Calibration gap = avg student confidence − avg understanding."
+            )
+            rows_html = ""
+            for rank, (topic_name, d) in enumerate(sorted_topics, start=1):
+                cbw = d["label_counts"]["confident_but_wrong"]
+                gap = d["calibration_gap"]
+                rows_html += (
+                    f"<tr>"
+                    f"<td style='width:44px;color:#5a5a5a;'>{rank}</td>"
+                    f"<td>{topic_name}</td>"
+                    f"<td style='width:130px;text-align:center;'>{cbw}</td>"
+                    f"<td style='width:200px;'>{gap:+.2f} <span style='color:#5a5a5a;"
+                    f"font-size:12px;'>{gap_label(gap)}</span></td>"
+                    f"<td style='width:160px;'>{action_chip_html(cbw, gap)}</td>"
+                    f"</tr>"
+                )
+            st.markdown(
+                f"""<table class="reteach-table">
+                <thead><tr>
+                <th>#</th><th>Topic</th>
+                <th style="text-align:center;">Confident but wrong</th>
+                <th>Gap</th><th>Recommended action</th>
+                </tr></thead>
+                <tbody>{rows_html}</tbody>
+                </table>""",
+                unsafe_allow_html=True,
+            )
 
 # ════════════════════════════════════════════════════════════════════════════
 # TAB 2 — Topic Details
@@ -692,6 +779,13 @@ with tab_evidence:
         <div class="ev-label">Of true CBW cases, this share were caught</div>
         </div>""", unsafe_allow_html=True)
         st.markdown("<div style='margin-bottom:4px'></div>", unsafe_allow_html=True)
+
+        st.markdown("""
+        <div class="callout-card" style="background:#f0fdf4;border-left-color:#16a34a;">
+        <div style="font-size:13px;color:#166534;">
+        The model caught every confident-but-wrong case in the simulated dataset,
+        the group least likely to ask for help on its own.
+        </div></div>""", unsafe_allow_html=True)
 
         st.markdown(
             "<p style='font-size:12px;color:#6b7280;line-height:1.5;margin:4px 0 12px 0;'>"

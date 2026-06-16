@@ -1,0 +1,102 @@
+Improve only the visual design and layout of the Faculty Dashboard so it reads as a polished calibration analytics dashboard instead of a plain table report.
+
+Hard rules:
+
+* Presentation only. Do not touch the database, saved results, imported data, model prompt, scoring logic, label rules, Evidence calculations, or Robustness Check calculations.
+* Do not rerun the model and do not clear results.
+* Do not change how any value is calculated. Use the same existing queries, formulas, counts, gaps, percentages, labels, and actions that are already being shown.
+* Every count, gap, percentage, and label on screen after this change should match the current app.
+* If a change would require editing scoring, labeling, calculation logic, or database logic, skip it and leave that part as is.
+
+Colors:
+
+* Main accent NYU Violet #57068C, used sparingly for headings and structure. Do not make the whole app purple.
+* Keep semantic outcome colors:
+
+  * confident_but_wrong = red
+  * underconfident = blue
+  * understands = green
+  * knows_confused = amber
+  * partial = lavender
+
+Keep the four tabs as they are:
+
+* Overview
+* Topic Details
+* Evidence
+* Robustness Check
+
+1. Add a Calibration Grid to the Overview and make it the visual centerpiece. Place it after the main explanation box and before Top Insight.
+
+Show the five outcome counts as a calibration map, not a table:
+
+* A 2x2 grid, confidence on one axis, demonstrated understanding on the other:
+
+  * high confidence, high understanding = understands, green
+  * high confidence, low understanding = confident_but_wrong, red
+  * low confidence, high understanding = underconfident, blue
+  * low confidence, low understanding = knows_confused, amber
+* A smaller separate card for partial, lavender, set apart from the 2x2.
+* Each cell shows the outcome name and its current count from the existing computed results.
+* Emphasize the confident_but_wrong cell as the highest-risk group, for example with a stronger red accent and a small "highest risk" tag.
+
+Heading:
+"Calibration Grid"
+
+Helper line:
+"Confidence and demonstrated understanding are measured separately. The gap between them shows where instruction should focus."
+
+2. Order the Overview as a story:
+
+* main explanation
+* status line and metric cards
+* Calibration Grid
+* Top Insight
+* priority list
+* full ranking
+
+Tighten vertical spacing so there are no large empty gaps, but keep it readable.
+
+3. Replace the Priority Topics cards with a compact ranked risk list.
+
+Each row should show:
+
+* rank
+* topic name
+* confident-but-wrong count
+* calibration gap
+* recommended-action badge
+
+Style:
+
+* soft card background
+* no thick borders
+* subtle colored left stripe by action
+* red stripe for Reteach first
+* blue stripe for Reassure students
+* gray or green stripe for Monitor
+
+Display the existing values and actions. Do not change any action logic.
+
+4. Move the Reteach First table below the priority list under a heading:
+   "Full topic ranking"
+
+Keep the same columns, sorting, and actions. Make it visually lighter than the grid and the priority list, for example inside an expander that is open by default.
+
+Do not change sorting or action logic.
+
+5. Evidence tab:
+
+* Keep all metrics, the confusion matrix, and the existing caveat note.
+* Add one short callout under the metric cards:
+  "The model caught every confident-but-wrong case in the simulated dataset, the group least likely to ask for help on its own."
+
+6. Spacing and typography:
+
+* Use slightly stronger section headings.
+* Add consistent spacing between sections.
+* Keep muted text readable.
+* Avoid giant empty gaps.
+* Keep the design clean, not flashy.
+
+7. Do not change the Student Reflection page or the About and Responsible Use page, except minor color consistency if needed.

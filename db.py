@@ -41,3 +41,30 @@ def init_db():
         conn.commit()
     finally:
         conn.close()
+
+
+def get_topics():
+    conn = get_connection()
+    try:
+        with conn.cursor(cursor_factory=RealDictCursor) as cur:
+            cur.execute("SELECT name FROM topics ORDER BY name")
+            return [row["name"] for row in cur.fetchall()]
+    finally:
+        conn.close()
+
+
+def save_reflection(nickname, topic_name, reflection_text, student_confidence):
+    conn = get_connection()
+    try:
+        with conn.cursor() as cur:
+            cur.execute(
+                """
+                INSERT INTO reflections
+                    (nickname, topic_name, reflection_text, student_confidence)
+                VALUES ($1, $2, $3, $4)
+                """,
+                (nickname, topic_name, reflection_text, student_confidence),
+            )
+        conn.commit()
+    finally:
+        conn.close()

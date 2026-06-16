@@ -43,12 +43,16 @@ st.markdown("""
 .metric-card {
     background: #ffffff; border: 1px solid #e5e7eb; border-radius: 10px;
     padding: 18px 20px; box-shadow: 0 1px 4px rgba(0,0,0,0.07);
-    height: 100%; box-sizing: border-box;
+    height: 100%; min-height: 128px; box-sizing: border-box;
+    display: flex; flex-direction: column;
 }
-.metric-value { font-size: 30px; font-weight: 800; line-height: 1.1; }
+.metric-value {
+    font-size: 30px; font-weight: 800; line-height: 1.1;
+    flex: 1; display: flex; align-items: center;
+}
 .metric-sublabel { font-size: 11px; font-weight: 600; letter-spacing:.4px;
     text-transform: uppercase; margin-bottom: 4px; }
-.metric-caption { font-size: 12px; color: #777; margin-top: 5px; }
+.metric-caption { font-size: 12px; color: #555; margin-top: 5px; }
 
 /* ── Callout / insight cards ─────────────────────────────────────── */
 .callout-card {
@@ -68,14 +72,14 @@ st.markdown("""
     margin-bottom: 10px; line-height: 1.3;
 }
 .pri-card-num { font-size: 26px; font-weight: 800; line-height: 1; }
-.pri-card-sub { font-size: 11px; color: #888; margin-bottom: 6px; }
-.pri-card-gap { font-size: 12px; color: #555; margin-bottom: 10px; }
+.pri-card-sub { font-size: 11px; color: #5a5a5a; margin-bottom: 6px; }
+.pri-card-gap { font-size: 12px; color: #444; margin-bottom: 10px; }
 
 /* ── Reteach First table ─────────────────────────────────────────── */
 .reteach-table { width: 100%; border-collapse: collapse; font-size: 14px; }
 .reteach-table th {
     text-align: left; padding: 9px 12px; font-weight: 600; font-size: 12px;
-    text-transform: uppercase; letter-spacing: .4px; color: #666;
+    text-transform: uppercase; letter-spacing: .4px; color: #444;
     border-bottom: 2px solid #e5e7eb; background: #f9fafb;
 }
 .reteach-table td {
@@ -98,7 +102,7 @@ st.markdown("""
     text-align: center;
 }
 .ev-value { font-size: 32px; font-weight: 800; line-height: 1.1; }
-.ev-label { font-size: 12px; color: #666; margin-top: 4px; }
+.ev-label { font-size: 12px; color: #555; margin-top: 4px; }
 
 /* ── Sidebar: active page link → NYU Violet ──────────────────── */
 [data-testid="stSidebarNav"] a[aria-current="page"] {
@@ -386,8 +390,6 @@ with tab_overview:
     </span></div>
     """, unsafe_allow_html=True)
 
-    st.divider()
-
     # Analyze button
     if unanalyzed:
         st.write(f"**{len(unanalyzed)}** reflection(s) have not been analyzed yet.")
@@ -428,12 +430,15 @@ with tab_overview:
                 st.success(f"Done. {len(unanalyzed)} reflection(s) analyzed.")
             st.rerun()
     else:
-        st.caption("All reflections have been analyzed.")
+        st.markdown(
+            "<p style='font-size:12px;color:#777;margin:4px 0 12px 0;'>"
+            "✓ All reflections have been analyzed.</p>",
+            unsafe_allow_html=True,
+        )
 
     if not summary_rows:
         st.info("No results yet. Run the analysis above to populate this dashboard.")
     else:
-        st.divider()
 
         # High-level metrics
         total_analyzed = sum(d["_total"] for _, d in sorted_topics)
@@ -532,7 +537,7 @@ with tab_overview:
                 return "#6b7280"
 
             st.markdown("<div style='margin-top:16px;margin-bottom:4px;font-size:12px;"
-                        "color:#888;font-weight:600;text-transform:uppercase;"
+                        "color:#555;font-weight:600;text-transform:uppercase;"
                         "letter-spacing:.5px;'>Priority topics</div>",
                         unsafe_allow_html=True)
             pri_cols = st.columns(len(pri_topics))
@@ -572,10 +577,10 @@ with tab_overview:
             gap = d["calibration_gap"]
             rows_html += (
                 f"<tr>"
-                f"<td style='width:44px;color:#888;'>{rank}</td>"
+                f"<td style='width:44px;color:#5a5a5a;'>{rank}</td>"
                 f"<td>{topic_name}</td>"
                 f"<td style='width:130px;text-align:center;'>{cbw}</td>"
-                f"<td style='width:200px;'>{gap:+.2f} <span style='color:#888;font-size:12px;'>"
+                f"<td style='width:200px;'>{gap:+.2f} <span style='color:#5a5a5a;font-size:12px;'>"
                 f"{gap_label(gap)}</span></td>"
                 f"<td style='width:160px;'>{action_chip_html(cbw, uc)}</td>"
                 f"</tr>"

@@ -1,0 +1,59 @@
+Update how the engine rates understanding, because right now it is too strict and under-rates correct answers. Keep everything else about the engine the same, including:
+
+* the labeling rule
+* the student confidence values
+* the topic descriptions
+* the misconception detection
+* the database schema
+* the dashboard calculations
+* the Evidence calculations
+* the Robustness Check logic
+
+Change the instruction sent to Claude so it rates understanding this way:
+
+* 5 when the explanation captures the core idea correctly, even if it is short or plainly worded.
+* 4 when it is mostly correct with a minor gap or imprecision.
+* 3 only when it is partially correct but missing or muddling something important.
+* 2 when it is mostly wrong or shows a clear misconception.
+* 1 when it is empty, off topic, or entirely wrong.
+
+State clearly in the model prompt:
+
+* Brevity is not a reason to lower the score.
+* A correct core idea stated simply should still score 4 or 5.
+* Plain wording should not be penalized.
+* Reserve 1 and 2 for answers that are actually wrong, empty, off topic, or show a real misconception.
+* Do not reward confident tone, keywords, or buzzwords if the explanation is conceptually wrong.
+* If the reflection uses correct vocabulary but explains the concept incorrectly, score it 1 or 2.
+* Do not infer confidence from the reflection text. Confidence only comes from the student_confidence slider.
+
+Include these two anchor examples in the prompt:
+
+* Should score 5: "Adoption goes innovators, early adopters, early majority, late majority, laggards, and depends on more than the technology." Correct and complete even though brief.
+* Should score 1 or 2: "The early majority is the most venturesome group, the first to adopt anything new." Confident but a clear misconception.
+
+Keep Claude's output format exactly the same as before. It should still return only valid JSON with:
+{
+"understanding": 1,
+"misconception": "short phrase or none"
+}
+
+After changing the engine prompt:
+
+1. Clear only the existing rows in the results table.
+2. Do not delete or modify reflections.
+3. Do not delete or modify topics.
+4. Do not delete or modify ground_truth_label values.
+5. Re-run the engine over all reflections in the reflections table so every reflection is re-scored with the new criteria.
+6. Do not save adversarial robustness cases into the reflections table.
+7. Do not change the Student Reflection page, About page, Faculty Dashboard layout, Evidence section formulas, or Robustness Check section.
+
+Check after completion:
+
+* Open the Evidence tab.
+* Confirm overall accuracy went up.
+* Confirm the understands row in the confusion matrix leaks far fewer reflections into partial and confident_but_wrong.
+* Confirm confident-but-wrong recall stays at or near 100%.
+* Confirm the Evidence confusion matrix still totals 100 labeled reflections.
+* Confirm the Faculty Dashboard still shows 100 total analyzed reflections.
+* Confirm the Robustness Check still passes close to 6/6.

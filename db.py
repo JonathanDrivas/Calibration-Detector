@@ -182,6 +182,17 @@ def get_evidence_rows():
         conn.close()
 
 
+def clear_results():
+    """Delete all rows from the results table. Does not touch reflections or topics."""
+    conn = get_connection()
+    try:
+        with conn.cursor() as cur:
+            cur.execute("DELETE FROM results")
+        conn.commit()
+    finally:
+        conn.close()
+
+
 def get_cbw_details():
     """Return confident_but_wrong reflections with nickname and misconception, ordered by topic."""
     conn = get_connection()

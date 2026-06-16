@@ -39,7 +39,25 @@ Common misconceptions for this topic:
 Student's reflection:
 {reflection_text}
 
-Judge ONLY the student's demonstrated understanding of the topic based on how well the reflection matches the correct topic description and common misconceptions. Do NOT factor in the student's confidence, tone, certainty, or wording style.
+Rate the student's understanding on a scale of 1 to 5 using these criteria:
+
+5 — The reflection captures the core idea correctly, even if it is short or plainly worded.
+4 — Mostly correct with a minor gap or imprecision.
+3 — Partially correct but missing or muddling something important.
+2 — Mostly wrong or shows a clear misconception.
+1 — Empty, off topic, or entirely wrong.
+
+Critical rules for scoring:
+- Brevity is NOT a reason to lower the score. A correct core idea stated simply should score 4 or 5.
+- Plain wording should NOT be penalized. Simple, clear, correct answers deserve high scores.
+- Reserve 1 and 2 ONLY for answers that are actually wrong, empty, off topic, or show a real misconception.
+- Do NOT reward confident tone, keywords, or buzzwords if the explanation is conceptually wrong.
+- If the reflection uses correct vocabulary but explains the concept incorrectly, score it 1 or 2.
+- Do NOT infer confidence from the reflection text. Confidence comes only from the student_confidence value, which is handled separately.
+
+Anchor examples:
+- SCORES 5: "Adoption goes innovators, early adopters, early majority, late majority, laggards, and depends on more than the technology." — Correct and complete even though brief.
+- SCORES 1 or 2: "The early majority is the most venturesome group, the first to adopt anything new." — Confident phrasing but a clear misconception.
 
 Respond with ONLY valid JSON in this exact format, no markdown, no explanation:
 {{"understanding": <integer 1-5>, "misconception": "<short phrase or none>"}}

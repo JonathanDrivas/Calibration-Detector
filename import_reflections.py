@@ -12,7 +12,7 @@ import sys
 
 import psycopg2
 
-CSV_PATH = "attached_assets/simulated_reflections_realistic_1781638446026.csv"
+CSV_PATH = "attached_assets/simulated_reflections_realistic_1781640314253.csv"
 
 _ADJECTIVES = [
     "Amber", "Birch", "Cobalt", "Dusk", "Ember", "Fern", "Glacier", "Hazel",

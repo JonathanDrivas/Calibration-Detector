@@ -458,5 +458,23 @@ if st.button("Run adversarial robustness check", type="primary"):
     passes = sum(1 for r in adv_results if r["Result"].startswith("✅"))
     st.metric("Robustness pass rate", f"{passes}/{len(ADVERSARIAL_CASES)}")
 
-    adv_df = pd.DataFrame(adv_results)
-    st.dataframe(adv_df, use_container_width=True, hide_index=True)
+    # Compact table — reflection text excluded to avoid horizontal scroll
+    compact_df = pd.DataFrame([
+        {
+            "Topic": r["Topic"],
+            "Understanding": r["Understanding"],
+            "Misconception": r["Misconception"],
+            "Computed": r["Computed label"],
+            "Expected": r["Expected label"],
+            "Result": r["Result"],
+        }
+        for r in adv_results
+    ])
+    st.dataframe(compact_df, use_container_width=True, hide_index=True)
+
+    # Reflection text shown per-case in expanders
+    st.markdown("**Reflection text per case:**")
+    for r in adv_results:
+        label = f"{r['Result']} {r['Topic']}"
+        with st.expander(label):
+            st.write(r["Reflection"])

@@ -12,6 +12,12 @@ from db import (
 )
 from ai import analyze_reflection, compute_label
 
+st.set_page_config(
+    page_title="Faculty Dashboard — Calibration Detector",
+    page_icon="📊",
+    layout="wide",
+)
+
 st.title("Faculty Dashboard")
 
 # ── Constants ─────────────────────────────────────────────────────────────────
@@ -331,7 +337,6 @@ with tab_overview:
                 "Topic":               topic_name,
                 "Confident but wrong": d["label_counts"]["confident_but_wrong"],
                 "Gap":                 f"{d['calibration_gap']:+.2f}  {gap_label(d['calibration_gap'])}",
-                "Total":               d["_total"],
                 "Recommended action":  action_badge(
                     d["label_counts"]["confident_but_wrong"],
                     d["label_counts"]["underconfident"],

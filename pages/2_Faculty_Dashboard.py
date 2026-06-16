@@ -1,6 +1,4 @@
 import streamlit as st
-import pandas as pd
-import altair as alt
 from collections import defaultdict
 
 from db import (
@@ -69,13 +67,7 @@ else:
 
 st.divider()
 
-# ── Topic-level results ───────────────────────────────────────────────────────
-summary_rows = get_topic_summaries()
-
-if not summary_rows:
-    st.info("No results yet. Run the analysis above to populate this dashboard.")
-    st.stop()
-
+# ── Constants ────────────────────────────────────────────────────────────────
 ALL_LABELS = ["understands", "underconfident", "partial", "knows_confused", "confident_but_wrong"]
 LABEL_COLOR = {
     "understands":         "#22c55e",
@@ -92,11 +84,58 @@ LABEL_DISPLAY = {
     "confident_but_wrong": "Confident but wrong",
 }
 
+
+def stacked_bar_html(counts: dict) -> str:
+    total = sum(counts.get(l, 0) for l in ALL_LABELS)
+    if total == 0:
+        return ""
+
+    segments = ""
+    for lbl in ALL_LABELS:
+        n = counts.get(lbl, 0)
+        if n == 0:
+            continue
+        pct = n / total * 100
+        color = LABEL_COLOR[lbl]
+        display = LABEL_DISPLAY[lbl]
+        segments += (
+            f'<div title="{display}: {n}" style="'
+            f'width:{pct:.1f}%;background:{color};height:100%;'
+            f'display:inline-block;"></div>'
+        )
+
+    legend_items = ""
+    for lbl in ALL_LABELS:
+        n = counts.get(lbl, 0)
+        color = LABEL_COLOR[lbl]
+        display = LABEL_DISPLAY[lbl]
+        legend_items += (
+            f'<span style="display:inline-flex;align-items:center;'
+            f'margin-right:14px;font-size:12px;color:#444;">'
+            f'<span style="width:12px;height:12px;border-radius:2px;'
+            f'background:{color};display:inline-block;margin-right:4px;'
+            f'flex-shrink:0;"></span>{display} ({n})</span>'
+        )
+
+    return (
+        f'<div style="width:100%;height:26px;border-radius:4px;'
+        f'overflow:hidden;background:#e5e7eb;margin-bottom:6px;">'
+        f'{segments}</div>'
+        f'<div style="display:flex;flex-wrap:wrap;margin-bottom:8px;">'
+        f'{legend_items}</div>'
+    )
+
+
+# ── Topic-level results ───────────────────────────────────────────────────────
+summary_rows = get_topic_summaries()
+
+if not summary_rows:
+    st.info("No results yet. Run the analysis above to populate this dashboard.")
+    st.stop()
+
 # Build per-topic structures
-topic_data: dict[str, dict] = defaultdict(lambda: {
+topic_data: dict = defaultdict(lambda: {
     "label_counts": {l: 0 for l in ALL_LABELS},
-    "avg_confidence": 0.0,
-    "avg_understanding": 0.0,
     "_conf_sum": 0.0,
     "_und_sum": 0.0,
     "_total": 0,
@@ -117,16 +156,16 @@ for t, d in topic_data.items():
     d["avg_understanding"] = d["_und_sum"] / total if total else 0
     d["calibration_gap"] = d["avg_confidence"] - d["avg_understanding"]
 
-# Sort topics: most confident_but_wrong first (Reteach First)
+# Sort: most confident_but_wrong first (Reteach First)
 sorted_topics = sorted(
     topic_data.items(),
     key=lambda kv: kv[1]["label_counts"]["confident_but_wrong"],
     reverse=True,
 )
 
-# Build confident_but_wrong detail lookup
+# Confident-but-wrong detail lookup
 cbw_rows = get_cbw_details()
-cbw_by_topic: dict[str, list] = defaultdict(list)
+cbw_by_topic: dict = defaultdict(list)
 for row in cbw_rows:
     cbw_by_topic[row["topic_name"]].append(
         {"nickname": row["nickname"], "misconception": row["misconception"]}
@@ -157,32 +196,8 @@ for rank, (topic_name, d) in enumerate(sorted_topics, start=1):
         )
         c3.metric("Total analyzed", d["_total"])
 
-        # ── Stacked bar chart ─────────────────────────────────────────────
-        bar_df = pd.DataFrame([
-            {"Label": LABEL_DISPLAY[lbl], "Count": counts[lbl], "order": i}
-            for i, lbl in enumerate(ALL_LABELS)
-            if counts[lbl] > 0
-        ])
-
-        chart = (
-            alt.Chart(bar_df)
-            .mark_bar()
-            .encode(
-                x=alt.X("Count:Q", stack="normalize", axis=alt.Axis(format="%", title="")),
-                color=alt.Color(
-                    "Label:N",
-                    scale=alt.Scale(
-                        domain=[LABEL_DISPLAY[l] for l in ALL_LABELS],
-                        range=[LABEL_COLOR[l] for l in ALL_LABELS],
-                    ),
-                    legend=alt.Legend(orient="bottom", columns=5, title=None),
-                ),
-                order=alt.Order("order:Q"),
-                tooltip=["Label:N", "Count:Q"],
-            )
-            .properties(height=40)
-        )
-        st.altair_chart(chart, use_container_width=True, theme=None)
+        # ── Stacked bar (HTML/CSS) ────────────────────────────────────────
+        st.markdown(stacked_bar_html(counts), unsafe_allow_html=True)
 
         # ── Underconfident note ──────────────────────────────────────────
         if uc_count >= 2:
@@ -196,12 +211,9 @@ for rank, (topic_name, d) in enumerate(sorted_topics, start=1):
         # ── Confident-but-wrong detail list ─────────────────────────────
         if cbw_count > 0:
             st.markdown("**Confident but wrong — detected misconceptions:**")
-            cbw_list = cbw_by_topic.get(topic_name, [])
-            for item in cbw_list:
+            for item in cbw_by_topic.get(topic_name, []):
                 misconception = item["misconception"]
                 display = misconception if misconception.lower() != "none" else "—"
-                st.markdown(
-                    f"- `{item['nickname']}` · *{display}*"
-                )
+                st.markdown(f"- `{item['nickname']}` · *{display}*")
         else:
             st.success("No confident-but-wrong reflections on this topic.")

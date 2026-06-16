@@ -1,0 +1,87 @@
+The Faculty Dashboard is working, but the current design feels too busy and over-styled. Please clean up the UI/UX without changing any database logic, model logic, saved results, calculations, Evidence metrics, or Robustness Check results. Do not rerun Claude/model analysis.
+
+Design direction:
+
+* Make it feel like a clean faculty decision report, not a flashy product dashboard.
+* Keep NYU Violet (#57068C) as a subtle accent, but reduce heavy purple borders and large purple blocks.
+* Use more white space, softer cards, and clearer hierarchy.
+* Keep semantic colors for outcomes, but do not make every risk element look like an emergency.
+
+Specific changes:
+
+1. Header
+
+* Remove the large chart emoji/icon next to "Faculty Dashboard" or make it much smaller.
+* Keep the title simple and professional.
+* Keep tabs, but use NYU Violet only for the active tab underline.
+
+2. Overview tab
+
+* Remove the four large "Top topics by overconfidence risk" cards. They duplicate the Reteach First table and make the page feel busy.
+* Keep the Top Insight box, but make it smaller and cleaner:
+
+  * white or very light lavender background
+  * thin left border in NYU Violet
+  * no heavy purple fill
+* Keep "What to do next" inside the same Top Insight box.
+
+3. Metrics
+
+* Keep the four metric cards, but make them look like clean cards with subtle borders/backgrounds.
+* Keep captions under each metric.
+* Do not make the metric area too tall.
+
+4. Reteach First table
+
+* Keep the simplified table with:
+
+  * Rank
+  * Topic
+  * Confident but wrong
+  * Gap
+  * Recommended action
+* Make the table fit without horizontal scrolling at 100% browser zoom.
+* Allow long topic names to wrap instead of forcing the table wider.
+* Make the Recommended action badges calmer:
+
+  * Reteach first = red text on very light red background
+  * Watch closely = amber text on very light amber background
+  * Reassure students = blue text on very light blue background
+  * Monitor = gray text on light gray background
+* Do not use large red pill buttons inside the table.
+
+5. Recommended action logic
+
+* Keep the logic but make the wording less extreme:
+
+  * confident_but_wrong count >= 3: "Reteach first"
+  * confident_but_wrong count = 2: "Watch closely"
+  * underconfident count >= 2 and confident_but_wrong count < 2: "Reassure students"
+  * otherwise: "Monitor"
+* Add a small note above the table:
+  "Reteach First is a relative ranking. A topic can still appear in the list even if it only needs monitoring."
+
+6. Topic Details tab
+
+* Keep the expandable topic cards.
+* Keep the stacked bars.
+* Make the cards less tall if possible.
+* Keep the first topic expanded by default and the rest collapsed.
+
+7. Evidence tab
+
+* Keep the same metrics and confusion matrix.
+* Reduce the large empty spacing between metrics.
+* Keep the interpretation box, but use a subtle left-border callout instead of a large purple block.
+
+8. Robustness Check tab
+
+* Keep the same pass rate, table, and reflection expanders.
+* Change the run button to NYU Violet, not red.
+* Make the table fit cleanly without horizontal scrolling.
+
+9. Overall
+
+* Keep readable width around 1200px to 1280px.
+* Do not optimize for 50% browser zoom. Optimize for normal 100% zoom.
+* Do not change the Student Reflection page or About and Responsible Use page unless only minor color consistency is needed.

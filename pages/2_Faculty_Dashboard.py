@@ -23,26 +23,23 @@ st.markdown("""
 <style>
 /* ── Constrain content width and center ─────────────────────────── */
 .block-container {
-    max-width: 1200px !important;
+    max-width: 1240px !important;
     padding-left: 2rem !important;
     padding-right: 2rem !important;
     margin-left: auto !important;
     margin-right: auto !important;
 }
 
-/* ── Active tab underline → NYU Violet ──────────────────────────── */
+/* ── Active tab underline only → NYU Violet ─────────────────────── */
 [data-baseweb="tab-highlight"] {
     background-color: #57068C !important;
 }
 [data-testid="stTabs"] button[aria-selected="true"] {
     color: #57068C !important;
-    font-weight: 700 !important;
-}
-[data-testid="stTabs"] button:hover {
-    color: #57068C !important;
+    font-weight: 600 !important;
 }
 
-/* ── Primary buttons → NYU Violet (keep red for alerts only) ────── */
+/* ── Primary buttons → NYU Violet ───────────────────────────────── */
 [data-testid="baseButton-primary"] {
     background-color: #57068C !important;
     border-color: #57068C !important;
@@ -53,16 +50,25 @@ st.markdown("""
     border-color: #3d0466 !important;
 }
 
-/* ── Section headings accent ────────────────────────────────────── */
-h2, h3 { color: #57068C !important; }
-
-/* ── Dataframe: prevent horizontal scroll by allowing cell wrap ─── */
-[data-testid="stDataFrame"] table { table-layout: auto; word-break: break-word; }
-[data-testid="stDataFrame"] td { white-space: normal !important; }
+/* ── Reteach table: allow topic names to wrap ────────────────────── */
+.reteach-table { width: 100%; border-collapse: collapse; font-size: 14px; }
+.reteach-table th {
+    text-align: left; padding: 8px 12px; font-weight: 600;
+    color: #555; border-bottom: 2px solid #e5e7eb; background: #f9fafb;
+}
+.reteach-table td {
+    padding: 8px 12px; border-bottom: 1px solid #f0f0f0;
+    vertical-align: top; word-break: break-word;
+}
+.reteach-table tr:hover td { background: #fafafa; }
+.badge {
+    display: inline-block; border-radius: 4px; padding: 2px 8px;
+    font-size: 12px; font-weight: 600; white-space: nowrap;
+}
 </style>
 """, unsafe_allow_html=True)
 
-st.title("📊 Faculty Dashboard")
+st.title("Faculty Dashboard")
 
 # ── Constants ─────────────────────────────────────────────────────────────────
 ALL_LABELS = ["understands", "underconfident", "partial", "knows_confused", "confident_but_wrong"]
@@ -346,26 +352,30 @@ with tab_overview:
             if gap == 0:    return "Calibrated"
             return "Underconfident"
 
-        def action_badge(cbw: int, uc: int) -> str:
-            if cbw >= 3:  return "🔴 Reteach first"
-            if cbw == 2:  return "🟠 Watch closely"
-            if uc >= 2:   return "🔵 Reassure students"
-            return "⚫ Monitor"
+        def action_label(cbw: int, uc: int) -> str:
+            if cbw >= 3:  return "Reteach first"
+            if cbw == 2:  return "Watch closely"
+            if uc >= 2:   return "Reassure students"
+            return "Monitor"
 
-        def action_bg(cbw: int, uc: int) -> str:
-            if cbw >= 3:  return "#ef4444"
-            if cbw == 2:  return "#f97316"
-            if uc >= 2:   return "#3b82f6"
-            return "#6b7280"
+        def action_chip_html(cbw: int, uc: int) -> str:
+            label = action_label(cbw, uc)
+            styles = {
+                "Reteach first":     ("color:#b91c1c;background:#fef2f2;"),
+                "Watch closely":     ("color:#b45309;background:#fffbeb;"),
+                "Reassure students": ("color:#1d4ed8;background:#eff6ff;"),
+                "Monitor":           ("color:#6b7280;background:#f3f4f6;"),
+            }
+            s = styles.get(label, "color:#333;background:#f3f4f6;")
+            return f'<span class="badge" style="{s}">{label}</span>'
 
         # Top insight callout
         top_cbw_topics = [(name, d) for name, d in sorted_topics
                           if d["label_counts"]["confident_but_wrong"] > 0][:4]
         if top_cbw_topics:
-            topic_list = ", ".join(f"**{name}**" for name, _ in top_cbw_topics)
             count_desc = (
-                f"{top_cbw_topics[0][1]['label_counts']['confident_but_wrong']} confident-but-wrong "
-                "reflection(s) on the top topic"
+                f"{top_cbw_topics[0][1]['label_counts']['confident_but_wrong']} "
+                "confident-but-wrong reflection(s) on the top topic"
                 if len(top_cbw_topics) == 1
                 else (
                     f"between {top_cbw_topics[-1][1]['label_counts']['confident_but_wrong']} and "
@@ -373,73 +383,61 @@ with tab_overview:
                     "confident-but-wrong reflections each"
                 )
             )
+            names_html = ", ".join(f"<strong>{n}</strong>" for n, _ in top_cbw_topics)
             st.markdown(
-                f"""<div style="background:#fdf4ff;border-left:4px solid #57068C;
-                border-radius:6px;padding:14px 18px;margin:16px 0;">
-                <span style="font-size:15px;font-weight:700;color:#57068C;">🔍 Top insight</span><br>
-                <span style="font-size:14px;color:#333;">{', '.join(f'<strong>{n}</strong>' for n, _ in top_cbw_topics)}
-                show the highest overconfidence risk ({count_desc}).
-                Review these topics first — see Topic Details for the detected misconceptions.</span><br><br>
-                <span style="font-size:13px;color:#57068C;font-weight:600;">What to do next</span><br>
-                <span style="font-size:13px;color:#555;">Start with the top-ranked topics, review the detected
-                misconceptions, then decide whether students need reteaching or reassurance.</span>
-                </div>""",
+                f"""<div style="background:#ffffff;border-left:3px solid #57068C;
+                border-radius:4px;padding:12px 16px;margin:12px 0;
+                box-shadow:0 1px 3px rgba(0,0,0,0.06);">
+                <div style="font-size:13px;font-weight:700;color:#57068C;
+                margin-bottom:6px;">Top insight</div>
+                <div style="font-size:13px;color:#333;margin-bottom:8px;">
+                {names_html} show the highest overconfidence risk ({count_desc}).
+                Review these topics first — see Topic Details for the detected misconceptions.
+                </div>
+                <div style="font-size:12px;color:#666;">
+                <strong>What to do next:</strong> Start with the top-ranked topics, review
+                the detected misconceptions, then decide whether students need reteaching
+                or reassurance.
+                </div></div>""",
                 unsafe_allow_html=True,
             )
 
         st.divider()
 
-        # 4 compact topic cards
-        if top_cbw_topics:
-            st.markdown(
-                "<p style='font-size:13px;color:#888;margin-bottom:8px;'>"
-                "Top topics by overconfidence risk</p>",
-                unsafe_allow_html=True,
-            )
-            card_cols = st.columns(min(len(top_cbw_topics), 4))
-            for col, (name, d) in zip(card_cols, top_cbw_topics):
-                cbw  = d["label_counts"]["confident_but_wrong"]
-                uc   = d["label_counts"]["underconfident"]
-                gap  = d["calibration_gap"]
-                bg   = action_bg(cbw, uc)
-                badge = action_badge(cbw, uc)
-                col.markdown(
-                    f"""<div style="border:2px solid #57068C;border-radius:10px;
-                    padding:14px 16px;background:#faf5ff;height:100%;">
-                    <div style="font-weight:700;font-size:13px;color:#57068C;
-                    margin-bottom:10px;line-height:1.3;">{name}</div>
-                    <div style="font-size:26px;font-weight:800;color:#ef4444;
-                    line-height:1;">{cbw}</div>
-                    <div style="font-size:11px;color:#666;margin-bottom:8px;">
-                    confident but wrong</div>
-                    <div style="font-size:12px;color:#555;margin-bottom:10px;">
-                    Gap: {gap:+.2f} · {gap_label(gap)}</div>
-                    <div style="background:{bg};color:white;border-radius:4px;
-                    padding:3px 8px;font-size:11px;font-weight:600;
-                    display:inline-block;">{badge}</div>
-                    </div>""",
-                    unsafe_allow_html=True,
-                )
-            st.markdown("<div style='margin-bottom:20px;'></div>", unsafe_allow_html=True)
-
-        # Compact Reteach First table
+        # Reteach First table
         st.subheader("Reteach First")
-        st.caption("Sorted by confident-but-wrong count. Calibration gap = avg student confidence − avg understanding.")
+        st.caption(
+            "Sorted by confident-but-wrong count. "
+            "Calibration gap = avg student confidence − avg understanding. "
+            "This is a relative ranking — a topic can appear even if it only needs monitoring."
+        )
 
-        reteach_df = pd.DataFrame([
-            {
-                "Rank":                rank,
-                "Topic":               topic_name,
-                "Confident but wrong": d["label_counts"]["confident_but_wrong"],
-                "Gap":                 f"{d['calibration_gap']:+.2f}  {gap_label(d['calibration_gap'])}",
-                "Recommended action":  action_badge(
-                    d["label_counts"]["confident_but_wrong"],
-                    d["label_counts"]["underconfident"],
-                ),
-            }
-            for rank, (topic_name, d) in enumerate(sorted_topics, start=1)
-        ])
-        st.dataframe(reteach_df, use_container_width=True, hide_index=True)
+        rows_html = ""
+        for rank, (topic_name, d) in enumerate(sorted_topics, start=1):
+            cbw = d["label_counts"]["confident_but_wrong"]
+            uc  = d["label_counts"]["underconfident"]
+            gap = d["calibration_gap"]
+            rows_html += (
+                f"<tr>"
+                f"<td style='width:44px;color:#888;'>{rank}</td>"
+                f"<td>{topic_name}</td>"
+                f"<td style='width:130px;text-align:center;'>{cbw}</td>"
+                f"<td style='width:200px;'>{gap:+.2f} <span style='color:#888;font-size:12px;'>"
+                f"{gap_label(gap)}</span></td>"
+                f"<td style='width:160px;'>{action_chip_html(cbw, uc)}</td>"
+                f"</tr>"
+            )
+        st.markdown(
+            f"""<table class="reteach-table">
+            <thead><tr>
+            <th>#</th><th>Topic</th>
+            <th style="text-align:center;">Confident but wrong</th>
+            <th>Gap</th><th>Recommended action</th>
+            </tr></thead>
+            <tbody>{rows_html}</tbody>
+            </table>""",
+            unsafe_allow_html=True,
+        )
 
 # ════════════════════════════════════════════════════════════════════════════
 # TAB 2 — Topic Details

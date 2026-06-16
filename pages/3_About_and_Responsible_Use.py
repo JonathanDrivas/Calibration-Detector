@@ -29,7 +29,7 @@ principles = [
         "🤝 Human judgment stays central",
         "The model reads understanding from text, which is an imperfect signal. "
         "Low-certainty cases are routed for human review, and the tool is meant to support "
-        "a teacher's judgment — never replace it.",
+        "a teacher's judgment, never replace it.",
     ),
     (
         "🧪 Simulated data only",

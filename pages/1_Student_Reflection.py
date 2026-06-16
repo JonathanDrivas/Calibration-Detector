@@ -43,4 +43,4 @@ if submitted:
     else:
         nickname = random_nickname()
         save_reflection(nickname, topic_name, reflection_text, student_confidence)
-        st.success("Reflection submitted — thank you!")
+        st.success("Reflection submitted. Thank you!")

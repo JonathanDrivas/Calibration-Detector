@@ -115,7 +115,7 @@ border:1px solid #ddd0ec;border-radius:12px;padding:22px 28px;margin-bottom:6px;
 <div style="font-size:27px;font-weight:800;color:#1a1a2e;margin-bottom:4px;">
 Faculty Dashboard</div>
 <div style="font-size:14px;color:#666;">
-Confidence vs. demonstrated understanding across simulated student reflections.</div>
+Confidence vs. demonstrated understanding across student reflections.</div>
 </div>
 """, unsafe_allow_html=True)
 
@@ -365,7 +365,7 @@ with tab_overview:
             if errors:
                 st.warning("Finished with errors:\n" + "\n".join(errors))
             else:
-                st.success(f"Done — {len(unanalyzed)} reflection(s) analyzed.")
+                st.success(f"Done. {len(unanalyzed)} reflection(s) analyzed.")
             st.rerun()
     else:
         st.caption("All reflections have been analyzed.")
@@ -439,16 +439,14 @@ with tab_overview:
         top_cbw_topics = [(name, d) for name, d in sorted_topics
                           if d["label_counts"]["confident_but_wrong"] > 0][:4]
         if top_cbw_topics:
-            count_desc = (
-                f"{top_cbw_topics[0][1]['label_counts']['confident_but_wrong']} "
-                "confident-but-wrong reflection(s) on the top topic"
-                if len(top_cbw_topics) == 1
-                else (
-                    f"between {top_cbw_topics[-1][1]['label_counts']['confident_but_wrong']} and "
-                    f"{top_cbw_topics[0][1]['label_counts']['confident_but_wrong']} "
-                    "confident-but-wrong reflections each"
-                )
-            )
+            hi = top_cbw_topics[0][1]["label_counts"]["confident_but_wrong"]
+            lo = top_cbw_topics[-1][1]["label_counts"]["confident_but_wrong"]
+            if len(top_cbw_topics) == 1:
+                count_desc = f"{hi} confident-but-wrong reflection(s) on the top topic"
+            elif hi == lo:
+                count_desc = f"{hi} confident-but-wrong reflections each"
+            else:
+                count_desc = f"between {lo} and {hi} confident-but-wrong reflections each"
             names_html = ", ".join(f"<strong>{n}</strong>" for n, _ in top_cbw_topics)
             st.markdown(
                 f"""<div class="callout-card">
@@ -456,7 +454,7 @@ with tab_overview:
                 🔍 Top insight</div>
                 <div style="font-size:13px;color:#333;margin-bottom:8px;">
                 {names_html} show the highest overconfidence risk ({count_desc}).
-                Review these topics first — see Topic Details for the detected misconceptions.
+                Review these topics first. See Topic Details for the detected misconceptions.
                 </div>
                 <div style="font-size:12px;color:#555;">
                 <strong>What to do next:</strong> Start with the top-ranked topics, review
@@ -504,7 +502,7 @@ with tab_overview:
         st.caption(
             "Sorted by confident-but-wrong count. "
             "Calibration gap = avg student confidence − avg understanding. "
-            "This is a relative ranking — a topic can appear even if it only needs monitoring."
+            "This is a relative ranking. A topic can appear even if it only needs monitoring."
         )
 
         rows_html = ""
@@ -569,16 +567,16 @@ with tab_topics:
                 if uc_count >= 2:
                     st.info(
                         f"ℹ️ **{uc_count} underconfident** reflection(s) on this topic. "
-                        "These students understand the material but doubt themselves — "
-                        "reassurance and visible success will help more than reteaching.",
+                        "These students understand the material but doubt themselves. "
+                        "Reassurance and visible success will help more than reteaching.",
                         icon=None,
                     )
 
                 if cbw_count > 0:
-                    st.markdown("**Confident but wrong — detected misconceptions:**")
+                    st.markdown("**Confident but wrong: detected misconceptions**")
                     for item in cbw_by_topic.get(topic_name, []):
                         misconception = item["misconception"]
-                        display = misconception if misconception.lower() != "none" else "—"
+                        display = misconception if misconception.lower() != "none" else "(none)"
                         st.markdown(f"- `{item['nickname']}` · *{display}*")
                 else:
                     st.success("No confident-but-wrong reflections on this topic.")
@@ -639,12 +637,12 @@ with tab_evidence:
         About this panel</div>
         <div style="font-size:13px;color:#333;">
         Compares computed labels against simulated ground truth. The most important metric is
-        <strong>confident-but-wrong recall</strong> — the tool is designed to catch students
-        who are confident but mistaken. Missing a CBW case (low recall) is a more serious
+        <strong>confident-but-wrong recall</strong>, because the tool is designed to catch
+        students who are confident but mistaken. Missing a CBW case (low recall) is a more serious
         failure than a false positive.
         </div></div>""", unsafe_allow_html=True)
 
-        st.markdown("**Confusion matrix** — rows: ground truth · columns: computed label")
+        st.markdown("**Confusion matrix** (rows: ground truth, columns: computed label)")
 
         matrix: dict[str, dict[str, int]] = {l: {l2: 0 for l2 in ALL_LABELS} for l in ALL_LABELS}
         unknown_gt, unknown_pred = set(), set()
@@ -667,7 +665,7 @@ with tab_evidence:
 
         if unknown_gt or unknown_pred:
             st.warning(
-                f"Unrecognized labels skipped — ground truth: {unknown_gt or 'none'} · "
+                f"Unrecognized labels skipped. Ground truth: {unknown_gt or 'none'}, "
                 f"computed: {unknown_pred or 'none'}"
             )
 
@@ -714,8 +712,8 @@ with tab_robustness:
                 adv_results.append({
                     "Topic":          case["topic_name"],
                     "Reflection":     case["reflection_text"],
-                    "Understanding":  "—",
-                    "Misconception":  "—",
+                    "Understanding":  "N/A",
+                    "Misconception":  "N/A",
                     "Computed label": "error",
                     "Expected label": case["expected_label"],
                     "Result":         "❌ Error",

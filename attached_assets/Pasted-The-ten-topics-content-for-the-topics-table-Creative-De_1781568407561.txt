@@ -1,0 +1,41 @@
+The ten topics (content for the topics table)
+
+Creative Destruction (Schumpeter)
+Economic progress comes from a constant churn where new innovations displace and wipe out established products and the firms built around them. The destruction of the old is the engine of growth, not a side effect, and Christensen's disruption is a modern descendant.
+Common misconceptions: people often reduce it to ordinary competition or to things simply changing over time. Others treat the destruction as a regrettable cost rather than the source of progress, or assume it is the same thing as Christensen's disruptive innovation rather than the broader idea behind it.
+
+The Creative Force (Basadur)
+This is the human side of where technology comes from. It centers on the creative mindset behind innovation, like reframing the problem and blending knowledge across disciplines, and on Basadur's Creative Problem Solving model, which treats creativity as a deliberate, learnable process that runs from defining a problem through to implementing a solution. It also stresses Personal Initiative, the self-starting and proactive behavior that carries ideas into practice. Creativity here is a skill that can be built, not a gift a few people are born with.
+Common misconceptions: many believe creativity is an inborn talent rather than a trainable process and mindset. Some treat it as only idea generation and skip problem finding and implementation, or they overlook Personal Initiative, the proactive behavior that actually moves an idea forward.
+
+Technology Creation (Brian Arthur)
+From Arthur's The Nature of Technology. All technologies are combinations of existing technologies, and each new technology becomes a building block for the next, so technology evolves by recombining itself, which Arthur calls combinatorial evolution. A technology also works by capturing a natural phenomenon and harnessing it to a human purpose.
+Common misconceptions: people picture technology as lone-genius invention from scratch rather than recombination of existing parts. Some treat combination as trivial copying instead of the core creative act, or miss that technologies build recursively on each other over time.
+
+Displacement of Concepts (Schon)
+New concepts form by carrying an old concept from a familiar setting into a new one as a metaphor, then elaborating and correcting it to fit, through the phases Schon calls transposition, interpretation, correction, and spelling out. The old theory acts as a symbol or projective model for the new situation, not something applied to it literally.
+Common misconceptions: the big one is confusing this with plain analogy. Schon separates intelligent projection, where the old theory is restructured to fit the new situation, from the unintelligent use of analogy, where it is carried over unchanged. People also treat the metaphor as decoration rather than the engine that produces the new concept, or treat the new idea as the finish line rather than the start of hard development work.
+
+Adopt-Transform-Apply (Fortino and Cozzolino)
+A method for innovation by imitation, which some of your course materials also call Lift-Shift-Drop. Rather than inventing from scratch, you scan other industries for a good idea, adopt or lift it, transform or shift it to your own context, then apply or drop it by working out the implementation and the business case. The apply step is the most work-intensive, because that is where feasibility is actually proven.
+Common misconceptions: people mistake it for copying or plagiarism rather than transforming an idea for a new context. Some skip the transform step and lift the idea unchanged, or underestimate apply, which is the hardest part rather than a formality.
+
+Invention, Innovation, and Entrepreneurship
+Three distinct stages. Invention is crafting something new through research and experimentation. Innovation is applying that invention to create something useful that people adopt and that adds value. Entrepreneurship is turning the innovation into a profitable business venture that scales. An invention that no one uses is not yet an innovation, because society benefits only once innovation happens, not from invention alone.
+Common misconceptions: people use the three terms as synonyms, or believe an invention by itself already counts as an innovation. Others assume innovation always needs a brand-new invention, when it often recombines what already exists, or treat the inventor and the entrepreneur as the same role.
+
+Diffusion of Innovation (Rogers)
+How an innovation spreads through a population over time, tracing an S-shaped curve across five adopter categories in order: innovators (venturesome), early adopters (respectable), the early majority (deliberate), the late majority (skeptical), and laggards (traditional). Adoption depends on the innovation's perceived attributes, like relative advantage, compatibility, complexity, trialability, and observability, and is shaped by change agents and opinion leaders, not by the technology alone.
+Common misconceptions: the frequent error is getting the order wrong, for example placing the early majority right after the innovators and skipping the early adopters. People also reduce diffusion to marketing, or assume spread depends only on the technology rather than on usefulness, visibility, trust, and the messenger.
+
+Crossing the Chasm (Moore)
+Moore's extension of the diffusion curve. There is a chasm, a dangerous gap, between the early adopters and the early majority, because early adopters are visionaries who tolerate risk while the early majority are pragmatists who wait for proof and a complete, reliable product. Many technologies stall there, and crossing usually takes a focused beachhead market and sharp messaging around a compelling use.
+Common misconceptions: people put the chasm at the wrong place on Rogers' curve instead of between the early adopters and the early majority. Some assume every technology eventually crosses, or treat Moore's chasm as the same thing as Rogers' overall curve rather than the specific hardest gap within it.
+
+User-Led Adoption (Von Hippel)
+Eric von Hippel's idea that innovation is often driven by users themselves, not by manufacturers or suppliers. Users identify their own unmet needs and build solutions, and the most important of these come from lead users, who hit those needs ahead of the general market and innovate out of necessity. Emerging technologies like open-source software and 3D printing make this user-driven innovation faster and more widespread, and firms benefit by spotting and absorbing what users have already built.
+Common misconceptions: people reduce it to ordinary customer feedback or surveys, rather than users actually creating the innovations. Some think innovation only comes from manufacturers and R&D departments, or they confuse lead users with ordinary early adopters, when lead users are the ones inventing solutions ahead of the market, not just buying early.
+
+Technology Classification and Adoption Strategy (Fortino)
+Fortino's method for classifying a technology by how mature its adoption is, laid over Rogers' curve. Bleeding edge is the newest and riskiest, worth piloting only. Leading edge has proven itself enough to invest in and roll out widely. Trailing edge is past its useful peak and ready to retire. A technology manager keeps a balanced portfolio, mostly leading edge with smaller amounts of bleeding and trailing edge, and usually waits for a technology to cross the chasm before committing to it.
+Common misconceptions: people mix up the edges, for example treating bleeding edge as the safe choice to roll out widely when it is the riskiest and only worth piloting. Some forget the portfolio should be weighted toward leading edge, or they assume every new technology is worth adopting rather than classifying it first by maturity.

@@ -2,10 +2,6 @@ import random
 import streamlit as st
 from db import get_topics, save_reflection
 
-if not st.session_state.get("authenticated"):
-    st.warning("Please log in from the home page.")
-    st.stop()
-
 _ADJECTIVES = [
     "Amber", "Birch", "Cobalt", "Dusk", "Ember", "Fern", "Glacier", "Hazel",
     "Indigo", "Juniper", "Kelp", "Linden", "Maple", "Nova", "Obsidian",

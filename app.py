@@ -9,5 +9,10 @@ st.set_page_config(
     layout="wide",
 )
 
-st.title("🎯 Calibration Detector")
-st.markdown("Use the sidebar to navigate between pages.")
+pg = st.navigation([
+    st.Page("home.py",                                   title="Home",                      icon="🎯"),
+    st.Page("pages/1_Student_Reflection.py",             title="Student Reflection",         icon="✏️"),
+    st.Page("pages/2_Faculty_Dashboard.py",              title="Faculty Dashboard",          icon="📊"),
+    st.Page("pages/3_About_and_Responsible_Use.py",      title="About & Responsible Use",    icon="ℹ️"),
+])
+pg.run()

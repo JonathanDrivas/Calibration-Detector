@@ -12,12 +12,6 @@ from db import (
 )
 from ai import analyze_reflection, compute_label
 
-st.set_page_config(
-    page_title="Faculty Dashboard — Calibration Detector",
-    page_icon="📊",
-    layout="wide",
-)
-
 # ── NYU Violet theme ──────────────────────────────────────────────────────────
 st.markdown("""
 <style>
@@ -105,6 +99,31 @@ st.markdown("""
 }
 .ev-value { font-size: 32px; font-weight: 800; line-height: 1.1; }
 .ev-label { font-size: 12px; color: #666; margin-top: 4px; }
+
+/* ── Sidebar: active page link → NYU Violet ──────────────────── */
+[data-testid="stSidebarNav"] a[aria-current="page"] {
+    color: #57068C !important;
+    background-color: rgba(87,6,140,0.07) !important;
+    font-weight: 700 !important;
+    border-right: 3px solid #57068C !important;
+    border-radius: 0 !important;
+}
+[data-testid="stSidebarNav"] a[aria-current="page"] span {
+    color: #57068C !important;
+}
+
+/* ── Section subheaders → NYU Violet ────────────────────────── */
+[data-testid="stSubheader"] > div > div > p,
+[data-testid="stSubheader"] {
+    color: #57068C !important;
+}
+
+/* ── Vertical breathing room ─────────────────────────────────── */
+[data-testid="stSubheader"] {
+    margin-top: 1.5rem !important;
+}
+.callout-card { margin-top: 1rem !important; margin-bottom: 1rem !important; }
+[data-testid="stCaption"] { margin-bottom: 0.75rem !important; }
 </style>
 """, unsafe_allow_html=True)
 
@@ -118,6 +137,47 @@ Faculty Dashboard</div>
 Confidence vs. demonstrated understanding across student reflections.</div>
 </div>
 """, unsafe_allow_html=True)
+
+# ── Heatmap helper ────────────────────────────────────────────────────────────
+def _heatmap_html(cm_df: pd.DataFrame, labels: list) -> str:
+    """Render a confusion matrix as a colour-coded HTML table (no matplotlib)."""
+    def cell_style(v: int, is_diag: bool) -> str:
+        if is_diag:
+            return "background:#dcfce7;color:#166534"
+        if v == 0:
+            return "background:#f9fafa;color:#ccc"
+        if v <= 2:
+            return "background:#fee2e2;color:#991b1b"
+        if v <= 4:
+            return "background:#fca5a5;color:#7f1d1d"
+        return "background:#f87171;color:#7f1d1d"
+
+    th = "padding:10px 14px;font-size:12px;font-weight:600;color:#555;border:1px solid #e5e7eb;background:#f9fafb;white-space:nowrap;text-align:center;"
+    td_label = "padding:10px 14px;font-size:12px;font-weight:600;color:#555;white-space:nowrap;border:1px solid #e5e7eb;background:#f9fafb;"
+    corner = "padding:10px 14px;font-size:11px;font-weight:600;color:#888;border:1px solid #e5e7eb;background:#f0f0f4;white-space:nowrap;"
+
+    head = "".join(f'<th style="{th}">{c}</th>' for c in labels)
+    rows = []
+    for r in labels:
+        cells = []
+        for c in labels:
+            v = int(cm_df.loc[r, c])
+            style = cell_style(v, r == c)
+            cells.append(
+                f'<td style="{style};text-align:center;padding:10px 14px;'
+                f'font-weight:700;font-size:15px;border:1px solid #e5e7eb;">{v}</td>'
+            )
+        rows.append(
+            f'<tr><td style="{td_label}">{r}</td>{"".join(cells)}</tr>'
+        )
+    return (
+        f'<div style="overflow-x:auto;margin:8px 0 16px 0;">'
+        f'<table style="border-collapse:collapse;font-family:sans-serif;">'
+        f'<thead><tr><th style="{corner}">ground truth \\ computed</th>{head}</tr></thead>'
+        f'<tbody>{"".join(rows)}</tbody>'
+        f'</table></div>'
+    )
+
 
 # ── Constants ─────────────────────────────────────────────────────────────────
 ALL_LABELS = ["understands", "underconfident", "partial", "knows_confused", "confident_but_wrong"]
@@ -661,7 +721,7 @@ with tab_evidence:
             .fillna(0).astype(int)
         )
         cm_df.index.name = "ground truth \\ computed"
-        st.dataframe(cm_df, use_container_width=True)
+        st.markdown(_heatmap_html(cm_df, ALL_LABELS), unsafe_allow_html=True)
 
         if unknown_gt or unknown_pred:
             st.warning(

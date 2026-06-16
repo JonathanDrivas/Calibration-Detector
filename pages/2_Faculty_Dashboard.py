@@ -331,3 +331,132 @@ if unknown_gt or unknown_pred:
         f"Unrecognized labels skipped — ground truth: {unknown_gt or 'none'} · "
         f"computed: {unknown_pred or 'none'}"
     )
+
+st.divider()
+
+# ── Adversarial Robustness Check ─────────────────────────────────────────────
+st.subheader("Adversarial Robustness Check")
+st.caption(
+    "Six built-in reflections that sound confident and use course keywords but contain "
+    "weak or wrong understanding. All have student confidence = 5. "
+    "Pass means the model correctly labels them **confident_but_wrong**. "
+    "These cases are never saved to the database and do not affect any other metric."
+)
+
+ADVERSARIAL_CASES = [
+    {
+        "topic_name": "Crossing the Chasm",
+        "reflection_text": (
+            "I completely understand Crossing the Chasm. It is basically when an innovation "
+            "moves smoothly from innovators straight into the early majority because the market "
+            "naturally catches up once the product is exciting enough. The chasm is just another "
+            "name for the full Rogers adoption curve."
+        ),
+        "student_confidence": 5,
+        "expected_label": "confident_but_wrong",
+    },
+    {
+        "topic_name": "Diffusion of Innovation",
+        "reflection_text": (
+            "Diffusion of Innovation is simple. The order is innovators, early majority, early "
+            "adopters, late majority, and laggards. If the technology is good, people will adopt "
+            "it automatically because the product itself controls the spread."
+        ),
+        "student_confidence": 5,
+        "expected_label": "confident_but_wrong",
+    },
+    {
+        "topic_name": "User-Led Adoption",
+        "reflection_text": (
+            "User-Led Adoption means companies listen to customer feedback, run surveys, and then "
+            "their R&D teams build products for users. Lead users are basically the same as early "
+            "adopters because they buy the product first and tell others about it."
+        ),
+        "student_confidence": 5,
+        "expected_label": "confident_but_wrong",
+    },
+    {
+        "topic_name": "Technology Creation",
+        "reflection_text": (
+            "Technology Creation is when a genius inventor creates something completely original "
+            "from scratch. Recombination is mostly copying existing tools, so real technology "
+            "creation happens when someone invents a brand-new idea no one has ever built from before."
+        ),
+        "student_confidence": 5,
+        "expected_label": "confident_but_wrong",
+    },
+    {
+        "topic_name": "Creative Destruction",
+        "reflection_text": (
+            "Creative Destruction means companies compete harder and lower prices until weaker "
+            "businesses disappear. The destruction is an unfortunate side effect of competition, "
+            "but the real growth comes from normal market rivalry and better marketing."
+        ),
+        "student_confidence": 5,
+        "expected_label": "confident_but_wrong",
+    },
+    {
+        "topic_name": "Adopt-Transform-Apply",
+        "reflection_text": (
+            "Adopt-Transform-Apply means finding a successful idea in another company and copying "
+            "it into your own business as quickly as possible. The apply step is mostly just "
+            "launching it, because the hard part is finding the idea in the first place."
+        ),
+        "student_confidence": 5,
+        "expected_label": "confident_but_wrong",
+    },
+]
+
+if st.button("Run adversarial robustness check", type="primary"):
+    adv_progress = st.progress(0, text="Starting…")
+    adv_results = []
+    adv_errors = []
+
+    for i, case in enumerate(ADVERSARIAL_CASES):
+        topic = get_topic_info(case["topic_name"])
+        try:
+            analysis = analyze_reflection(
+                reflection_text=case["reflection_text"],
+                topic_description=topic["description"] if topic else "",
+                topic_misconceptions=topic["misconceptions"] if topic else "",
+            )
+            computed = compute_label(
+                understanding=analysis["understanding"],
+                confidence=case["student_confidence"],
+            )
+            passed = computed == case["expected_label"]
+            adv_results.append({
+                "Topic": case["topic_name"],
+                "Reflection": case["reflection_text"],
+                "Understanding": analysis["understanding"],
+                "Misconception": analysis["misconception"],
+                "Computed label": computed,
+                "Expected label": case["expected_label"],
+                "Result": "✅ Pass" if passed else "❌ Fail",
+            })
+        except Exception as e:
+            adv_errors.append(f"{case['topic_name']}: {e}")
+            adv_results.append({
+                "Topic": case["topic_name"],
+                "Reflection": case["reflection_text"],
+                "Understanding": "—",
+                "Misconception": "—",
+                "Computed label": "error",
+                "Expected label": case["expected_label"],
+                "Result": "❌ Error",
+            })
+        adv_progress.progress(
+            (i + 1) / len(ADVERSARIAL_CASES),
+            text=f"Checked {i + 1} of {len(ADVERSARIAL_CASES)}",
+        )
+
+    adv_progress.empty()
+
+    if adv_errors:
+        st.warning("Errors during check:\n" + "\n".join(adv_errors))
+
+    passes = sum(1 for r in adv_results if r["Result"].startswith("✅"))
+    st.metric("Robustness pass rate", f"{passes}/{len(ADVERSARIAL_CASES)}")
+
+    adv_df = pd.DataFrame(adv_results)
+    st.dataframe(adv_df, use_container_width=True, hide_index=True)

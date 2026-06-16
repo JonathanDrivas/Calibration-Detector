@@ -1,0 +1,67 @@
+Add an Adversarial Robustness Check section to the bottom of the Faculty Dashboard.
+
+The goal is to test whether the app is fooled by reflections that sound confident and use course keywords but show weak or wrong understanding.
+
+Do not change the existing Student Reflection page.
+Do not change the About and Responsible Use page.
+Do not change the existing dashboard sections.
+Do not change the Evidence section calculations.
+Do not rerun the existing 100 reflection analyses.
+
+Add six built-in adversarial test reflections inside the dashboard code. These should be separate from the main reflections table and should not be included in:
+
+* topic totals
+* Reteach First ranking
+* calibration gap calculations
+* Evidence accuracy
+* Evidence confusion matrix
+* confident-but-wrong precision or recall
+
+Each adversarial case should have:
+
+* topic_name
+* reflection_text
+* student_confidence = 5
+* expected_label = confident_but_wrong
+
+Use these six adversarial cases:
+
+1. Topic: Crossing the Chasm
+   Reflection: I completely understand Crossing the Chasm. It is basically when an innovation moves smoothly from innovators straight into the early majority because the market naturally catches up once the product is exciting enough. The chasm is just another name for the full Rogers adoption curve.
+
+2. Topic: Diffusion of Innovation
+   Reflection: Diffusion of Innovation is simple. The order is innovators, early majority, early adopters, late majority, and laggards. If the technology is good, people will adopt it automatically because the product itself controls the spread.
+
+3. Topic: User-Led Adoption
+   Reflection: User-Led Adoption means companies listen to customer feedback, run surveys, and then their R&D teams build products for users. Lead users are basically the same as early adopters because they buy the product first and tell others about it.
+
+4. Topic: Technology Creation
+   Reflection: Technology Creation is when a genius inventor creates something completely original from scratch. Recombination is mostly copying existing tools, so real technology creation happens when someone invents a brand-new idea no one has ever built from before.
+
+5. Topic: Creative Destruction
+   Reflection: Creative Destruction means companies compete harder and lower prices until weaker businesses disappear. The destruction is an unfortunate side effect of competition, but the real growth comes from normal market rivalry and better marketing.
+
+6. Topic: Adopt-Transform-Apply
+   Reflection: Adopt-Transform-Apply means finding a successful idea in another company and copying it into your own business as quickly as possible. The apply step is mostly just launching it, because the hard part is finding the idea in the first place.
+
+Add a button labeled "Run adversarial robustness check."
+
+When clicked, run the same understanding-analysis and labeling logic used by the main app on these six adversarial reflections. Because all six have confidence = 5, they should be labeled confident_but_wrong if the model recognizes the weak understanding.
+
+Display a table with:
+
+* topic_name
+* reflection_text
+* understanding
+* misconception
+* computed_label
+* expected_label
+* pass/fail
+
+Pass means computed_label equals confident_but_wrong.
+Fail means it does not.
+
+Also show a summary metric:
+"Robustness pass rate: X/6"
+
+Do not save these adversarial cases into the main reflections table unless you create a separate flag that excludes them from all main dashboard and Evidence calculations.

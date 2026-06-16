@@ -1,0 +1,101 @@
+topic_name,reflection_text,student_confidence,ground_truth_label
+"Creative Destruction","Creative destruction finally clicked. Schumpeter's point is that growth comes from the new wiping out the old, like streaming killing DVD rental. The destruction is the engine, not a side effect.",5,understands
+"Creative Destruction","The smartphone is the clearest case for me. It destroyed cameras, GPS units, and music players at once, and that churn is exactly what Schumpeter meant by progress.",4,understands
+"Creative Destruction","I've got this. Creative destruction just means healthy competition where the better product wins on price.",5,confident_but_wrong
+"Creative Destruction","Creative destruction is the same thing as Christensen's disruptive innovation, just a different name for it. Easy.",4,confident_but_wrong
+"Creative Destruction","I think creative destruction is the idea that new innovations replace and wipe out the old firms and industries, and that churn is what actually drives the economy forward, but I am probably not explaining it right.",2,underconfident
+"Creative Destruction","I might be wrong, but I believe Schumpeter saw the destruction of old industries as the necessary engine of capitalist growth rather than a problem to avoid. Not sure that is correct.",1,underconfident
+"Creative Destruction","I'm not totally sure I understand creative destruction. I get that things change but I can't say what makes it Schumpeter's idea and not just normal business.",1,knows_confused
+"Creative Destruction","Creative destruction is still fuzzy. How is it different from regular competition? I keep reading it and it isn't landing.",2,knows_confused
+"Creative Destruction","I understand creative destruction is the new replacing the old. So a company cutting prices to beat a rival is a good example of it.",3,partial
+"Creative Destruction","Creative destruction means innovation destroys old industries. So a store clearing out old stock in a big sale is it at work.",3,partial
+"The Creative Force","The creative force makes sense now. Basadur treats creativity as a trainable process from finding the problem through to implementing the fix, and Personal Initiative is the proactive push that moves an idea into practice.",5,understands
+"The Creative Force","What stuck is that creativity here includes problem finding, not just ideas, and that self-starting behavior matters as much as the insight itself.",4,understands
+"The Creative Force","I fully understand it. The creative force means creativity is an inborn talent, so you just hire the naturally creative people.",5,confident_but_wrong
+"The Creative Force","The creative force is just generating as many ideas as possible. That is the whole process.",4,confident_but_wrong
+"The Creative Force","I think Basadur frames creativity as a deliberate process you can learn, starting with defining the right problem, and that Personal Initiative is the proactive behavior that carries ideas forward, but I doubt I have it right.",2,underconfident
+"The Creative Force","Not confident here, but I believe the point is that creativity is a skill an organization can build through a structured process, not a gift, and that proactive self-starters drive it. Probably oversimplifying.",1,underconfident
+"The Creative Force","I'm a bit lost on the creative force. Basadur's stages blur together and I can't tell where idea generation ends and implementation starts.",1,knows_confused
+"The Creative Force","Honestly I don't fully get the creative problem solving process. I can list steps but couldn't explain why it is a process.",2,knows_confused
+"The Creative Force","I understand Basadur sees creativity as a process. So the main thing a team needs is a good brainstorming session for lots of ideas.",3,partial
+"The Creative Force","The creative force is a structured process. So I'd apply it by jumping straight to generating solutions for the problem we were handed.",3,partial
+"Technology Creation","Arthur's idea landed. All technologies are combinations of existing technologies, and each new one becomes a building block for the next, so technology evolves out of itself.",5,understands
+"Technology Creation","A technology works by harnessing a phenomenon for a purpose. A jet engine harnesses combustion and airflow toward thrust, which is exactly Arthur's point.",4,understands
+"Technology Creation","I've got Arthur down. His main point is that real breakthroughs come from a single inventor creating something entirely from scratch.",5,confident_but_wrong
+"Technology Creation","Technology creation is clear. Arthur says combining existing technologies is just imitation, and true technology has to be wholly original.",4,confident_but_wrong
+"Technology Creation","I think Arthur's view is that new technologies are recombinations of existing ones and that each becomes a part for building further technologies, which he calls combinatorial evolution, but I am not sure I am using the term right.",2,underconfident
+"Technology Creation","Might be off, but I believe technology creates itself out of itself by combining prior building blocks and harnessing natural phenomena for a purpose. Not confident that is accurate.",1,underconfident
+"Technology Creation","I'm not sure I follow Arthur. The idea that technology creates itself out of itself is confusing me and I can't picture it in practice.",1,knows_confused
+"Technology Creation","Arthur's combinatorial evolution is still unclear. I can repeat the phrase but couldn't give a real example.",2,knows_confused
+"Technology Creation","I understand Arthur says technologies are combinations. So the GPS in a phone is just the phone company copying GPS into the device.",3,partial
+"Technology Creation","Technology is combinations of existing parts. So assembling a pre-built kit from instructions is a clear case of technology creation.",3,partial
+"Displacement of Concepts","Schon's displacement of concepts made sense once I saw it as borrowing an old concept as a metaphor for a new situation, then reshaping it until it fits. The metaphor does real work.",5,understands
+"Displacement of Concepts","For Schon the old theory is a projective model for the new situation, not applied literally. You transpose it and then correct it as it meets the new context.",4,understands
+"Displacement of Concepts","I've got Schon. Displacement of concepts is just another term for analogy, where you carry an old idea to a new case unchanged.",5,confident_but_wrong
+"Displacement of Concepts","Displacement of concepts is clear. Once you have the metaphor, the new concept is finished and there is no more work to do.",4,confident_but_wrong
+"Displacement of Concepts","I think the idea is that new concepts form by carrying a familiar concept into a new situation as a metaphor and then elaborating and correcting it, and that this is different from just mapping it over unchanged, but I am probably not stating it well.",2,underconfident
+"Displacement of Concepts","Not sure I am right, but I believe Schon distinguishes intelligent projection, where the old theory is restructured for the new situation, from the unintelligent use of analogy. Likely missing something.",1,underconfident
+"Displacement of Concepts","I'm struggling with displacement of concepts. The four phases all sound similar and I can't keep transposition and interpretation straight.",1,knows_confused
+"Displacement of Concepts","Schon's theory is hard for me. I don't see how this differs from just using a metaphor and I'm not confident explaining it.",2,knows_confused
+"Displacement of Concepts","I understand displacement is using an old concept for a new situation. So treating the brain as exactly like a computer in every way is a good displacement.",3,partial
+"Displacement of Concepts","Schon's idea is carrying a concept to a new situation. So I'd apply it by finding any two things that look alike and noting the similarity.",3,partial
+"Adopt-Transform-Apply","ATA makes sense. You scan other industries, adopt a good idea, transform it to your context, then apply it by working out the implementation. It is innovation by imitation done deliberately.",5,understands
+"Adopt-Transform-Apply","What I took is that apply is the hardest step, because that is where you prove feasibility and build the business case, not just have the idea.",4,understands
+"Adopt-Transform-Apply","I've got ATA. It basically means copying what a competitor in your own industry is already doing successfully.",5,confident_but_wrong
+"Adopt-Transform-Apply","Adopt-transform-apply is clear. The whole point is inventing a brand-new idea no other industry has used.",4,confident_but_wrong
+"Adopt-Transform-Apply","I think ATA means scanning other industries, lifting an idea, adapting it to your own context, and then doing the hard work of applying it, with apply being the most work, but I doubt I have it exactly right.",2,underconfident
+"Adopt-Transform-Apply","Could be wrong, but I believe the transform step is what separates ATA from plain copying, since you reshape the borrowed idea for a new setting. Not confident.",1,underconfident
+"Adopt-Transform-Apply","I'm not sure I get ATA. I understand adopt and apply but can't tell what the transform step looks like.",1,knows_confused
+"Adopt-Transform-Apply","The adopt-transform-apply method confuses me. How is it different from just stealing an idea from another company? I can't articulate it.",2,knows_confused
+"Adopt-Transform-Apply","I understand ATA is borrowing ideas from other industries. So I'd adopt an idea and put it straight into our context without much change.",3,partial
+"Adopt-Transform-Apply","ATA means adopt, transform, apply. So the work is mostly in the adopt step, finding the idea, and the rest follows easily.",3,partial
+"Invention, Innovation, and Entrepreneurship","The three separated for me. Invention is crafting something new, innovation is applying it so people adopt it and it adds value, and entrepreneurship is turning that into a profitable venture that scales.",5,understands
+"Invention, Innovation, and Entrepreneurship","An invention nobody adopts isn't yet an innovation. Society benefits only once innovation happens, not from invention alone.",4,understands
+"Invention, Innovation, and Entrepreneurship","I've got this. Invention and innovation are basically the same thing, two words for creating something new.",5,confident_but_wrong
+"Invention, Innovation, and Entrepreneurship","It's clear. Innovation always requires a brand-new invention first, you can't innovate with existing technology.",4,confident_but_wrong
+"Invention, Innovation, and Entrepreneurship","I think invention is creating something new, innovation is putting it into valuable use that people adopt, and entrepreneurship is building the profitable business around it, but I am probably not drawing the lines cleanly.",2,underconfident
+"Invention, Innovation, and Entrepreneurship","Might have this wrong, but I believe the key distinction is that an invention only becomes an innovation once it is actually used and adds value. Not sure.",1,underconfident
+"Invention, Innovation, and Entrepreneurship","I keep mixing up invention and innovation. I know they're different but can't reliably explain the line.",1,knows_confused
+"Invention, Innovation, and Entrepreneurship","I'm unsure where entrepreneurship fits with invention and innovation. The three feel like the same thing right now.",2,knows_confused
+"Invention, Innovation, and Entrepreneurship","I understand invention is new and innovation is adoption. So as soon as someone patents a device, that counts as an innovation.",3,partial
+"Invention, Innovation, and Entrepreneurship","Innovation means turning an invention into use. So any new product a company designs is automatically an innovation.",3,partial
+"Diffusion of Innovation","Rogers' curve makes sense. Adoption spreads in an S-curve through innovators, early adopters, early majority, late majority, and laggards, in that order, each adopting for different reasons.",5,understands
+"Diffusion of Innovation","Diffusion isn't just the technology. Relative advantage, compatibility, complexity, trialability, and observability all shape whether something spreads.",4,understands
+"Diffusion of Innovation","I've got Rogers. The order goes innovators, then the early majority right after them, then early adopters.",5,confident_but_wrong
+"Diffusion of Innovation","It's clear. The early majority is the most venturesome, risk-taking group, the first to jump on anything new.",4,confident_but_wrong
+"Diffusion of Innovation","I think the adopter order is innovators, then early adopters, then early majority, late majority, and laggards, and that adoption depends on perceived attributes and the influence of opinion leaders, but I am not confident on the details.",2,underconfident
+"Diffusion of Innovation","Probably overthinking, but I believe diffusion depends on usefulness, visibility, and trust as much as the technology, and that change agents and opinion leaders drive it. Could be wrong.",1,underconfident
+"Diffusion of Innovation","I can name Rogers' categories but I'm not confident on the order, especially where early adopters sit relative to the majority.",1,knows_confused
+"Diffusion of Innovation","Diffusion is a bit unclear. I'm not sure what actually drives a technology from one adopter group to the next.",2,knows_confused
+"Diffusion of Innovation","I understand Rogers' categories. So to spread a product, the strategy is just to advertise heavily to everyone at once.",3,partial
+"Diffusion of Innovation","Diffusion follows the adopter curve. So I'd treat laggards the same as innovators since they all eventually adopt.",3,partial
+"Crossing the Chasm","Moore's chasm makes sense. It is the gap between early adopters and the early majority, where many technologies stall because pragmatists want proof and a complete product before they buy.",5,understands
+"Crossing the Chasm","Crossing usually means picking a focused beachhead market and nailing the messaging, rather than trying to win everyone at once.",4,understands
+"Crossing the Chasm","I've got the chasm. It sits right after the innovators, so the early majority is the group just past them.",5,confident_but_wrong
+"Crossing the Chasm","Crossing the chasm is clear. It is the gap between the late majority and the laggards at the end of the curve.",4,confident_but_wrong
+"Crossing the Chasm","I think the chasm is the gap between the early adopters and the early majority, caused by visionaries tolerating risk while pragmatists wait for proof, but I am not sure I have the placement right.",2,underconfident
+"Crossing the Chasm","Might be wrong, but I believe not every technology crosses the chasm, and crossing usually takes a focused beachhead and strong messaging. Not confident.",1,underconfident
+"Crossing the Chasm","I'm not sure where the chasm sits on Rogers' curve. I know it's a gap but couldn't say which two groups it falls between.",1,knows_confused
+"Crossing the Chasm","Crossing the chasm is hazy. I don't get why a technology early adopters love would stall out.",2,knows_confused
+"Crossing the Chasm","I understand the chasm is a gap in the curve. So the way across is just to lower the price until the mainstream buys.",3,partial
+"Crossing the Chasm","The chasm is between early adopters and the early majority. So once you have any early adopters, crossing happens on its own.",3,partial
+"User-Led Adoption","User-led innovation clicked. Von Hippel's point is that users themselves, especially lead users who hit needs ahead of the market, create innovations, not just manufacturers.",5,understands
+"User-Led Adoption","Open-source software and 3D printing let everyday users build and share solutions, so innovation doesn't have to start in a company's R&D lab.",4,understands
+"User-Led Adoption","I've got Von Hippel. User-led innovation just means manufacturers doing better market research before they build.",5,confident_but_wrong
+"User-Led Adoption","It's clear. A lead user is just someone who buys the product early, the same as an early adopter on the curve.",4,confident_but_wrong
+"User-Led Adoption","I think Von Hippel argues that users, especially lead users facing needs before the market, develop their own solutions, and that firms gain by absorbing what users already built, but I'm probably not framing it precisely.",2,underconfident
+"User-Led Adoption","Could be off, but I believe lead users innovate out of necessity ahead of the general market, which is different from ordinary early adopters who just buy early. Not sure.",1,underconfident
+"User-Led Adoption","I'm not fully clear on user-led innovation. I get that users matter but can't explain what makes a lead user different from any customer.",1,knows_confused
+"User-Led Adoption","Von Hippel's idea is fuzzy. How is user-led innovation different from a company listening to customer feedback? I'm not sure.",2,knows_confused
+"User-Led Adoption","I understand user-led innovation is users driving it. So a company running a customer survey about desired features is a good example.",3,partial
+"User-Led Adoption","User-led innovation means users help innovate. So collecting product reviews and complaints is the main way it works.",3,partial
+"Technology Classification and Adoption Strategy","Fortino's classification makes sense. You sort a technology by adoption maturity: bleeding edge for the newest and riskiest, leading edge for what is proven enough to roll out, trailing edge for what is ready to retire.",5,understands
+"Technology Classification and Adoption Strategy","The portfolio idea landed. You keep mostly leading edge with smaller amounts of bleeding and trailing edge, and usually wait for something to cross the chasm before betting big.",4,understands
+"Technology Classification and Adoption Strategy","I've got this. Bleeding edge is the safest, most proven category, so that is what you roll out across the whole company.",5,confident_but_wrong
+"Technology Classification and Adoption Strategy","It's clear. Trailing edge is the newest technology you adopt first, and bleeding edge is the old stuff you retire.",4,confident_but_wrong
+"Technology Classification and Adoption Strategy","I think you classify a technology by how mature its adoption is and hold a balanced portfolio weighted toward leading edge, piloting bleeding edge and retiring trailing edge, but I'm not confident on the mix.",2,underconfident
+"Technology Classification and Adoption Strategy","Might be wrong, but I believe bleeding edge is the riskiest and only worth piloting, while leading edge is what you invest in heavily. Not sure I have the strategy right.",1,underconfident
+"Technology Classification and Adoption Strategy","I'm not sure I understand the edge classification. I can name bleeding, leading, and trailing edge but couldn't say which to invest the most in.",1,knows_confused
+"Technology Classification and Adoption Strategy","Fortino's portfolio idea confuses me. I don't get how you decide what percentage of each edge to hold.",2,knows_confused
+"Technology Classification and Adoption Strategy","I understand the tech is sorted into bleeding, leading, and trailing edge. So the goal is to always be on the bleeding edge to stay ahead.",3,partial
+"Technology Classification and Adoption Strategy","Classification means ranking tech by maturity. So I'd put most of the budget into bleeding edge since it is the newest.",3,partial

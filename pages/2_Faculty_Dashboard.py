@@ -18,7 +18,51 @@ st.set_page_config(
     layout="wide",
 )
 
-st.title("Faculty Dashboard")
+# ── NYU Violet theme ──────────────────────────────────────────────────────────
+st.markdown("""
+<style>
+/* ── Constrain content width and center ─────────────────────────── */
+.block-container {
+    max-width: 1200px !important;
+    padding-left: 2rem !important;
+    padding-right: 2rem !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+}
+
+/* ── Active tab underline → NYU Violet ──────────────────────────── */
+[data-baseweb="tab-highlight"] {
+    background-color: #57068C !important;
+}
+[data-testid="stTabs"] button[aria-selected="true"] {
+    color: #57068C !important;
+    font-weight: 700 !important;
+}
+[data-testid="stTabs"] button:hover {
+    color: #57068C !important;
+}
+
+/* ── Primary buttons → NYU Violet (keep red for alerts only) ────── */
+[data-testid="baseButton-primary"] {
+    background-color: #57068C !important;
+    border-color: #57068C !important;
+    color: #ffffff !important;
+}
+[data-testid="baseButton-primary"]:hover {
+    background-color: #3d0466 !important;
+    border-color: #3d0466 !important;
+}
+
+/* ── Section headings accent ────────────────────────────────────── */
+h2, h3 { color: #57068C !important; }
+
+/* ── Dataframe: prevent horizontal scroll by allowing cell wrap ─── */
+[data-testid="stDataFrame"] table { table-layout: auto; word-break: break-word; }
+[data-testid="stDataFrame"] td { white-space: normal !important; }
+</style>
+""", unsafe_allow_html=True)
+
+st.title("📊 Faculty Dashboard")
 
 # ── Constants ─────────────────────────────────────────────────────────────────
 ALL_LABELS = ["understands", "underconfident", "partial", "knows_confused", "confident_but_wrong"]
@@ -295,25 +339,6 @@ with tab_overview:
             st.metric("Topics with underconfidence", topics_with_uc)
             st.caption("May need reassurance, not reteaching")
 
-        # Top insight callout
-        top_cbw = [(name, d["label_counts"]["confident_but_wrong"])
-                   for name, d in sorted_topics
-                   if d["label_counts"]["confident_but_wrong"] > 0][:4]
-        if top_cbw:
-            topic_list = ", ".join(f"**{name}**" for name, _ in top_cbw)
-            count_desc = (
-                f"{top_cbw[0][1]} confident-but-wrong reflection(s) on the top topic"
-                if len(top_cbw) == 1
-                else f"between {top_cbw[-1][1]} and {top_cbw[0][1]} confident-but-wrong reflections each"
-            )
-            st.warning(
-                f"🔍 **Top insight:** {topic_list} "
-                f"show the highest overconfidence risk ({count_desc}). "
-                "Review these topics first — see Topic Details for the detected misconceptions."
-            )
-
-        st.divider()
-
         def gap_label(gap: float) -> str:
             if gap >= 1.0:  return "High overconfidence"
             if gap >= 0.5:  return "Moderate overconfidence"
@@ -326,6 +351,76 @@ with tab_overview:
             if cbw == 2:  return "🟠 Watch closely"
             if uc >= 2:   return "🔵 Reassure students"
             return "⚫ Monitor"
+
+        def action_bg(cbw: int, uc: int) -> str:
+            if cbw >= 3:  return "#ef4444"
+            if cbw == 2:  return "#f97316"
+            if uc >= 2:   return "#3b82f6"
+            return "#6b7280"
+
+        # Top insight callout
+        top_cbw_topics = [(name, d) for name, d in sorted_topics
+                          if d["label_counts"]["confident_but_wrong"] > 0][:4]
+        if top_cbw_topics:
+            topic_list = ", ".join(f"**{name}**" for name, _ in top_cbw_topics)
+            count_desc = (
+                f"{top_cbw_topics[0][1]['label_counts']['confident_but_wrong']} confident-but-wrong "
+                "reflection(s) on the top topic"
+                if len(top_cbw_topics) == 1
+                else (
+                    f"between {top_cbw_topics[-1][1]['label_counts']['confident_but_wrong']} and "
+                    f"{top_cbw_topics[0][1]['label_counts']['confident_but_wrong']} "
+                    "confident-but-wrong reflections each"
+                )
+            )
+            st.markdown(
+                f"""<div style="background:#fdf4ff;border-left:4px solid #57068C;
+                border-radius:6px;padding:14px 18px;margin:16px 0;">
+                <span style="font-size:15px;font-weight:700;color:#57068C;">🔍 Top insight</span><br>
+                <span style="font-size:14px;color:#333;">{', '.join(f'<strong>{n}</strong>' for n, _ in top_cbw_topics)}
+                show the highest overconfidence risk ({count_desc}).
+                Review these topics first — see Topic Details for the detected misconceptions.</span><br><br>
+                <span style="font-size:13px;color:#57068C;font-weight:600;">What to do next</span><br>
+                <span style="font-size:13px;color:#555;">Start with the top-ranked topics, review the detected
+                misconceptions, then decide whether students need reteaching or reassurance.</span>
+                </div>""",
+                unsafe_allow_html=True,
+            )
+
+        st.divider()
+
+        # 4 compact topic cards
+        if top_cbw_topics:
+            st.markdown(
+                "<p style='font-size:13px;color:#888;margin-bottom:8px;'>"
+                "Top topics by overconfidence risk</p>",
+                unsafe_allow_html=True,
+            )
+            card_cols = st.columns(min(len(top_cbw_topics), 4))
+            for col, (name, d) in zip(card_cols, top_cbw_topics):
+                cbw  = d["label_counts"]["confident_but_wrong"]
+                uc   = d["label_counts"]["underconfident"]
+                gap  = d["calibration_gap"]
+                bg   = action_bg(cbw, uc)
+                badge = action_badge(cbw, uc)
+                col.markdown(
+                    f"""<div style="border:2px solid #57068C;border-radius:10px;
+                    padding:14px 16px;background:#faf5ff;height:100%;">
+                    <div style="font-weight:700;font-size:13px;color:#57068C;
+                    margin-bottom:10px;line-height:1.3;">{name}</div>
+                    <div style="font-size:26px;font-weight:800;color:#ef4444;
+                    line-height:1;">{cbw}</div>
+                    <div style="font-size:11px;color:#666;margin-bottom:8px;">
+                    confident but wrong</div>
+                    <div style="font-size:12px;color:#555;margin-bottom:10px;">
+                    Gap: {gap:+.2f} · {gap_label(gap)}</div>
+                    <div style="background:{bg};color:white;border-radius:4px;
+                    padding:3px 8px;font-size:11px;font-weight:600;
+                    display:inline-block;">{badge}</div>
+                    </div>""",
+                    unsafe_allow_html=True,
+                )
+            st.markdown("<div style='margin-bottom:20px;'></div>", unsafe_allow_html=True)
 
         # Compact Reteach First table
         st.subheader("Reteach First")
@@ -436,10 +531,17 @@ with tab_evidence:
             help="Of all ground-truth confident-but-wrong reflections, this share the model caught.",
         )
 
-        st.info(
-            "The evidence panel checks whether computed labels match the simulated ground truth. "
-            "The most important metric is **confident-but-wrong recall**, because the tool is "
-            "designed to catch students who are confident but mistaken."
+        st.markdown(
+            """<div style="background:#fdf4ff;border-left:4px solid #57068C;
+            border-radius:6px;padding:14px 18px;margin:12px 0;">
+            <span style="font-size:14px;font-weight:700;color:#57068C;">
+            About this panel</span><br>
+            <span style="font-size:13px;color:#333;">
+            The evidence panel checks whether computed labels match the simulated ground truth.
+            The most important metric is <strong>confident-but-wrong recall</strong>, because
+            the tool is designed to catch students who are confident but mistaken.
+            </span></div>""",
+            unsafe_allow_html=True,
         )
 
         st.markdown("**Confusion matrix** — rows: ground truth · columns: computed label")

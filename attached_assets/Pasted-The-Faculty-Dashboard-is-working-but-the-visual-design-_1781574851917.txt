@@ -1,0 +1,64 @@
+The Faculty Dashboard is working, but the visual design still feels dry and the Overview table still requires horizontal scrolling at normal browser zoom. Please improve the UI/UX only. Do not change the database, calculations, model logic, saved results, Evidence metrics, or Robustness Check results. Do not rerun Claude/model analysis.
+
+Design goals:
+
+* Make the dashboard feel like a polished NYU class project.
+* Use NYU Violet as the main accent color: #57068C.
+* Keep semantic colors for learning outcomes:
+
+  * confident_but_wrong = red
+  * knows_confused = amber/orange
+  * underconfident = blue
+  * understands = green
+  * partial = purple/lavender
+* Do not make the entire app purple. Use violet for tabs, buttons, headings, borders, and subtle accents.
+
+Layout fixes:
+
+1. Keep Streamlit wide mode, but add a readable centered content container with a max width around 1200px or 1280px so the page does not look stretched on wide monitors.
+2. Make sure the dashboard looks good at normal 100% browser zoom.
+3. Remove horizontal scrolling from the Overview tab’s Reteach First table.
+4. Simplify the Overview Reteach First table to these columns only:
+
+   * Rank
+   * Topic
+   * Confident but wrong
+   * Gap
+   * Recommended action
+5. Use `use_container_width=True` for tables/dataframes where appropriate.
+6. If a topic name is long, allow wrapping instead of forcing horizontal scroll.
+
+Overview tab improvements:
+
+1. Change the active tab underline/accent from red to NYU Violet.
+2. Change normal action buttons to NYU Violet instead of red.
+3. Keep red only for high-risk/confident-but-wrong status.
+4. Add a short “What to do next” callout under the Top Insight:
+   “Start with the top-ranked topics, review the detected misconceptions, then decide whether students need reteaching or reassurance.”
+5. Add four compact cards for the top four Reteach First topics above the table. Each card should show:
+
+   * topic name
+   * confident-but-wrong count
+   * calibration gap
+   * recommended action badge
+6. Keep the table below the cards for full ranking detail.
+
+Topic Details tab:
+
+1. Keep the existing expandable topic cards.
+2. Use NYU Violet for section headings and subtle borders.
+3. Keep the outcome colors unchanged because they carry meaning.
+
+Evidence tab:
+
+1. Keep the same accuracy, precision, recall, and confusion matrix calculations.
+2. Make the Evidence interpretation box use a light violet/blue background and NYU Violet heading accents.
+3. Make sure the confusion matrix fits without horizontal scrolling at normal zoom.
+
+Robustness Check tab:
+
+1. Keep the same pass rate and adversarial cases.
+2. Change the run button from red to NYU Violet.
+3. Keep pass/fail indicators green/red.
+
+Do not change the Student Reflection page or About and Responsible Use page unless needed only for consistent colors.

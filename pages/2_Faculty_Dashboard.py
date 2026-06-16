@@ -442,7 +442,7 @@ with tab_overview:
             sum(d["calibration_gap"] * d["_total"] for _, d in sorted_topics) / total_analyzed
             if total_analyzed else 0
         )
-        topics_with_uc = sum(1 for _, d in sorted_topics if d["label_counts"]["underconfident"] >= 2)
+        topics_with_uc = sum(1 for _, d in sorted_topics if d["calibration_gap"] < 0)
 
         m1, m2, m3, m4 = st.columns(4)
         m1.markdown(f"""

@@ -483,19 +483,17 @@ with tab_overview:
             if gap == 0:    return "Calibrated"
             return "Underconfident"
 
-        def action_label(cbw: int, uc: int) -> str:
-            if cbw >= 3:  return "Reteach first"
-            if cbw == 2:  return "Watch closely"
-            if uc >= 2:   return "Reassure students"
+        def action_label(cbw: int, gap: float) -> str:
+            if cbw >= 3 and gap >= 0.0:   return "Reteach first"
+            if gap <= -0.3 and cbw < 3:   return "Reassure students"
             return "Monitor"
 
-        def action_chip_html(cbw: int, uc: int) -> str:
-            label = action_label(cbw, uc)
+        def action_chip_html(cbw: int, gap: float) -> str:
+            label = action_label(cbw, gap)
             styles = {
-                "Reteach first":     ("color:#b91c1c;background:#fef2f2;"),
-                "Watch closely":     ("color:#b45309;background:#fffbeb;"),
-                "Reassure students": ("color:#1d4ed8;background:#eff6ff;"),
-                "Monitor":           ("color:#6b7280;background:#f3f4f6;"),
+                "Reteach first":     "color:#b91c1c;background:#fef2f2;",
+                "Reassure students": "color:#1d4ed8;background:#eff6ff;",
+                "Monitor":           "color:#4b5563;background:#f3f4f6;",
             }
             s = styles.get(label, "color:#333;background:#f3f4f6;")
             return f'<span class="badge" style="{s}">{label}</span>'
@@ -530,10 +528,9 @@ with tab_overview:
 
             # 3 compact priority cards
             pri_topics = top_cbw_topics[:3]
-            def pri_accent(cbw: int, uc: int) -> str:
-                if cbw >= 3: return "#dc2626"
-                if cbw == 2: return "#d97706"
-                if uc >= 2:  return "#2563eb"
+            def pri_accent(cbw: int, gap: float) -> str:
+                if cbw >= 3 and gap >= 0.0: return "#dc2626"
+                if gap <= -0.3 and cbw < 3: return "#2563eb"
                 return "#6b7280"
 
             st.markdown("<div style='margin-top:16px;margin-bottom:4px;font-size:12px;"
@@ -545,8 +542,8 @@ with tab_overview:
                 cbw  = d["label_counts"]["confident_but_wrong"]
                 uc   = d["label_counts"]["underconfident"]
                 gap  = d["calibration_gap"]
-                acc  = pri_accent(cbw, uc)
-                chip = action_chip_html(cbw, uc)
+                acc  = pri_accent(cbw, gap)
+                chip = action_chip_html(cbw, gap)
                 col.markdown(
                     f"""<div class="pri-card">
                     <div style="height:4px;background:{acc};"></div>
@@ -582,7 +579,7 @@ with tab_overview:
                 f"<td style='width:130px;text-align:center;'>{cbw}</td>"
                 f"<td style='width:200px;'>{gap:+.2f} <span style='color:#5a5a5a;font-size:12px;'>"
                 f"{gap_label(gap)}</span></td>"
-                f"<td style='width:160px;'>{action_chip_html(cbw, uc)}</td>"
+                f"<td style='width:160px;'>{action_chip_html(cbw, gap)}</td>"
                 f"</tr>"
             )
         st.markdown(

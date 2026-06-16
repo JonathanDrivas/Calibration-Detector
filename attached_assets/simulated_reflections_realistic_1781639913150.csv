@@ -1,0 +1,191 @@
+topic_name,reflection_text,student_confidence,ground_truth_label
+The Creative Force,"Basadur treats creativity as a learnable process from defining the problem to implementing the fix, and Personal Initiative is the proactive drive that pushes ideas into practice.",5,understands
+Technology Creation,I am lost on combinatorial evolution. I can repeat it but not explain it.,1,knows_confused
+Adopt-Transform-Apply,"ATA means you scan other industries, adopt a promising idea, transform it for your own context, then apply it by working out the implementation, with apply being the hardest step.",5,understands
+Diffusion of Innovation,"I know Rogers' categories, so spreading a product is mostly about advertising hard to everyone at once.",3,partial
+User-Led Adoption,"User-led innovation clicked. Von Hippel's point is that users themselves, especially lead users who hit needs ahead of the market, create innovations, not just manufacturers.",5,understands
+Adopt-Transform-Apply,"ATA is borrowing ideas from other industries, so I would adopt one and drop it into our context without much change.",3,partial
+"Invention, Innovation, and Entrepreneurship","I think invention is creating something new, innovation is putting it into valuable use that people adopt, and entrepreneurship is building the profitable business around it, but I am probably not drawing the lines cleanly.",2,underconfident
+Creative Destruction,"Schumpeter's idea is that growth comes from new innovations destroying the old industries and the firms behind them, and that churn is the engine, not a side effect.",4,understands
+User-Led Adoption,"I think lead users innovate out of necessity before the general market, which is different from ordinary early adopters who just buy early, but I am not certain.",2,underconfident
+Technology Classification and Adoption Strategy,"Fortino sorts a technology by adoption maturity, bleeding edge is newest and riskiest and only worth piloting, leading edge is proven enough to invest in, and trailing edge is ready to retire.",4,understands
+Adopt-Transform-Apply,I understand ATA is borrowing ideas from other industries. So I'd adopt an idea and put it straight into our context without much change.,3,partial
+User-Led Adoption,User-led innovation means users help innovate. So collecting product reviews and complaints is the main way it works.,3,partial
+Displacement of Concepts,"Displacement of concepts is clear. Once you have the metaphor, the new concept is finished and there is no more work to do.",5,confident_but_wrong
+User-Led Adoption,"Von Hippel argues users themselves drive innovation, especially lead users who hit needs ahead of the market, and firms gain by spotting and absorbing what users have already built.",5,understands
+User-Led Adoption,"User-led innovation is users driving it, so a company running a feature survey is a good example.",3,partial
+Creative Destruction,I'm not totally sure I understand creative destruction. I get that things change but I can't say what makes it Schumpeter's idea and not just normal business.,2,knows_confused
+Creative Destruction,"I might be wrong, but I believe Schumpeter saw the destruction of old industries as the necessary engine of capitalist growth rather than a problem to avoid. Not sure that is correct.",2,underconfident
+User-Led Adoption,I've got Von Hippel. User-led innovation just means manufacturers doing better market research before they build.,4,confident_but_wrong
+Adopt-Transform-Apply,"ATA makes sense. You scan other industries, adopt a good idea, transform it to your context, then apply it by working out the implementation. It is innovation by imitation done deliberately.",4,understands
+The Creative Force,"Basadur treats creativity as a learnable process from defining the problem to implementing the fix, and Personal Initiative is the proactive drive that pushes ideas into practice.",4,understands
+Technology Creation,"Combining what already exists is just imitation, real technology has to be fully original.",5,confident_but_wrong
+Diffusion of Innovation,"I can name Rogers' categories but I'm not confident on the order, especially where early adopters sit relative to the majority.",2,knows_confused
+User-Led Adoption,"I think lead users innovate out of necessity before the general market, which is different from ordinary early adopters who just buy early, but I am not certain.",2,underconfident
+Displacement of Concepts,"Schon means you carry a familiar concept into a new situation as a metaphor, then reshape and correct it to fit, with the old theory acting as a projective model rather than something applied literally.",5,understands
+Displacement of Concepts,I understand displacement is using an old concept for a new situation. So treating the brain as exactly like a computer in every way is a good displacement.,3,partial
+Creative Destruction,"Schumpeter's idea is that growth comes from new innovations destroying the old industries and the firms behind them, and that churn is the engine, not a side effect.",4,understands
+Diffusion of Innovation,"The early majority is the most venturesome group, first to try anything.",5,confident_but_wrong
+Diffusion of Innovation,"Probably overthinking, but I believe diffusion depends on usefulness, visibility, and trust as much as the technology, and that change agents and opinion leaders drive it. Could be wrong.",1,underconfident
+Displacement of Concepts,I'm struggling with displacement of concepts. The four phases all sound similar and I can't keep transposition and interpretation straight.,1,knows_confused
+Displacement of Concepts,Schon's idea is carrying a concept to a new situation. So I'd apply it by finding any two things that look alike and noting the similarity.,3,partial
+User-Led Adoption,I am unsure how this differs from a company just listening to feedback.,1,knows_confused
+Crossing the Chasm,I understand the chasm is a gap in the curve. So the way across is just to lower the price until the mainstream buys.,3,partial
+Adopt-Transform-Apply,"I think ATA means scanning other industries, lifting an idea, adapting it to your own context, and then doing the hard work of applying it, with apply being the most work, but I doubt I have it exactly right.",2,underconfident
+User-Led Adoption,User-led innovation means users help innovate. So collecting product reviews and complaints is the main way it works.,3,partial
+User-Led Adoption,I cannot explain what makes a lead user different from any other customer.,2,knows_confused
+Creative Destruction,"I think the core of it is that the destruction of established industries is what actually drives capitalist growth, but I am not certain I am framing Schumpeter right.",1,underconfident
+The Creative Force,"I think Basadur frames creativity as a deliberate process you can learn, starting with defining the right problem, and that Personal Initiative is the proactive behavior that carries ideas forward, but I doubt I have it right.",1,underconfident
+Technology Creation,"New technology mostly comes from pure science discoveries, not from recombining existing tools.",4,confident_but_wrong
+Technology Creation,"Arthur argues every technology is a combination of existing ones, each becomes a building block for the next, and a technology works by harnessing a phenomenon for a purpose.",4,understands
+Creative Destruction,I understand creative destruction is the new replacing the old. So a company cutting prices to beat a rival is a good example of it.,3,partial
+Technology Creation,The phrase technology creates itself out of itself confuses me and I cannot give a real example.,1,knows_confused
+Adopt-Transform-Apply,"ATA means adopt, transform, apply. So the work is mostly in the adopt step, finding the idea, and the rest follows easily.",3,partial
+"Invention, Innovation, and Entrepreneurship",Innovation means turning an invention into use. So any new product a company designs is automatically an innovation.,3,partial
+Adopt-Transform-Apply,Adopt-transform-apply is clear. The whole point is inventing a brand-new idea no other industry has used.,4,confident_but_wrong
+Creative Destruction,"The smartphone is the clearest case for me. It destroyed cameras, GPS units, and music players at once, and that churn is exactly what Schumpeter meant by progress.",4,understands
+Displacement of Concepts,"Schon is really just describing brainstorming, coming up with loose associations between ideas.",5,confident_but_wrong
+Technology Classification and Adoption Strategy,"I'm not sure I understand the edge classification. I can name bleeding, leading, and trailing edge but couldn't say which to invest the most in.",1,knows_confused
+Creative Destruction,"Creative destruction finally clicked. Schumpeter's point is that growth comes from the new wiping out the old, like streaming killing DVD rental. The destruction is the engine, not a side effect.",5,understands
+Technology Classification and Adoption Strategy,"I've got this. Bleeding edge is the safest, most proven category, so that is what you roll out across the whole company.",4,confident_but_wrong
+The Creative Force,The creative force is a structured process. So I'd apply it by jumping straight to generating solutions for the problem we were handed.,3,partial
+Technology Creation,"Arthur says technologies are combinations, so a phone having GPS just means the maker copied GPS into it.",3,partial
+Adopt-Transform-Apply,The adopt-transform-apply method confuses me. How is it different from just stealing an idea from another company? I can't articulate it.,1,knows_confused
+"Invention, Innovation, and Entrepreneurship","Invention is crafting something new, innovation is applying it so people adopt it and it adds value, and entrepreneurship is turning that into a profitable venture that scales.",4,understands
+"Invention, Innovation, and Entrepreneurship","An invention nobody adopts isn't yet an innovation. Society benefits only once innovation happens, not from invention alone.",4,understands
+Crossing the Chasm,"I think the chasm sits between the visionaries and the pragmatists and that not every technology crosses it, but I am unsure I have the placement right.",2,underconfident
+Creative Destruction,"Creative destruction is the new replacing the old, so I would point to any company going out of business as an example of it.",3,partial
+Crossing the Chasm,I'm not sure where the chasm sits on Rogers' curve. I know it's a gap but couldn't say which two groups it falls between.,1,knows_confused
+Displacement of Concepts,Schon's four phases all sound the same to me and I cannot keep transposition and interpretation straight.,1,knows_confused
+Adopt-Transform-Apply,"ATA is borrowing ideas from other industries, so I would adopt one and drop it into our context without much change.",3,partial
+User-Led Adoption,"Could be off, but I believe lead users innovate out of necessity ahead of the general market, which is different from ordinary early adopters who just buy early. Not sure.",1,underconfident
+Crossing the Chasm,It is the gap between the late majority and the laggards at the end.,5,confident_but_wrong
+Diffusion of Innovation,Whether something spreads comes down entirely to the marketing budget.,4,confident_but_wrong
+"Invention, Innovation, and Entrepreneurship","I understand invention is new and innovation is adoption. So as soon as someone patents a device, that counts as an innovation.",3,partial
+Diffusion of Innovation,"Diffusion isn't just the technology. Relative advantage, compatibility, complexity, trialability, and observability all shape whether something spreads.",5,understands
+Technology Classification and Adoption Strategy,"Trailing edge is the newest tech you adopt first, and bleeding edge is the old stuff you retire.",5,confident_but_wrong
+Adopt-Transform-Apply,"ATA means you scan other industries, adopt a promising idea, transform it for your own context, then apply it by working out the implementation, with apply being the hardest step.",4,understands
+The Creative Force,"The creative force is a process, so the main thing a team needs is a strong brainstorming session to get lots of ideas.",3,partial
+Displacement of Concepts,"Displacement is applying an old concept to a new area, so treating the brain as exactly like a computer in every way is a good example.",3,partial
+"Invention, Innovation, and Entrepreneurship","Invention is crafting something new, innovation is applying it so people adopt it and it adds value, and entrepreneurship is turning that into a profitable venture that scales.",5,understands
+The Creative Force,Honestly I don't fully get the creative problem solving process. I can list steps but couldn't explain why it is a process.,2,knows_confused
+Adopt-Transform-Apply,"I think ATA means scanning other industries, lifting an idea, adapting it to your own context, and then doing the hard work of applying it, with apply being the most work, but I doubt I have it exactly right.",1,underconfident
+Technology Classification and Adoption Strategy,Every new technology is worth adopting right away to stay ahead.,4,confident_but_wrong
+Technology Classification and Adoption Strategy,"I think you hold a balanced portfolio weighted toward leading edge and usually wait for something to cross the chasm before betting big, but I am not confident on the mix.",2,underconfident
+Diffusion of Innovation,"I know Rogers' categories, so spreading a product is mostly about advertising hard to everyone at once.",3,partial
+Displacement of Concepts,"Displacement of concepts is just another name for analogy, you carry the old idea over unchanged.",5,confident_but_wrong
+Crossing the Chasm,"I could not say which two groups the chasm sits between, just that it is a gap somewhere.",1,knows_confused
+"Invention, Innovation, and Entrepreneurship","The three separated for me. Invention is crafting something new, innovation is applying it so people adopt it and it adds value, and entrepreneurship is turning that into a profitable venture that scales.",5,understands
+Adopt-Transform-Apply,"ATA means adopt, transform, apply. So the work is mostly in the adopt step, finding the idea, and the rest follows easily.",3,partial
+Technology Creation,Technology is combinations of existing parts. So assembling a pre-built kit from instructions is a clear case of technology creation.,3,partial
+Diffusion of Innovation,"I understand Rogers' categories. So to spread a product, the strategy is just to advertise heavily to everyone at once.",3,partial
+"Invention, Innovation, and Entrepreneurship","Might have this wrong, but I believe the key distinction is that an invention only becomes an innovation once it is actually used and adds value. Not sure.",1,underconfident
+Creative Destruction,I understand creative destruction is the new replacing the old. So a company cutting prices to beat a rival is a good example of it.,3,partial
+The Creative Force,"I believe the point is that creativity is a skill you can build through a process rather than a born talent, but I might be missing part of it.",2,underconfident
+Crossing the Chasm,"The chasm is between early adopters and the early majority. So once you have any early adopters, crossing happens on its own.",3,partial
+The Creative Force,"Not confident here, but I believe the point is that creativity is a skill an organization can build through a structured process, not a gift, and that proactive self-starters drive it. Probably oversimplifying.",2,underconfident
+Diffusion of Innovation,"The order is innovators, then the early majority, then the early adopters.",4,confident_but_wrong
+"Invention, Innovation, and Entrepreneurship","I understand invention is new and innovation is adoption. So as soon as someone patents a device, that counts as an innovation.",3,partial
+Technology Creation,"Arthur says technologies are combinations, so a phone having GPS just means the maker copied GPS into it.",3,partial
+User-Led Adoption,I understand user-led innovation is users driving it. So a company running a customer survey about desired features is a good example.,3,partial
+User-Led Adoption,"Open-source software and 3D printing let everyday users build and share solutions, so innovation doesn't have to start in a company's R&D lab.",5,understands
+Technology Classification and Adoption Strategy,"The portfolio idea landed. You keep mostly leading edge with smaller amounts of bleeding and trailing edge, and usually wait for something to cross the chasm before betting big.",5,understands
+Crossing the Chasm,"The chasm is right after the innovators, so the early majority sits just past it.",4,confident_but_wrong
+Creative Destruction,"Creative destruction is the new replacing the old, so I would point to any company going out of business as an example of it.",3,partial
+Technology Creation,"I think Arthur calls it combinatorial evolution, where technologies recombine existing pieces into new ones, but I am not confident I have the term exactly right.",1,underconfident
+The Creative Force,"What stuck is that creativity here includes problem finding, not just ideas, and that self-starting behavior matters as much as the insight itself.",4,understands
+Crossing the Chasm,"I think the chasm is the gap between the early adopters and the early majority, caused by visionaries tolerating risk while pragmatists wait for proof, but I am not sure I have the placement right.",1,underconfident
+Displacement of Concepts,"Any time two things look alike, that resemblance is a displacement of concepts.",4,confident_but_wrong
+The Creative Force,"The creative force makes sense now. Basadur treats creativity as a trainable process from finding the problem through to implementing the fix, and Personal Initiative is the proactive push that moves an idea into practice.",5,understands
+Adopt-Transform-Apply,"ATA makes sense. You scan other industries, adopt a good idea, transform it to your context, then apply it by working out the implementation. It is innovation by imitation done deliberately.",4,understands
+"Invention, Innovation, and Entrepreneurship","Might have this wrong, but I believe the key distinction is that an invention only becomes an innovation once it is actually used and adds value. Not sure.",2,underconfident
+Technology Classification and Adoption Strategy,"I understand the tech is sorted into bleeding, leading, and trailing edge. So the goal is to always be on the bleeding edge to stay ahead.",3,partial
+Technology Classification and Adoption Strategy,Fortino's portfolio idea confuses me. I don't get how you decide what percentage of each edge to hold.,1,knows_confused
+The Creative Force,"The creative force makes sense now. Basadur treats creativity as a trainable process from finding the problem through to implementing the fix, and Personal Initiative is the proactive push that moves an idea into practice.",5,understands
+User-Led Adoption,I understand user-led innovation is users driving it. So a company running a customer survey about desired features is a good example.,3,partial
+Technology Creation,"A technology works by harnessing a phenomenon for a purpose. A jet engine harnesses combustion and airflow toward thrust, which is exactly Arthur's point.",5,understands
+User-Led Adoption,"Von Hippel argues users themselves drive innovation, especially lead users who hit needs ahead of the market, and firms gain by spotting and absorbing what users have already built.",5,understands
+The Creative Force,I understand Basadur sees creativity as a process. So the main thing a team needs is a good brainstorming session for lots of ideas.,3,partial
+Technology Creation,"Technology creation is clear. Arthur says combining existing technologies is just imitation, and true technology has to be wholly original.",4,confident_but_wrong
+"Invention, Innovation, and Entrepreneurship","The three separated for me. Invention is crafting something new, innovation is applying it so people adopt it and it adds value, and entrepreneurship is turning that into a profitable venture that scales.",4,understands
+Displacement of Concepts,"Once you have the metaphor the new concept is finished, there is no more work to do.",4,confident_but_wrong
+Diffusion of Innovation,"I understand Rogers' categories. So to spread a product, the strategy is just to advertise heavily to everyone at once.",3,partial
+Creative Destruction,"Creative destruction finally clicked. Schumpeter's point is that growth comes from the new wiping out the old, like streaming killing DVD rental. The destruction is the engine, not a side effect.",5,understands
+Technology Creation,I understand Arthur says technologies are combinations. So the GPS in a phone is just the phone company copying GPS into the device.,3,partial
+Diffusion of Innovation,"I think opinion leaders and perceived attributes drive diffusion as much as the technology itself, but I am not confident on all the details.",1,underconfident
+Technology Classification and Adoption Strategy,"Fortino sorts a technology by adoption maturity, bleeding edge is newest and riskiest and only worth piloting, leading edge is proven enough to invest in, and trailing edge is ready to retire.",5,understands
+"Invention, Innovation, and Entrepreneurship","I believe the main distinction is that an invention only becomes an innovation once it is actually used and adds value, but I might have the line a bit off.",1,underconfident
+The Creative Force,"What stuck is that creativity here includes problem finding, not just ideas, and that self-starting behavior matters as much as the insight itself.",4,understands
+Adopt-Transform-Apply,I've got ATA. It basically means copying what a competitor in your own industry is already doing successfully.,4,confident_but_wrong
+"Invention, Innovation, and Entrepreneurship","The three separated for me. Invention is crafting something new, innovation is applying it so people adopt it and it adds value, and entrepreneurship is turning that into a profitable venture that scales.",5,understands
+Crossing the Chasm,You cross the chasm by spending heavily on mass advertising to the whole market at once.,5,confident_but_wrong
+Crossing the Chasm,"The chasm is between early adopters and the early majority. So once you have any early adopters, crossing happens on its own.",3,partial
+Technology Classification and Adoption Strategy,"The portfolio idea landed. You keep mostly leading edge with smaller amounts of bleeding and trailing edge, and usually wait for something to cross the chasm before betting big.",5,understands
+Technology Creation,Arthur's combinatorial evolution is still unclear. I can repeat the phrase but couldn't give a real example.,1,knows_confused
+Technology Creation,I've got Arthur down. His main point is that real breakthroughs come from a single inventor creating something entirely from scratch.,5,confident_but_wrong
+Displacement of Concepts,"Displacement is applying an old concept to a new area, so treating the brain as exactly like a computer in every way is a good example.",3,partial
+User-Led Adoption,"I think Von Hippel argues that users, especially lead users facing needs before the market, develop their own solutions, and that firms gain by absorbing what users already built, but I'm probably not framing it precisely.",2,underconfident
+Diffusion of Innovation,Diffusion follows the adopter curve. So I'd treat laggards the same as innovators since they all eventually adopt.,3,partial
+The Creative Force,"I believe the point is that creativity is a skill you can build through a process rather than a born talent, but I might be missing part of it.",1,underconfident
+Diffusion of Innovation,"I think the adopter order is innovators, then early adopters, then early majority, late majority, and laggards, and that adoption depends on perceived attributes and the influence of opinion leaders, but I am not confident on the details.",2,underconfident
+Displacement of Concepts,Schon's theory is hard for me. I don't see how this differs from just using a metaphor and I'm not confident explaining it.,1,knows_confused
+Technology Creation,Arthur's real claim is that breakthroughs come from one inventor making something from scratch.,5,confident_but_wrong
+Creative Destruction,"The smartphone is the clearest case for me. It destroyed cameras, GPS units, and music players at once, and that churn is exactly what Schumpeter meant by progress.",5,understands
+"Invention, Innovation, and Entrepreneurship",I am not sure where entrepreneurship fits next to the other two.,1,knows_confused
+User-Led Adoption,"User-led innovation is users driving it, so a company running a feature survey is a good example.",3,partial
+Creative Destruction,"I think the core of it is that the destruction of established industries is what actually drives capitalist growth, but I am not certain I am framing Schumpeter right.",1,underconfident
+Creative Destruction,"Creative destruction finally clicked. Schumpeter's point is that growth comes from the new wiping out the old, like streaming killing DVD rental. The destruction is the engine, not a side effect.",4,understands
+Technology Creation,I understand Arthur says technologies are combinations. So the GPS in a phone is just the phone company copying GPS into the device.,3,partial
+Diffusion of Innovation,Diffusion follows the adopter curve. So I'd treat laggards the same as innovators since they all eventually adopt.,3,partial
+Technology Classification and Adoption Strategy,"Might be wrong, but I believe bleeding edge is the riskiest and only worth piloting, while leading edge is what you invest in heavily. Not sure I have the strategy right.",1,underconfident
+Adopt-Transform-Apply,"ATA is basically benchmarking, you measure rivals and match their numbers.",4,confident_but_wrong
+Crossing the Chasm,Crossing the chasm is hazy. I don't get why a technology early adopters love would stall out.,1,knows_confused
+The Creative Force,"What stuck is that creativity here includes problem finding, not just ideas, and that self-starting behavior matters as much as the insight itself.",4,understands
+Diffusion of Innovation,"Adoption spreads in an S-curve through innovators, early adopters, early majority, late majority, then laggards, and it depends on attributes like relative advantage, compatibility, and trialability.",4,understands
+Diffusion of Innovation,"Rogers' curve makes sense. Adoption spreads in an S-curve through innovators, early adopters, early majority, late majority, and laggards, in that order, each adopting for different reasons.",4,understands
+"Invention, Innovation, and Entrepreneurship","Invention is new and innovation is adoption, so the moment something is patented it counts as an innovation.",3,partial
+Technology Classification and Adoption Strategy,"I understand the tech is sorted into bleeding, leading, and trailing edge. So the goal is to always be on the bleeding edge to stay ahead.",3,partial
+User-Led Adoption,"User-led innovation clicked. Von Hippel's point is that users themselves, especially lead users who hit needs ahead of the market, create innovations, not just manufacturers.",4,understands
+Crossing the Chasm,I do not get why a product early adopters love would suddenly stall out.,1,knows_confused
+Crossing the Chasm,"The chasm is a gap in the curve, so once you have a few early adopters you have basically crossed it.",3,partial
+User-Led Adoption,"A lead user is the same as an early adopter, someone who buys the product early.",5,confident_but_wrong
+"Invention, Innovation, and Entrepreneurship","I think invention is creating something new, innovation is putting it into valuable use that people adopt, and entrepreneurship is building the profitable business around it, but I am probably not drawing the lines cleanly.",2,underconfident
+Adopt-Transform-Apply,"What I took is that apply is the hardest step, because that is where you prove feasibility and build the business case, not just have the idea.",4,understands
+Displacement of Concepts,"I think the key is that intelligent projection restructures the old theory for the new situation, unlike just using an analogy unchanged, but I am probably not stating it cleanly.",2,underconfident
+Crossing the Chasm,Every technology crosses the chasm if you just give it enough time.,4,confident_but_wrong
+Diffusion of Innovation,I can name the categories but cannot reliably put them in the right order.,2,knows_confused
+"Invention, Innovation, and Entrepreneurship","An invention nobody adopts isn't yet an innovation. Society benefits only once innovation happens, not from invention alone.",5,understands
+The Creative Force,"The creative force is only about generating as many ideas as you can, that is the whole thing.",4,confident_but_wrong
+Technology Classification and Adoption Strategy,"I think you classify a technology by how mature its adoption is and hold a balanced portfolio weighted toward leading edge, piloting bleeding edge and retiring trailing edge, but I'm not confident on the mix.",1,underconfident
+The Creative Force,"Not confident here, but I believe the point is that creativity is a skill an organization can build through a structured process, not a gift, and that proactive self-starters drive it. Probably oversimplifying.",2,underconfident
+Technology Creation,"Each technology is its own separate invention, they do not build on one another.",4,confident_but_wrong
+Adopt-Transform-Apply,"Could be wrong, but I believe the transform step is what separates ATA from plain copying, since you reshape the borrowed idea for a new setting. Not confident.",1,underconfident
+Crossing the Chasm,"Might be wrong, but I believe not every technology crosses the chasm, and crossing usually takes a focused beachhead and strong messaging. Not confident.",1,underconfident
+Crossing the Chasm,"I've got the chasm. It sits right after the innovators, so the early majority is the group just past them.",5,confident_but_wrong
+Diffusion of Innovation,"Adoption spreads in an S-curve through innovators, early adopters, early majority, late majority, then laggards, and it depends on attributes like relative advantage, compatibility, and trialability.",5,understands
+Crossing the Chasm,"Crossing usually means picking a focused beachhead market and nailing the messaging, rather than trying to win everyone at once.",5,understands
+The Creative Force,"Basadur treats creativity as a learnable process from defining the problem to implementing the fix, and Personal Initiative is the proactive drive that pushes ideas into practice.",4,understands
+Adopt-Transform-Apply,"I think the transform step is what separates ATA from plain copying, since you reshape the borrowed idea for a new setting, but I am not fully sure.",1,underconfident
+Creative Destruction,"I think creative destruction is the idea that new innovations replace and wipe out the old firms and industries, and that churn is what actually drives the economy forward, but I am probably not explaining it right.",2,underconfident
+Technology Classification and Adoption Strategy,"The tech is sorted into bleeding, leading, and trailing edge, so the goal is to always stay on the bleeding edge.",3,partial
+Displacement of Concepts,"I've got Schon. Displacement of concepts is just another term for analogy, where you carry an old idea to a new case unchanged.",4,confident_but_wrong
+The Creative Force,The creative force is a structured process. So I'd apply it by jumping straight to generating solutions for the problem we were handed.,3,partial
+Diffusion of Innovation,"Laggards adopt at the same time as everyone else, they just complain more about it.",5,confident_but_wrong
+Crossing the Chasm,"The chasm is a gap in the curve, so once you have a few early adopters you have basically crossed it.",3,partial
+Technology Classification and Adoption Strategy,Classification means ranking tech by maturity. So I'd put most of the budget into bleeding edge since it is the newest.,3,partial
+"Invention, Innovation, and Entrepreneurship","An invention nobody adopts isn't yet an innovation. Society benefits only once innovation happens, not from invention alone.",4,understands
+Technology Classification and Adoption Strategy,"The tech is sorted into bleeding, leading, and trailing edge, so the goal is to always stay on the bleeding edge.",3,partial
+Technology Classification and Adoption Strategy,"Fortino's classification makes sense. You sort a technology by adoption maturity: bleeding edge for the newest and riskiest, leading edge for what is proven enough to roll out, trailing edge for what is ready to retire.",5,understands
+Technology Creation,I'm not sure I follow Arthur. The idea that technology creates itself out of itself is confusing me and I can't picture it in practice.,2,knows_confused
+Displacement of Concepts,Schon's idea is carrying a concept to a new situation. So I'd apply it by finding any two things that look alike and noting the similarity.,3,partial
+Adopt-Transform-Apply,I understand ATA is borrowing ideas from other industries. So I'd adopt an idea and put it straight into our context without much change.,3,partial
+Displacement of Concepts,I understand displacement is using an old concept for a new situation. So treating the brain as exactly like a computer in every way is a good displacement.,3,partial
+Creative Destruction,Creative destruction is really about companies cutting costs and trimming staff to stay efficient.,4,confident_but_wrong
+Creative Destruction,Creative destruction means innovation destroys old industries. So a store clearing out old stock in a big sale is it at work.,3,partial
+Technology Classification and Adoption Strategy,Classification means ranking tech by maturity. So I'd put most of the budget into bleeding edge since it is the newest.,3,partial
+Technology Creation,"Might be off, but I believe technology creates itself out of itself by combining prior building blocks and harnessing natural phenomena for a purpose. Not confident that is accurate.",2,underconfident
+Creative Destruction,"Schumpeter's idea is that growth comes from new innovations destroying the old industries and the firms behind them, and that churn is the engine, not a side effect.",4,understands
+Crossing the Chasm,"Moore's chasm is the gap between early adopters and the early majority, since pragmatists wait for proof and a complete product, and crossing usually means a focused beachhead market.",4,understands
+"Invention, Innovation, and Entrepreneurship","Invention is crafting something new, innovation is applying it so people adopt it and it adds value, and entrepreneurship is turning that into a profitable venture that scales.",5,understands
+Displacement of Concepts,"For Schon the old theory is a projective model for the new situation, not applied literally. You transpose it and then correct it as it meets the new context.",5,understands
+Displacement of Concepts,"Not sure I am right, but I believe Schon distinguishes intelligent projection, where the old theory is restructured for the new situation, from the unintelligent use of analogy. Likely missing something.",2,underconfident

@@ -267,23 +267,59 @@ with tab_overview:
         st.divider()
 
         # High-level metrics
-        total_analyzed   = sum(d["_total"] for _, d in sorted_topics)
-        total_cbw        = sum(d["label_counts"]["confident_but_wrong"] for _, d in sorted_topics)
-        avg_gap          = (
+        total_analyzed = sum(d["_total"] for _, d in sorted_topics)
+        total_cbw      = sum(d["label_counts"]["confident_but_wrong"] for _, d in sorted_topics)
+        avg_gap        = (
             sum(d["calibration_gap"] * d["_total"] for _, d in sorted_topics) / total_analyzed
             if total_analyzed else 0
         )
-        topics_with_uc   = sum(1 for _, d in sorted_topics if d["label_counts"]["underconfident"] >= 2)
+        topics_with_uc = sum(1 for _, d in sorted_topics if d["label_counts"]["underconfident"] >= 2)
 
         m1, m2, m3, m4 = st.columns(4)
-        m1.metric("Total analyzed", total_analyzed)
-        m2.metric("Confident but wrong", total_cbw)
-        m3.metric("Avg calibration gap", f"{avg_gap:+.2f}",
-                  help="Positive = class is overconfident on average.")
-        m4.metric("Topics with underconfidence warning", topics_with_uc,
-                  help="Topics with 2+ underconfident reflections.")
+        with m1:
+            st.metric("Total analyzed", total_analyzed)
+            st.caption("Reflections processed by the model")
+        with m2:
+            st.metric("Confident but wrong", total_cbw)
+            st.caption("Highest-priority learning risk")
+        with m3:
+            st.metric("Avg calibration gap", f"{avg_gap:+.2f}")
+            st.caption("Positive means students are overconfident")
+        with m4:
+            st.metric("Topics with underconfidence", topics_with_uc)
+            st.caption("May need reassurance, not reteaching")
+
+        # Top insight callout
+        top_cbw = [(name, d["label_counts"]["confident_but_wrong"])
+                   for name, d in sorted_topics
+                   if d["label_counts"]["confident_but_wrong"] > 0][:4]
+        if top_cbw:
+            topic_list = ", ".join(f"**{name}**" for name, _ in top_cbw)
+            count_desc = (
+                f"{top_cbw[0][1]} confident-but-wrong reflection(s) on the top topic"
+                if len(top_cbw) == 1
+                else f"between {top_cbw[-1][1]} and {top_cbw[0][1]} confident-but-wrong reflections each"
+            )
+            st.warning(
+                f"🔍 **Top insight:** {topic_list} "
+                f"show the highest overconfidence risk ({count_desc}). "
+                "Review these topics first — see Topic Details for the detected misconceptions."
+            )
 
         st.divider()
+
+        def gap_label(gap: float) -> str:
+            if gap >= 1.0:  return "High overconfidence"
+            if gap >= 0.5:  return "Moderate overconfidence"
+            if gap > 0:     return "Slight overconfidence"
+            if gap == 0:    return "Calibrated"
+            return "Underconfident"
+
+        def action_badge(cbw: int, uc: int) -> str:
+            if cbw >= 3:  return "🔴 Reteach first"
+            if cbw == 2:  return "🟠 Watch closely"
+            if uc >= 2:   return "🔵 Reassure students"
+            return "⚫ Monitor"
 
         # Compact Reteach First table
         st.subheader("Reteach First")
@@ -294,8 +330,12 @@ with tab_overview:
                 "Rank":                rank,
                 "Topic":               topic_name,
                 "Confident but wrong": d["label_counts"]["confident_but_wrong"],
-                "Calibration gap":     round(d["calibration_gap"], 2),
-                "Total analyzed":      d["_total"],
+                "Gap":                 f"{d['calibration_gap']:+.2f}  {gap_label(d['calibration_gap'])}",
+                "Total":               d["_total"],
+                "Recommended action":  action_badge(
+                    d["label_counts"]["confident_but_wrong"],
+                    d["label_counts"]["underconfident"],
+                ),
             }
             for rank, (topic_name, d) in enumerate(sorted_topics, start=1)
         ])
@@ -389,6 +429,12 @@ with tab_evidence:
         c2.metric(
             "Confident-but-wrong recall", f"{recall:.0%}",
             help="Of all ground-truth confident-but-wrong reflections, this share the model caught.",
+        )
+
+        st.info(
+            "The evidence panel checks whether computed labels match the simulated ground truth. "
+            "The most important metric is **confident-but-wrong recall**, because the tool is "
+            "designed to catch students who are confident but mistaken."
         )
 
         st.markdown("**Confusion matrix** — rows: ground truth · columns: computed label")

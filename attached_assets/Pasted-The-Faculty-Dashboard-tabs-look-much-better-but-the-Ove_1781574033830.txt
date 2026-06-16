@@ -1,0 +1,50 @@
+The Faculty Dashboard tabs look much better, but the Overview still feels dry. Please improve the UX and visual polish without changing any database logic, model logic, saved results, evidence calculations, or adversarial calculations. Do not rerun Claude/model analysis.
+
+Keep the existing four tabs:
+
+* Overview
+* Topic Details
+* Evidence
+* Robustness Check
+
+Improve only the Faculty Dashboard presentation:
+
+1. On the Overview tab, add a "Top insight" callout below the main explanation box. It should automatically summarize the top 2-4 topics with the highest confident_but_wrong count and say they should be reviewed first.
+
+2. Improve the four metric cards by adding short helper captions:
+
+* Total analyzed: "Reflections processed by the model"
+* Confident but wrong: "Highest-priority learning risk"
+* Avg calibration gap: "Positive means students are overconfident"
+* Topics with underconfidence: "May need reassurance, not reteaching"
+
+3. In the Reteach First table, add a "Recommended action" column:
+
+* If confident_but_wrong count is 3 or higher, show "Reteach first"
+* If confident_but_wrong count is 2, show "Watch closely"
+* If underconfident count is 2 or higher, show "Reassure students"
+* Otherwise show "Monitor"
+
+4. Add simple visual status labels or badges in the Reteach First table:
+
+* Reteach first = red
+* Watch closely = orange
+* Reassure students = blue
+* Monitor = gray or green
+
+5. Make calibration gap easier to interpret by adding a short label:
+
+* gap >= 1.0: "High overconfidence"
+* gap >= 0.5: "Moderate overconfidence"
+* gap > 0: "Slight overconfidence"
+* gap = 0: "Calibrated"
+* gap < 0: "Underconfident"
+
+6. On the Evidence tab, add a short plain-English interpretation box above the confusion matrix:
+   "The evidence panel checks whether computed labels match the simulated ground truth. The most important metric is confident-but-wrong recall, because the tool is designed to catch students who are confident but mistaken."
+
+7. Do not change the Student Reflection page or About and Responsible Use page.
+
+8. Do not change any existing calculations.
+
+9. Do not save or modify any data.

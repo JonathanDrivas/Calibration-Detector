@@ -1,45 +1,52 @@
-# [Project name]
+# Calibration Detector
 
-_Replace the heading above with the project's name, and this line with one sentence describing what this app does for users._
+A Streamlit app that helps faculty assess whether students' self-reported confidence matches their actual understanding of course topics.
 
 ## Run & Operate
 
-- `pnpm --filter @workspace/api-server run dev` — run the API server (port 5000)
-- `pnpm run typecheck` — full typecheck across all packages
-- `pnpm run build` — typecheck + build all packages
-- `pnpm --filter @workspace/api-spec run codegen` — regenerate API hooks and Zod schemas from the OpenAPI spec
-- `pnpm --filter @workspace/db run push` — push DB schema changes (dev only)
-- Required env: `DATABASE_URL` — Postgres connection string
+- `streamlit run app.py --server.port 5000` — run the app (port 5000)
+- Required env: `DATABASE_URL` — Postgres connection string (auto-set by Replit)
 
 ## Stack
 
-- pnpm workspaces, Node.js 24, TypeScript 5.9
-- API: Express 5
-- DB: PostgreSQL + Drizzle ORM
-- Validation: Zod (`zod/v4`), `drizzle-zod`
-- API codegen: Orval (from OpenAPI spec)
-- Build: esbuild (CJS bundle)
+- Python 3.11 + Streamlit 1.58
+- DB: PostgreSQL + psycopg2-binary (raw SQL, CREATE TABLE IF NOT EXISTS on startup)
 
 ## Where things live
 
-_Populate as you build — short repo map plus pointers to the source-of-truth file for DB schema, API contracts, theme files, etc._
+- `app.py` — entry point; password gate + home page
+- `db.py` — DB connection helper and `init_db()` (runs `CREATE TABLE IF NOT EXISTS` for all three tables)
+- `pages/1_Student_Reflection.py` — student-facing form (skeleton)
+- `pages/2_Faculty_Dashboard.py` — faculty results view (skeleton)
+- `.streamlit/config.toml` — server config (port 5000, headless, 0.0.0.0)
+
+## Database schema
+
+- `topics` — id (PK), name, description, misconceptions
+- `reflections` — id (PK), nickname, topic_name, reflection_text, student_confidence, ground_truth_label
+- `results` — id (PK), reflection_id (FK → reflections), understanding, misconception, label
 
 ## Architecture decisions
 
-_Populate as you build — non-obvious choices a reader couldn't infer from the code (3-5 bullets)._
+- Tables are created idempotently via `init_db()` called on every startup — no separate migration step needed for this skeleton phase.
+- Password protection uses a hardcoded string in `app.py` with `st.session_state`; replace with an env var before sharing broadly.
+- Each page re-checks `st.session_state.authenticated` and stops early if not logged in, keeping the gate consistent across all pages.
 
 ## Product
 
-_Describe the high-level user-facing capabilities of this app once they exist._
+- **Student Reflection** (page 1): students enter a nickname, pick a topic, write a reflection, and rate their confidence.
+- **Faculty Dashboard** (page 2): faculty review submitted reflections alongside AI-generated calibration labels.
 
 ## User preferences
 
-_Populate as you build — explicit user instructions worth remembering across sessions._
+- App should remain private (password-gated).
 
 ## Gotchas
 
-_Populate as you build — sharp edges, "always run X before Y" rules._
+- `init_db()` is called on every cold start — idempotent, so safe to leave in.
+- Streamlit's multipage `pages/` convention requires filenames to start with a number for ordering (e.g. `1_Student_Reflection.py`).
 
 ## Pointers
 
-- See the `pnpm-workspace` skill for workspace structure, TypeScript setup, and package details
+- See the `streamlit` skill for UI and workflow guidelines.
+- See the `database` skill for SQL query helpers.

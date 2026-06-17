@@ -1,0 +1,181 @@
+The app works functionally, but the visual design across the app still looks like default Streamlit. Start by creating a shared design system and applying it to the Faculty Dashboard only. Do not redesign the other pages yet, except for shared global CSS that may affect fonts, background, sidebar, and basic navigation.
+
+Hard rules:
+- Presentation only.
+- Do not change the database.
+- Do not change saved reflections or results.
+- Do not rerun the model.
+- Do not clear any tables.
+- Do not change imported data.
+- Do not change scoring logic, label rules, action logic, Evidence calculations, Robustness Check calculations, or any formulas.
+- Every number, percentage, topic ranking, action label, confidence gap, and evidence result must stay exactly the same.
+- Do not hardcode any count, percentage, gap, or label anywhere. Read every displayed value live from the existing computed results, including the header badge count and the calibration grid, so the dashboard stays correct if the data changes.
+- Global CSS may change fonts, colors, spacing, and background only. It must not alter the confidence slider, form inputs, or any interactive behavior.
+- If a requested visual change would require changing calculations or data logic, skip it.
+
+Goal:
+Make the app look like a legitimate NYU-style academic analytics product, not a Streamlit prototype. Build a reusable design system first, then use it on the Faculty Dashboard.
+
+Global design system:
+- Background: #F7F5FA
+- Card background: #FFFFFF
+- Main accent: NYU Violet #57068C
+- Text: #20202A
+- Secondary text: #555766
+- Border: #E4DEEC
+- Soft shadow: 0 8px 24px rgba(32, 32, 42, 0.06)
+- Border radius: 14px
+- Use a clean font stack, system UI is fine.
+- Avoid emoji-heavy design.
+- Avoid giant purple blocks.
+- Use color only for hierarchy or meaning.
+
+Semantic colors:
+- understands = green
+- confident_but_wrong = red
+- underconfident = blue
+- knows_confused = amber
+- partial = lavender
+- Reteach first = red
+- Reassure students = blue
+- Monitor = gray
+
+Create reusable CSS classes or helper render functions for:
+- app shell/container
+- page header
+- section header
+- metric card
+- callout card
+- calibration grid
+- calibration cell
+- action badge
+- priority row
+- data panel
+- evidence metric card
+- heatmap table wrapper
+- clean expander/card sections
+
+Do not scatter random one-off inline styles everywhere. Use a consistent visual system.
+
+Faculty Dashboard redesign:
+Keep the four tabs:
+- Overview
+- Topic Details
+- Evidence
+- Robustness Check
+
+Page shell:
+- Center content in a max-width container around 1180px to 1240px.
+- Do not stretch content across the whole browser.
+- No horizontal scrolling on the Overview at 100% browser zoom.
+- Keep the sidebar.
+- Active sidebar item and active tab should use NYU Violet.
+
+Header:
+- Use a compact professional header, not a giant hero.
+- White card with subtle border/shadow.
+- Left side:
+  - Faculty Dashboard
+  - Confidence vs. demonstrated understanding across student reflections.
+- Right side:
+  - small badge: analyzed count, read live from the data
+  - small badge: simulated dataset
+- Keep it clean and businesslike.
+
+Overview tab structure:
+The Overview should tell the story in this order:
+1. Key Risk Signal
+2. KPI Metrics
+3. Calibration Grid
+4. Instructor Action Plan
+5. Full Topic Ranking
+Remove duplicate visual blocks that repeat the same idea.
+
+1. Key Risk Signal:
+Use a compact white callout card with a thin NYU Violet left border.
+Title: Key risk signal
+Body: High confidence with low understanding is the highest-risk learning state because those students are unlikely to ask for help. The dashboard identifies those topics first.
+Keep it short. No huge lavender banner.
+
+2. KPI Metrics:
+Show four equal metric cards in one row:
+- Total analyzed
+- Confident but wrong
+- Avg calibration gap
+- Underconfidence topics
+Each card:
+- same height
+- same width
+- white background
+- subtle shadow
+- small uppercase label
+- large number
+- one short caption
+- small top accent line
+- no oversized icons
+- no emoji-heavy styling
+
+3. Calibration Grid:
+Make this the centerpiece. Build a real 2x2 grid with axis labels.
+- X-axis: Student confidence, low to high
+- Y-axis: Demonstrated understanding, low to high
+Each quadrant shows the outcome name, its live count, and a short teaching response:
+- Low confidence, high understanding: Underconfident, "Reassure students", blue
+- High confidence, high understanding: Understands, "No action needed", green
+- Low confidence, low understanding: Knows confused, "Support and reteach", amber
+- High confidence, low understanding: Confident but wrong, "Reteach first", red, with a highest-risk tag
+Partial: a separate card beside or below the grid, with its live count and "Review examples", lavender.
+Pull every count live from the same computed results the metric cards already use. Do not hardcode any count. After building, the grid counts must sum to the Total analyzed value and match the rest of the dashboard. As a check only, the current values should read understands 49, confident but wrong 31, underconfident 34, knows confused 21, partial 55. Read these from the data, do not paste them in.
+The grid should be readable in five seconds and should visually explain the project's thesis.
+
+4. Instructor Action Plan:
+Replace the current Priority Topics section with a compact ranked action list.
+Each row:
+- rank
+- topic name
+- confident-but-wrong count
+- calibration gap
+- recommended action badge
+Use existing values and existing action labels.
+Style:
+- white row card
+- subtle border
+- compact height
+- colored left stripe by action
+- red for Reteach first
+- blue for Reassure students
+- gray for Monitor
+- no thick borders
+- no large cards
+Section title: Instructor Action Plan
+Subtitle: Topics are ranked by confident-but-wrong count. Action labels also consider calibration gap.
+
+5. Full Topic Ranking:
+Keep the full ranking table, but make it secondary.
+- Put it in an expander labeled "Full topic ranking."
+- Open by default.
+- Keep same columns, sorting, values, and actions.
+- Make it compact and readable.
+- No horizontal scrolling.
+
+Topic Details tab:
+- Keep all existing content.
+- Restyle only: cleaner topic cards, better spacing, readable labels, subtle borders, aligned stacked bars.
+- First topic open by default, others collapsed.
+- Do not make every topic look urgent.
+
+Evidence tab:
+- Keep all existing metrics and values.
+- Restyle the three metric cards to match the design system.
+- Keep the heatmap confusion matrix.
+- Keep the caveat note.
+- Keep the "what this means" note.
+- Put the confusion matrix in a clean white data panel.
+- Do not stretch the matrix awkwardly across the whole page.
+
+Robustness Check tab:
+- Keep all existing functionality and values.
+- Restyle: pass rate as a clean result card, run button in NYU Violet, adversarial examples in cleaner expanders.
+- Keep pass/fail indicators restrained and readable.
+
+Do not redesign Student Reflection, About & Responsible Use, or Home yet, except for shared global CSS that gives the whole app a consistent background, sidebar, tab styling, font, and accent color.

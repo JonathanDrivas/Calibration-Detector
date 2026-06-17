@@ -667,62 +667,81 @@ with tab_overview:
 </div>""", unsafe_allow_html=True)
 
         _gc = global_counts
-        st.markdown(f"""
-<div style="display:grid;grid-template-columns:1fr 152px;gap:10px;
-            align-items:stretch;margin-bottom:8px;">
-
-  <div style="display:flex;flex-direction:column;gap:6px;">
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
-
-      <div class="ds-cal-cell" style="border-top:3px solid #3b82f6;">
-        <div class="ds-cal-quadrant">Low confidence · High understanding</div>
-        <div class="ds-cal-name"  style="color:#3b82f6;">Underconfident</div>
-        <div class="ds-cal-count" style="color:#3b82f6;">{_gc["underconfident"]}</div>
-        <div class="ds-cal-response">Reassure students</div>
-      </div>
-
-      <div class="ds-cal-cell" style="border-top:3px solid #22c55e;">
-        <div class="ds-cal-quadrant">High confidence · High understanding</div>
-        <div class="ds-cal-name"  style="color:#22c55e;">Understands</div>
-        <div class="ds-cal-count" style="color:#22c55e;">{_gc["understands"]}</div>
-        <div class="ds-cal-response">No action needed</div>
-      </div>
-
-      <div class="ds-cal-cell" style="border-top:3px solid #f59e0b;">
-        <div class="ds-cal-quadrant">Low confidence · Low understanding</div>
-        <div class="ds-cal-name"  style="color:#f59e0b;">Knows confused</div>
-        <div class="ds-cal-count" style="color:#f59e0b;">{_gc["knows_confused"]}</div>
-        <div class="ds-cal-response">Support and reteach</div>
-      </div>
-
-      <div class="ds-cal-cell" style="border-top:4px solid #dc2626;background:#fff8f8;">
-        <div class="ds-cal-quadrant">High confidence · Low understanding</div>
-        <div style="display:flex;align-items:baseline;gap:6px;flex-wrap:wrap;margin-bottom:2px;">
-          <span class="ds-cal-name" style="color:#dc2626;">Confident but wrong</span>
-          <span style="font-size:9px;font-weight:800;background:#dc2626;color:#fff;
-                border-radius:3px;padding:2px 5px;flex-shrink:0;white-space:nowrap;">
-            HIGHEST RISK
-          </span>
-        </div>
-        <div class="ds-cal-count" style="color:#dc2626;">{_gc["confident_but_wrong"]}</div>
-        <div class="ds-cal-response">Reteach first</div>
-      </div>
-
-    </div>
-    <div style="text-align:center;font-size:11px;font-weight:600;color:#555766;
-                letter-spacing:.3px;padding-top:2px;">
-      Student Confidence →
-    </div>
-  </div>
-
-  <div class="ds-cal-partial" style="border-top:3px solid #a78bfa;">
-    <div class="ds-cal-quadrant">Mixed signals</div>
-    <div class="ds-cal-name"  style="color:#7c3aed;">Partial</div>
-    <div class="ds-cal-count" style="color:#7c3aed;">{_gc["partial"]}</div>
-    <div class="ds-cal-response">Review examples</div>
-  </div>
-
-</div>""", unsafe_allow_html=True)
+        # Build HTML with no blank lines — blank lines inside an f-string HTML block
+        # cause Python-Markdown to exit HTML-block mode and render the rest as text.
+        _cell_uc = (
+            '<div class="ds-cal-cell" style="border-top:3px solid #3b82f6;">'
+            '<div class="ds-cal-quadrant">Low confidence · High understanding</div>'
+            '<div class="ds-cal-name" style="color:#3b82f6;">Underconfident</div>'
+            f'<div class="ds-cal-count" style="color:#3b82f6;">{_gc["underconfident"]}</div>'
+            '<div class="ds-cal-response">Reassure students</div>'
+            '</div>'
+        )
+        _cell_un = (
+            '<div class="ds-cal-cell" style="border-top:3px solid #22c55e;">'
+            '<div class="ds-cal-quadrant">High confidence · High understanding</div>'
+            '<div class="ds-cal-name" style="color:#22c55e;">Understands</div>'
+            f'<div class="ds-cal-count" style="color:#22c55e;">{_gc["understands"]}</div>'
+            '<div class="ds-cal-response">No action needed</div>'
+            '</div>'
+        )
+        _cell_kc = (
+            '<div class="ds-cal-cell" style="border-top:3px solid #f59e0b;">'
+            '<div class="ds-cal-quadrant">Low confidence · Low understanding</div>'
+            '<div class="ds-cal-name" style="color:#f59e0b;">Knows confused</div>'
+            f'<div class="ds-cal-count" style="color:#f59e0b;">{_gc["knows_confused"]}</div>'
+            '<div class="ds-cal-response">Support and reteach</div>'
+            '</div>'
+        )
+        _risk_tag = (
+            '<span style="font-size:9px;font-weight:800;background:#dc2626;color:#fff;'
+            'border-radius:3px;padding:2px 5px;flex-shrink:0;white-space:nowrap;">'
+            'HIGHEST RISK</span>'
+        )
+        _cell_cbw = (
+            '<div class="ds-cal-cell" style="border-top:4px solid #dc2626;background:#fff8f8;">'
+            '<div class="ds-cal-quadrant">High confidence · Low understanding</div>'
+            '<div style="display:flex;align-items:baseline;gap:6px;flex-wrap:wrap;margin-bottom:2px;">'
+            f'<span class="ds-cal-name" style="color:#dc2626;">Confident but wrong</span>{_risk_tag}'
+            '</div>'
+            f'<div class="ds-cal-count" style="color:#dc2626;">{_gc["confident_but_wrong"]}</div>'
+            '<div class="ds-cal-response">Reteach first</div>'
+            '</div>'
+        )
+        _y_label = (
+            '<div style="writing-mode:vertical-rl;text-orientation:mixed;transform:rotate(180deg);'
+            'font-size:11px;font-weight:600;color:#555766;letter-spacing:.3px;'
+            'display:flex;align-items:center;justify-content:center;padding:4px 2px;">'
+            '↑ Demonstrated understanding</div>'
+        )
+        _x_label = (
+            '<div style="text-align:center;font-size:11px;font-weight:600;color:#555766;'
+            'letter-spacing:.3px;padding-top:4px;">Student confidence →</div>'
+        )
+        _inner_grid = (
+            '<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">'
+            + _cell_uc + _cell_un + _cell_kc + _cell_cbw
+            + '</div>'
+        )
+        _partial = (
+            '<div class="ds-cal-partial" style="border-top:3px solid #a78bfa;min-width:140px;">'
+            '<div class="ds-cal-quadrant">Mixed signals</div>'
+            '<div class="ds-cal-name" style="color:#7c3aed;">Partial</div>'
+            f'<div class="ds-cal-count" style="color:#7c3aed;">{_gc["partial"]}</div>'
+            '<div class="ds-cal-response">Review examples</div>'
+            '</div>'
+        )
+        _cal_html = (
+            '<div style="display:flex;gap:10px;align-items:stretch;margin-bottom:8px;">'
+            + _y_label
+            + '<div style="flex:1;display:flex;flex-direction:column;gap:6px;">'
+            + _inner_grid
+            + _x_label
+            + '</div>'
+            + _partial
+            + '</div>'
+        )
+        st.markdown(_cal_html, unsafe_allow_html=True)
 
         # 4. Top Insight ────────────────────────────────────────────────────
         top_cbw_topics = [

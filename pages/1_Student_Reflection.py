@@ -1,6 +1,7 @@
 import random
 import streamlit as st
 from db import get_topics, save_reflection
+from nav import render_nav
 
 _ADJECTIVES = [
     "Amber", "Birch", "Cobalt", "Dusk", "Ember", "Fern", "Glacier", "Hazel",
@@ -19,6 +20,8 @@ _NOUNS = [
 def random_nickname():
     return f"{random.choice(_ADJECTIVES)}{random.choice(_NOUNS)}"
 
+
+render_nav("reflection")
 
 st.markdown("""
 <style>

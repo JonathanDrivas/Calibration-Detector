@@ -1,4 +1,7 @@
 import streamlit as st
+from nav import render_nav
+
+render_nav("about")
 
 st.markdown("""
 <style>

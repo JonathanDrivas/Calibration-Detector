@@ -1,6 +1,7 @@
 import pandas as pd
 import streamlit as st
 from collections import defaultdict
+from nav import render_nav
 
 from db import (
     get_unanalyzed_reflections,
@@ -542,6 +543,11 @@ _ACTION_STRIPE = {
     "Monitor":           "#3A3A50",
 }
 
+
+# ────────────────────────────────────────────────────────────────────────────
+# Top navigation bar
+# ────────────────────────────────────────────────────────────────────────────
+render_nav("dashboard")
 
 # ────────────────────────────────────────────────────────────────────────────
 # Page Header

@@ -1,5 +1,7 @@
 import streamlit as st
+from nav import render_nav
 
+# ── CSS ──────────────────────────────────────────────────────────────────────
 st.markdown("""
 <style>
 .home-hero {
@@ -42,30 +44,15 @@ st.markdown("""
 .home-divider {
     border: none; border-top: 1px solid #262633; margin: 0 0 20px 0;
 }
-.home-cta-row {
-    display: flex; gap: 10px; flex-wrap: wrap;
-}
-.home-cta {
-    display: inline-block;
-    background: rgba(160,107,255,0.10);
-    border: 1px solid rgba(160,107,255,0.25);
-    border-radius: 10px;
-    padding: 10px 18px;
-    font-size: 13px; font-weight: 600; color: #A06BFF;
-    text-decoration: none;
-    white-space: nowrap;
-}
-.home-cta-muted {
-    display: inline-block;
-    background: #14141C;
-    border: 1px solid #262633;
-    border-radius: 10px;
-    padding: 10px 18px;
-    font-size: 13px; font-weight: 600; color: #9A9AAC;
-    text-decoration: none;
-}
-</style>
 
+</style>
+""", unsafe_allow_html=True)
+
+# ── Top nav ───────────────────────────────────────────────────────────────────
+render_nav("home")
+
+# ── Hero + feature cards ──────────────────────────────────────────────────────
+st.markdown("""
 <div class="home-hero">
   <div class="home-hero-tag">Academic Learning Analytics</div>
   <div class="home-hero-title">Calibration Detector</div>
@@ -103,12 +90,20 @@ st.markdown("""
     </div>
   </div>
 </div>
-
-<hr class="home-divider">
-<div style="font-size:12px;color:#555566;margin-bottom:8px;font-weight:600;
-text-transform:uppercase;letter-spacing:.5px;">Navigate</div>
-<div class="home-cta-row">
-  <span class="home-cta">✏ Submit a reflection — Student Reflection</span>
-  <span class="home-cta-muted">📊 View analytics — Faculty Dashboard</span>
-</div>
 """, unsafe_allow_html=True)
+
+# ── CTA navigation ────────────────────────────────────────────────────────────
+st.markdown(
+    '<hr class="home-divider">'
+    '<div style="font-size:12px;color:#555566;margin-bottom:10px;font-weight:600;'
+    'text-transform:uppercase;letter-spacing:.5px;">Get started</div>',
+    unsafe_allow_html=True,
+)
+
+cta1, cta2, _ = st.columns([1.5, 1.5, 4])
+with cta1:
+    if st.button("✏  Submit a reflection", type="primary", use_container_width=True):
+        st.switch_page("pages/1_Student_Reflection.py")
+with cta2:
+    if st.button("📊  View analytics", use_container_width=True):
+        st.switch_page("pages/2_Faculty_Dashboard.py")

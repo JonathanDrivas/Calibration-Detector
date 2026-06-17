@@ -1,0 +1,51 @@
+Fix navigation only. Do not redesign the app in this task.
+
+Hard rules:
+
+* Do not change the database.
+* Do not change saved reflections or results.
+* Do not rerun the model.
+* Do not clear any tables.
+* Do not change imported data.
+* Do not change model prompt, scoring logic, label rules, action logic, Evidence calculations, Robustness Check calculations, or any formulas.
+* Do not change any displayed number, count, gap, percentage, ranking, or action label.
+* Do not change the visual design beyond what is needed for the navigation bar.
+* Do not break the confidence slider, topic selectbox, textarea, form submission, dashboard tabs, Evidence tab, or Robustness Check.
+
+Problem:
+The app currently depends on the collapsible left sidebar for page navigation. If the sidebar is collapsed, users can get stuck or have a hard time switching pages.
+
+Goal:
+Add an always-visible top navigation bar that works from every page.
+
+Navigation requirements:
+
+1. Add a custom top navigation bar to every page.
+2. The nav bar should include:
+
+   * a small calibration-grid style wordmark/logo on the left
+   * page links on the right:
+
+     * Home
+     * Student Reflection
+     * Faculty Dashboard
+     * About
+3. The active page should be marked with the violet accent color.
+4. Keep the existing page structure if possible. Do not rewrite the whole app architecture unless absolutely necessary.
+5. Prefer using Streamlit-native navigation helpers such as `st.page_link()` or `st.switch_page()` if they fit the current multipage structure.
+6. Only use `st.session_state` and `st.rerun()` if that is cleaner and does not require a risky rewrite.
+7. The Home page buttons, “Submit a reflection” and “View analytics,” must become real working navigation actions that switch to Student Reflection and Faculty Dashboard.
+8. After the top navigation works, hide or de-emphasize the default sidebar navigation if possible, but do not create a broken or blank sidebar.
+
+Testing:
+
+* Run the app.
+* From Home, confirm the top nav reaches Student Reflection, Faculty Dashboard, and About.
+* From Student Reflection, confirm the top nav reaches Home, Faculty Dashboard, and About.
+* From Faculty Dashboard, confirm the top nav reaches Home, Student Reflection, and About.
+* From About, confirm the top nav reaches Home, Student Reflection, and Faculty Dashboard.
+* Confirm the Home buttons navigate correctly.
+* Confirm the Student Reflection form still works.
+* Confirm the Faculty Dashboard tabs still work.
+* Confirm no numbers or labels changed.
+* Summarize which files changed.

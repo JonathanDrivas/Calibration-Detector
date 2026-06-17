@@ -1,0 +1,330 @@
+GOAL
+
+Do a full premium dark visual redesign of this Streamlit app so it looks like a high-end AI analytics product in the register of Linear, Vercel, and Palantir, while still feeling appropriate for an academic faculty tool. This is a visual presentation pass only.
+
+Change the font, background, cards, layout polish, sidebar, tabs, buttons, inputs, tables, expanders, and native Streamlit widget styling where possible. Do not just restyle cards. The goal is to reduce the default Streamlit look across the whole app.
+
+Keep it tasteful, high-contrast, and professional. Do not make it neon, cartoonish, crypto-looking, or overly futuristic.
+
+HARD RULES
+
+* Presentation only.
+* Do not change the database.
+* Do not change saved reflections or results.
+* Do not change imported data.
+* Do not rerun the model.
+* Do not clear any tables.
+* Do not change the model prompt.
+* Do not change scoring logic.
+* Do not change label rules.
+* Do not change action logic.
+* Do not change Evidence calculations.
+* Do not change Robustness Check calculations.
+* Do not change any formula.
+* Do not hardcode any displayed number, count, gap, percentage, ranking, or action label. Read values from the existing computed results exactly as the app does now.
+* Every number and label currently shown should remain the same after the redesign.
+* Do not break the confidence slider, topic selectbox, textarea, form submission, dashboard tabs, Evidence tab, Robustness Check, import logic, or model-run button behavior. Style them only.
+* If a visual change would require changing data logic, calculation logic, or model logic, skip that change.
+* Render all custom HTML through `st.markdown(..., unsafe_allow_html=True)`.
+* Never render HTML as a code block with `st.code`, `st.text`, or visible markdown.
+* The calibration grid must render as a real styled 2x2 grid, not as visible code.
+* Do not hide Streamlit errors with CSS.
+* Do not add new Python package dependencies.
+* Do not use matplotlib.
+
+TECH SETUP
+
+Create or update `.streamlit/config.toml` with a cohesive dark theme:
+
+[theme]
+base="dark"
+backgroundColor="#0B0B12"
+secondaryBackgroundColor="#14141C"
+primaryColor="#A06BFF"
+textColor="#ECECF2"
+font="sans serif"
+
+Use Inter as the preferred font if it loads successfully:
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+
+Apply this font stack across the app:
+
+Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif
+
+Use `font-variant-numeric: tabular-nums` for large stat numbers.
+
+If Google Fonts does not load, the app should still look good using the system font fallback.
+
+DESIGN TOKENS
+
+Use these values consistently:
+
+* Base background: #0B0B12
+* Background effect: subtle radial glow, for example radial-gradient(1200px 600px at 50% -10%, rgba(160,107,255,0.10), transparent 60%) layered over #0B0B12
+* Panel/card background: #14141C
+* Elevated panel: #1A1A24
+* Hairline border: #262633
+* Card shadow: inset 0 1px 0 rgba(255,255,255,0.03), 0 12px 30px rgba(0,0,0,0.45)
+* Text primary: #ECECF2
+* Text secondary: #9A9AAC
+* Accent: #A06BFF
+* Accent hover: #B98CFF
+* Radius: 14px for cards
+* Radius: 10px for buttons and inputs
+* Radius: 999px for pills
+
+Semantic colors for dark mode:
+
+* understands green: #3DDC97
+* confident_but_wrong red: #FF5C6C
+* underconfident blue: #5AA9FF
+* knows_confused amber: #F5B544
+* partial lavender: #C4B5FD
+
+Use semantic colors as thin accents, badges, labels, stripes, and heatmap colors. Do not use full bright color fills everywhere.
+
+GLOBAL CSS
+
+Create a shared global CSS layer that reduces the default Streamlit look.
+
+Apply:
+
+* Dark page background with subtle radial glow.
+* Optional very faint grid texture at low opacity, only if subtle.
+* Center main content in a max-width container around 1180px to 1240px.
+* No horizontal scrolling at 100% browser zoom.
+* Inter/system font across headings, body, tables, widgets, and form controls.
+* Headings with tight spacing, weight 700 to 800, letter-spacing around -0.02em.
+* Secondary text in #9A9AAC with enough contrast to read comfortably.
+* Cards with #14141C background, #262633 border, subtle shadow, 14px radius.
+* Consistent spacing between sections.
+
+Restyle native Streamlit chrome where possible:
+
+* Sidebar: dark panel, hairline right border, active nav item with violet left bar and brighter text.
+* Tabs: clean underline or segmented style. Active tab uses violet accent and bright text. Inactive tabs use muted text.
+* Buttons: primary solid violet #A06BFF, dark or white readable text, soft glow 0 6px 20px rgba(160,107,255,0.28), hover lift translateY(-1px), hover color #B98CFF.
+* Inputs, selectbox, slider, textarea: dark field #14141C, hairline border #262633, violet focus ring. Slider filled track uses violet accent.
+* Expanders: dark panels with clean header row, hairline border, rounded corners.
+* Dataframes and tables: dark rows, hairline separators, hover row #1A1A24, muted uppercase headers, readable numbers.
+* Action pills: dark pill background with semantic text/border color.
+
+Avoid brittle CSS that breaks Streamlit widgets. If a widget cannot be safely restyled, leave it functional and style its surrounding panel instead.
+
+APP-WIDE PAGES
+
+Apply the dark design system across:
+
+* Home
+* Student Reflection
+* Faculty Dashboard
+* About & Responsible Use
+
+Do not change page behavior or data. Only restyle.
+
+Home:
+
+* Make it feel like a polished product landing page inside the app.
+* Add a compact dark header section with product name and short explanation.
+* Use three cards:
+
+  * What it does
+  * How it works
+  * Why calibration matters
+* Add clear navigation cues to submit a reflection or open the dashboard.
+* Keep the content concise.
+
+Student Reflection:
+
+* Restyle as a clean two-column layout if possible.
+* Left side: short explanation of the reflection process and privacy note.
+* Right side: form card with topic selectbox, reflection textarea, confidence slider, and submit button.
+* Do not change form behavior.
+* Make the confidence slider feel polished and readable.
+
+About & Responsible Use:
+
+* Restyle as a governance page.
+* Use dark principle cards for:
+
+  * Diagnostic, not grading
+  * Topic-level review
+  * Nicknames, not real identities
+  * Human judgment still matters
+  * Simulated data for this project
+* Keep the original governance meaning. Do not weaken it.
+
+FACULTY DASHBOARD
+
+Keep the four tabs:
+
+* Overview
+* Topic Details
+* Evidence
+* Robustness Check
+
+Branded header:
+
+* Use a compact professional dark header.
+* Left side:
+
+  * Faculty Dashboard
+  * Subtitle: Confidence vs. demonstrated understanding across student reflections.
+* Right side:
+
+  * badge showing analyzed reflection count, read from existing data
+  * badge showing simulated dataset
+* Do not hardcode the analyzed count.
+* Use dark pills for badges.
+
+Overview tab:
+Keep the story in this order:
+
+1. Key Risk Signal
+
+2. KPI Metrics
+
+3. Calibration Grid
+
+4. Instructor Action Plan
+
+5. Full Topic Ranking
+
+6. Key Risk Signal:
+
+* Dark callout card with violet left bar.
+* Text should explain that high confidence with low understanding is the highest-risk learning state.
+* Keep it compact and professional.
+
+2. KPI Metrics:
+
+* Four even KPI cards.
+* Same height and width.
+* Thin top accent line.
+* Big tabular number.
+* Small uppercase label.
+* Muted caption.
+* No emoji-heavy design.
+* Read values from the existing computed results.
+
+3. Calibration Grid:
+   Make this the visual centerpiece.
+
+Render a real styled 2x2 grid with axis labels:
+
+* X-axis: Student confidence
+* Y-axis: Demonstrated understanding
+
+Quadrants:
+
+* High confidence + high understanding = understands
+* High confidence + low understanding = confident_but_wrong
+* Low confidence + high understanding = underconfident
+* Low confidence + low understanding = knows_confused
+
+Partial:
+
+* Show partial as a separate panel outside the 2x2 grid.
+
+Each cell should show:
+
+* outcome name
+* current count from existing computed results
+* short teaching response
+
+Teaching responses:
+
+* understands: No action needed
+* confident_but_wrong: Reteach first
+* underconfident: Reassure students
+* knows_confused: Support and reteach
+* partial: Review examples
+
+Make confident_but_wrong stand out with stronger red border/accent and a small HIGHEST RISK pill, but do not make it look like an error screen.
+
+4. Instructor Action Plan:
+
+* Use a compact ranked action list, not large cards and not a plain table.
+* Each row shows:
+
+  * rank
+  * topic name
+  * confident-but-wrong count
+  * calibration gap
+  * recommended action badge
+* Use existing values and existing action labels.
+* Use semantic left stripe by action:
+
+  * Reteach first = red
+  * Reassure students = blue
+  * Monitor = gray
+* Keep rows compact and easy to scan.
+
+5. Full Topic Ranking:
+
+* Keep the full topic ranking table.
+* Put it inside a dark expander titled “Full topic ranking.”
+* Open by default.
+* Keep the same columns, sorting, values, and action labels.
+* No horizontal scrolling at 100% zoom.
+
+Topic Details tab:
+
+* Keep existing topic data and expanders.
+* Restyle topic panels as clean dark cards.
+* Keep stacked bars aligned and readable.
+* Keep semantic colors.
+* First topic open by default, others collapsed.
+* Do not make every topic look urgent.
+
+Evidence tab:
+
+* Keep existing accuracy, precision, recall, caveat note, what-this-means note, and confusion matrix.
+* Restyle the three metric cards using the same dark design system.
+* Confusion matrix should be in a dark data panel.
+* Diagonal cells should use muted green.
+* Off-diagonal error cells should use muted red, with darker shading for larger counts.
+* Keep numbers visible and readable.
+* Do not use matplotlib.
+* Do not change Evidence formulas.
+
+Robustness Check tab:
+
+* Keep existing pass rate, table, button behavior, and adversarial examples.
+* Restyle pass rate as a clean dark result card.
+* Run button should be violet.
+* Adversarial examples should appear in clean dark expanders.
+* Pass/fail indicators should be clear but restrained.
+
+AVOID
+
+* Neon colors
+* Heavy blur
+* Giant glowing blobs
+* Oversized rounded blobs
+* Random gradients on every card
+* Gray-on-gray low contrast
+* Emoji-heavy styling
+* Full bright color fills
+* Hardcoded metric values
+* Breaking native Streamlit controls
+* Hiding errors with CSS
+
+BEFORE FINISHING
+
+Run the app and fix every error.
+
+Confirm:
+
+* Home loads.
+* Student Reflection loads and the form still works.
+* Faculty Dashboard loads.
+* All four Faculty Dashboard tabs render.
+* Evidence tab still shows the same metrics and matrix values.
+* Robustness Check still works.
+* About & Responsible Use loads.
+* No displayed numbers, labels, gaps, percentages, rankings, or action labels changed.
+* No horizontal scrolling on the Faculty Dashboard Overview at 100% zoom.
+
+Summarize which files changed and what was done.

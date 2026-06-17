@@ -4,3 +4,11 @@ address = "0.0.0.0"
 port = 5000
 enableCORS = false
 enableXsrfProtection = false
+
+[theme]
+base = "dark"
+backgroundColor = "#0B0B12"
+secondaryBackgroundColor = "#14141C"
+primaryColor = "#A06BFF"
+textColor = "#ECECF2"
+font = "sans serif"

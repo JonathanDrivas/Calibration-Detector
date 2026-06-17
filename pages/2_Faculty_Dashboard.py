@@ -13,7 +13,7 @@ from db import (
 from ai import analyze_reflection, compute_label
 
 # ────────────────────────────────────────────────────────────────────────────
-# Design System CSS
+# Dark Design System CSS
 # ────────────────────────────────────────────────────────────────────────────
 st.markdown("""
 <style>
@@ -26,210 +26,219 @@ st.markdown("""
 }
 
 /* ── Tabs ────────────────────────────────────────────────────────── */
-[data-baseweb="tab-highlight"] { background-color: #57068C !important; }
-[data-testid="stTabs"] button[aria-selected="true"] {
-    color: #57068C !important; font-weight: 600 !important;
-}
-[data-testid="stTabs"] button { color: #555766; font-size: 14px; }
+[data-baseweb="tab-highlight"] { background-color: #A06BFF !important; }
+[data-testid="stTabs"] button[aria-selected="true"] { color: #ECECF2 !important; font-weight: 600 !important; }
+[data-testid="stTabs"] button { color: #9A9AAC; font-size: 14px; }
+[data-testid="stTabs"] [role="tablist"] { border-bottom: 1px solid #262633 !important; }
 
-/* ── Primary button ─────────────────────────────────────────────── */
-[data-testid="baseButton-primary"] {
-    background-color: #57068C !important;
-    border-color:     #57068C !important;
-    color:            #ffffff !important;
-    border-radius:    8px !important;
+/* ── Primary buttons ─────────────────────────────────────────────── */
+[data-testid^="baseButton-primary"] {
+    background: #A06BFF !important;
+    border-color: #A06BFF !important;
+    color: #ffffff !important;
+    border-radius: 10px !important;
+    font-weight: 600 !important;
+    box-shadow: 0 6px 20px rgba(160,107,255,0.28) !important;
+    transition: all 0.15s ease !important;
 }
-[data-testid="baseButton-primary"]:hover {
-    background-color: #3d0466 !important;
-    border-color:     #3d0466 !important;
+[data-testid^="baseButton-primary"]:hover {
+    background: #B98CFF !important;
+    border-color: #B98CFF !important;
+    transform: translateY(-1px) !important;
 }
 
 /* ── Sidebar active link ─────────────────────────────────────────── */
 [data-testid="stSidebarNav"] a[aria-current="page"] {
-    color: #57068C !important;
-    background-color: rgba(87,6,140,0.07) !important;
+    color: #ECECF2 !important;
+    background: rgba(160,107,255,0.10) !important;
     font-weight: 700 !important;
-    border-right: 3px solid #57068C !important;
-    border-radius: 0 !important;
+    border-left: 3px solid #A06BFF !important;
+    border-radius: 0 8px 8px 0 !important;
 }
-[data-testid="stSidebarNav"] a[aria-current="page"] span { color: #57068C !important; }
+[data-testid="stSidebarNav"] a[aria-current="page"] span { color: #ECECF2 !important; }
 
 /* ── Page header ─────────────────────────────────────────────────── */
 .ds-header {
-    background: #ffffff;
-    border: 1px solid #E4DEEC;
+    background: #14141C;
+    border: 1px solid #262633;
     border-radius: 14px;
     padding: 14px 22px;
     margin-bottom: 16px;
-    box-shadow: 0 2px 8px rgba(32,32,42,0.06);
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    flex-wrap: wrap;
-    gap: 10px;
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.03), 0 8px 24px rgba(0,0,0,0.4);
+    display: flex; align-items: center; justify-content: space-between;
+    flex-wrap: wrap; gap: 10px;
 }
 .ds-header-title {
-    font-size: 20px; font-weight: 800; color: #20202A;
-    letter-spacing: -0.3px; margin-bottom: 2px; line-height: 1.2;
+    font-size: 20px; font-weight: 800; color: #ECECF2;
+    letter-spacing: -0.03em; margin-bottom: 2px; line-height: 1.2;
 }
-.ds-header-sub { font-size: 13px; color: #555766; }
+.ds-header-sub { font-size: 13px; color: #9A9AAC; }
 .ds-header-badges { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
 .ds-hbadge {
-    font-size: 11px; font-weight: 600; border-radius: 6px;
-    padding: 4px 10px; white-space: nowrap;
+    font-size: 11px; font-weight: 600; border-radius: 999px;
+    padding: 4px 11px; white-space: nowrap;
 }
 
 /* ── Section headings ────────────────────────────────────────────── */
 .ds-section-title {
-    font-size: 14px; font-weight: 700; color: #20202A;
+    font-size: 13px; font-weight: 700; color: #ECECF2;
     letter-spacing: .1px; margin: 20px 0 3px 0;
+    text-transform: uppercase; letter-spacing: .5px;
 }
 .ds-section-sub {
-    font-size: 12px; color: #555766;
-    margin-bottom: 12px; line-height: 1.5;
+    font-size: 12px; color: #9A9AAC; margin-bottom: 12px; line-height: 1.5;
 }
 
 /* ── KPI metric cards ────────────────────────────────────────────── */
 .ds-kpi-card {
-    background: #ffffff;
-    border: 1px solid #E4DEEC;
+    background: #14141C;
+    border: 1px solid #262633;
     border-radius: 14px;
     padding: 16px 20px;
-    box-shadow: 0 2px 8px rgba(32,32,42,0.06);
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.03), 0 8px 24px rgba(0,0,0,0.35);
     height: 100%; min-height: 108px;
     box-sizing: border-box;
     display: flex; flex-direction: column;
 }
 .ds-kpi-label {
     font-size: 10px; font-weight: 700; text-transform: uppercase;
-    letter-spacing: .5px; margin-bottom: 6px;
+    letter-spacing: .6px; margin-bottom: 6px;
 }
 .ds-kpi-value {
     font-size: 32px; font-weight: 800; line-height: 1;
     flex: 1; display: flex; align-items: center;
+    font-variant-numeric: tabular-nums;
 }
-.ds-kpi-caption { font-size: 11px; color: #555766; margin-top: 6px; }
+.ds-kpi-caption { font-size: 11px; color: #9A9AAC; margin-top: 6px; }
 
 /* ── Callout cards ───────────────────────────────────────────────── */
 .ds-callout {
-    background: #ffffff;
-    border: 1px solid #E4DEEC;
-    border-left: 4px solid #57068C;
+    background: #14141C;
+    border: 1px solid #262633;
+    border-left: 4px solid #A06BFF;
     border-radius: 0 10px 10px 0;
     padding: 12px 16px;
     margin: 12px 0;
-    box-shadow: 0 2px 8px rgba(32,32,42,0.04);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
 }
 .ds-callout-title {
-    font-size: 11px; font-weight: 700; color: #57068C;
+    font-size: 11px; font-weight: 700; color: #A06BFF;
     text-transform: uppercase; letter-spacing: .4px; margin-bottom: 5px;
 }
-.ds-callout-body { font-size: 13px; color: #20202A; line-height: 1.55; }
-.ds-callout-note { font-size: 12px; color: #555766; margin-top: 6px; }
+.ds-callout-body { font-size: 13px; color: #ECECF2; line-height: 1.55; }
+.ds-callout-note { font-size: 12px; color: #9A9AAC; margin-top: 6px; }
 
 /* ── Calibration grid cells ──────────────────────────────────────── */
 .ds-cal-cell {
-    background: #ffffff;
-    border: 1px solid #E4DEEC;
+    background: #14141C;
+    border: 1px solid #262633;
     border-radius: 12px;
     padding: 14px 16px;
-    box-shadow: 0 2px 6px rgba(32,32,42,0.05);
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.02), 0 4px 12px rgba(0,0,0,0.3);
     display: flex; flex-direction: column;
     min-height: 112px;
 }
 .ds-cal-quadrant {
     font-size: 9px; font-weight: 700; text-transform: uppercase;
-    letter-spacing: .5px; color: #999; margin-bottom: 5px;
+    letter-spacing: .5px; color: #3A3A50; margin-bottom: 5px;
 }
 .ds-cal-name   { font-size: 13px; font-weight: 700; margin-bottom: 2px; }
-.ds-cal-count  { font-size: 28px; font-weight: 800; line-height: 1; margin-bottom: 6px; }
-.ds-cal-response { font-size: 11px; color: #555766; margin-top: auto; }
+.ds-cal-count  {
+    font-size: 28px; font-weight: 800; line-height: 1; margin-bottom: 6px;
+    font-variant-numeric: tabular-nums;
+}
+.ds-cal-response { font-size: 11px; color: #9A9AAC; margin-top: auto; }
 .ds-cal-partial {
-    background: #ffffff;
-    border: 1px solid #E4DEEC;
+    background: #14141C;
+    border: 1px solid #262633;
     border-radius: 12px;
     padding: 14px 16px;
-    box-shadow: 0 2px 6px rgba(32,32,42,0.05);
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.02), 0 4px 12px rgba(0,0,0,0.3);
     display: flex; flex-direction: column; justify-content: center;
     min-height: 112px;
 }
 
 /* ── Action badges ───────────────────────────────────────────────── */
 .ds-badge, .badge {
-    display: inline-block; border-radius: 5px; padding: 3px 9px;
+    display: inline-block; border-radius: 999px; padding: 3px 10px;
     font-size: 11px; font-weight: 700; white-space: nowrap;
 }
 
 /* ── Instructor Action Plan rows ─────────────────────────────────── */
 .ds-risk-row {
     display: flex; align-items: center;
-    background: #ffffff;
-    border: 1px solid #E4DEEC;
+    background: #14141C;
+    border: 1px solid #262633;
     border-radius: 10px;
     margin-bottom: 6px; overflow: hidden;
-    box-shadow: 0 1px 4px rgba(32,32,42,0.04);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.25);
 }
-.ds-risk-stripe { width: 5px; align-self: stretch; flex-shrink: 0; }
+.ds-risk-stripe { width: 4px; align-self: stretch; flex-shrink: 0; }
 .ds-risk-rank {
-    font-size: 12px; font-weight: 700; color: #bbb;
+    font-size: 12px; font-weight: 700; color: #3A3A50;
     width: 36px; text-align: center; flex-shrink: 0;
 }
 .ds-risk-name {
-    flex: 1; font-size: 13px; font-weight: 600; color: #20202A;
+    flex: 1; font-size: 13px; font-weight: 600; color: #ECECF2;
     padding: 11px 10px; min-width: 0;
 }
 .ds-risk-cbw {
     font-size: 14px; font-weight: 800;
     width: 80px; text-align: center; flex-shrink: 0;
+    font-variant-numeric: tabular-nums;
 }
 .ds-risk-gap {
-    font-size: 12px; color: #555766;
+    font-size: 12px; color: #9A9AAC;
     width: 88px; text-align: right; padding-right: 10px; flex-shrink: 0;
+    font-variant-numeric: tabular-nums;
 }
 .ds-risk-action {
-    width: 148px; text-align: right;
+    width: 152px; text-align: right;
     padding: 11px 12px 11px 0; flex-shrink: 0;
 }
 
 /* ── Evidence metric cards ───────────────────────────────────────── */
 .ds-ev-card {
-    background: #ffffff;
-    border: 1px solid #E4DEEC;
+    background: #14141C;
+    border: 1px solid #262633;
     border-radius: 14px;
     padding: 18px 20px;
-    box-shadow: 0 2px 8px rgba(32,32,42,0.06);
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.03), 0 8px 24px rgba(0,0,0,0.35);
     text-align: center;
 }
 .ds-ev-sublabel {
     font-size: 10px; font-weight: 700; text-transform: uppercase;
     letter-spacing: .4px; margin-bottom: 5px;
 }
-.ds-ev-value { font-size: 34px; font-weight: 800; line-height: 1.1; }
-.ds-ev-label { font-size: 11px; color: #555766; margin-top: 5px; }
+.ds-ev-value {
+    font-size: 34px; font-weight: 800; line-height: 1.1;
+    font-variant-numeric: tabular-nums;
+}
+.ds-ev-label { font-size: 11px; color: #9A9AAC; margin-top: 5px; }
 
 /* ── Data panel ──────────────────────────────────────────────────── */
 .ds-data-panel {
-    background: #ffffff;
-    border: 1px solid #E4DEEC;
+    background: #14141C;
+    border: 1px solid #262633;
     border-radius: 14px;
     padding: 18px 20px;
     margin: 12px 0;
-    box-shadow: 0 2px 8px rgba(32,32,42,0.04);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
     overflow-x: auto;
 }
 .ds-data-panel-title {
-    font-size: 13px; font-weight: 700; color: #20202A; margin-bottom: 10px;
+    font-size: 13px; font-weight: 700; color: #ECECF2; margin-bottom: 10px;
 }
 
 /* ── Robustness pass card ────────────────────────────────────────── */
 .ds-pass-card {
-    background: #ffffff;
-    border: 1px solid #E4DEEC;
+    background: #14141C;
+    border: 1px solid #262633;
     border-radius: 14px;
     padding: 16px 20px;
     display: inline-flex; flex-direction: column;
     min-width: 200px;
-    box-shadow: 0 2px 8px rgba(32,32,42,0.06);
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.03), 0 8px 24px rgba(0,0,0,0.35);
     margin-bottom: 16px;
 }
 
@@ -238,44 +247,45 @@ st.markdown("""
 .ds-rank-table th {
     text-align: left; padding: 8px 12px;
     font-weight: 600; font-size: 11px;
-    text-transform: uppercase; letter-spacing: .4px; color: #555766;
-    border-bottom: 2px solid #E4DEEC; background: #faf9fc;
+    text-transform: uppercase; letter-spacing: .4px; color: #9A9AAC;
+    border-bottom: 1px solid #262633; background: #1A1A24;
 }
 .ds-rank-table td {
-    padding: 9px 12px; border-bottom: 1px solid #f0eef5;
-    vertical-align: middle; color: #20202A; word-break: break-word;
+    padding: 9px 12px; border-bottom: 1px solid rgba(38,38,51,0.8);
+    vertical-align: middle; color: #ECECF2; word-break: break-word;
 }
-.ds-rank-table tbody tr:hover td { background: #f7f3ff; }
+.ds-rank-table tbody tr:hover td { background: #1A1A24; }
 
-/* ── Expander ────────────────────────────────────────────────────── */
+/* ── Expanders ───────────────────────────────────────────────────── */
 [data-testid="stExpander"] {
-    border: 1px solid #E4DEEC !important;
+    border: 1px solid #262633 !important;
     border-radius: 12px !important;
     overflow: hidden !important;
-    background: #ffffff !important;
+    background: #14141C !important;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3) !important;
 }
 
 /* ── Misc ────────────────────────────────────────────────────────── */
-hr { border-color: #E4DEEC !important; }
-[data-testid="stCaption"] { color: #555766 !important; font-size: 12px !important; }
+hr { border-color: #262633 !important; opacity: 1 !important; }
+[data-testid="stCaption"] { color: #9A9AAC !important; font-size: 12px !important; }
 </style>
 """, unsafe_allow_html=True)
 
 
 # ────────────────────────────────────────────────────────────────────────────
-# Heatmap helper
+# Heatmap helper  (dark mode)
 # ────────────────────────────────────────────────────────────────────────────
 def _heatmap_html(cm_df: pd.DataFrame, labels: list) -> str:
     def cell_style(v: int, is_diag: bool) -> str:
-        if is_diag:   return "background:#dcfce7;color:#166534"
-        if v == 0:    return "background:#f9fafa;color:#ccc"
-        if v <= 2:    return "background:#fee2e2;color:#991b1b"
-        if v <= 4:    return "background:#fca5a5;color:#7f1d1d"
-        return "background:#f87171;color:#7f1d1d"
+        if is_diag: return "background:rgba(61,220,151,0.15);color:#3DDC97"
+        if v == 0:  return "background:#1A1A24;color:#3A3A50"
+        if v <= 2:  return "background:rgba(255,92,108,0.12);color:#FF5C6C"
+        if v <= 4:  return "background:rgba(255,92,108,0.28);color:#FF5C6C"
+        return      "background:rgba(255,92,108,0.48);color:#FF5C6C"
 
-    th       = "padding:10px 14px;font-size:12px;font-weight:600;color:#555766;border:1px solid #E4DEEC;background:#faf9fc;white-space:nowrap;text-align:center;"
-    td_label = "padding:10px 14px;font-size:12px;font-weight:600;color:#555766;white-space:nowrap;border:1px solid #E4DEEC;background:#faf9fc;"
-    corner   = "padding:10px 14px;font-size:11px;font-weight:600;color:#888;border:1px solid #E4DEEC;background:#f4f2f9;white-space:nowrap;"
+    th       = "padding:10px 14px;font-size:12px;font-weight:600;color:#9A9AAC;border:1px solid #262633;background:#1A1A24;white-space:nowrap;text-align:center;"
+    td_label = "padding:10px 14px;font-size:12px;font-weight:600;color:#9A9AAC;white-space:nowrap;border:1px solid #262633;background:#1A1A24;"
+    corner   = "padding:10px 14px;font-size:11px;font-weight:600;color:#3A3A50;border:1px solid #262633;background:#14141C;white-space:nowrap;"
 
     head = "".join(f'<th style="{th}">{c}</th>' for c in labels)
     rows = []
@@ -286,26 +296,27 @@ def _heatmap_html(cm_df: pd.DataFrame, labels: list) -> str:
             style = cell_style(v, r == c)
             cells.append(
                 f'<td style="{style};text-align:center;padding:10px 14px;'
-                f'font-weight:700;font-size:15px;border:1px solid #E4DEEC;">{v}</td>'
+                f'font-weight:700;font-size:15px;border:1px solid #262633;'
+                f'font-variant-numeric:tabular-nums;">{v}</td>'
             )
         rows.append(f'<tr><td style="{td_label}">{r}</td>{"".join(cells)}</tr>')
     return (
-        f'<table style="border-collapse:collapse;font-family:sans-serif;width:100%;">'
+        f'<table style="border-collapse:collapse;font-family:inherit;width:100%;">'
         f'<thead><tr><th style="{corner}">ground truth \\ computed</th>{head}</tr></thead>'
         f'<tbody>{"".join(rows)}</tbody></table>'
     )
 
 
 # ────────────────────────────────────────────────────────────────────────────
-# Constants
+# Constants  (dark semantic colors)
 # ────────────────────────────────────────────────────────────────────────────
 ALL_LABELS = ["understands", "underconfident", "partial", "knows_confused", "confident_but_wrong"]
 LABEL_COLOR = {
-    "understands":         "#22c55e",
-    "underconfident":      "#3b82f6",
-    "partial":             "#a78bfa",
-    "knows_confused":      "#f59e0b",
-    "confident_but_wrong": "#ef4444",
+    "understands":         "#3DDC97",
+    "underconfident":      "#5AA9FF",
+    "partial":             "#C4B5FD",
+    "knows_confused":      "#F5B544",
+    "confident_but_wrong": "#FF5C6C",
 }
 LABEL_DISPLAY = {
     "understands":         "Understands",
@@ -412,7 +423,7 @@ def stacked_bar_html(raw_counts: dict) -> tuple[str, list[str]]:
             continue
         segments += (
             f'<div title="{LABEL_DISPLAY[lbl]}: {n}" style="'
-            f'flex:{n};background:{LABEL_COLOR[lbl]};height:100%;"></div>'
+            f'flex:{n};background:{LABEL_COLOR[lbl]};height:100%;opacity:0.85;"></div>'
         )
 
     legend_items = ""
@@ -420,15 +431,15 @@ def stacked_bar_html(raw_counts: dict) -> tuple[str, list[str]]:
         n = counts.get(lbl, 0)
         legend_items += (
             f'<span style="display:inline-flex;align-items:center;'
-            f'margin-right:14px;font-size:12px;color:#555766;">'
+            f'margin-right:14px;font-size:12px;color:#9A9AAC;">'
             f'<span style="width:10px;height:10px;border-radius:2px;'
             f'background:{LABEL_COLOR[lbl]};display:inline-block;margin-right:4px;'
-            f'flex-shrink:0;"></span>{LABEL_DISPLAY[lbl]} ({n})</span>'
+            f'flex-shrink:0;opacity:0.85;"></span>{LABEL_DISPLAY[lbl]} ({n})</span>'
         )
 
     html = (
-        f'<div style="width:100%;height:22px;border-radius:4px;overflow:hidden;'
-        f'display:flex;margin-bottom:6px;">{segments}</div>'
+        f'<div style="width:100%;height:20px;border-radius:4px;overflow:hidden;'
+        f'display:flex;margin-bottom:6px;background:#1A1A24;">{segments}</div>'
         f'<div style="display:flex;flex-wrap:wrap;margin-bottom:8px;">{legend_items}</div>'
     )
     return html, unknown
@@ -453,7 +464,7 @@ for row in summary_rows:
     lbl = row["label"]
     cnt = int(row["count"])
     topic_data[t]["label_counts"][lbl]  = cnt
-    topic_data[t]["_conf_sum"]         += float(row["avg_confidence"])   * cnt
+    topic_data[t]["_conf_sum"]         += float(row["avg_confidence"])    * cnt
     topic_data[t]["_und_sum"]          += float(row["avg_understanding"]) * cnt
     topic_data[t]["_total"]            += cnt
 for t, d in topic_data.items():
@@ -481,7 +492,7 @@ for row in evidence_rows:
         normalize_label(row["computed_label"]),
     ))
 
-# Pre-compute global stats (used in header and overview)
+# Pre-compute global stats
 total_analyzed = sum(d["_total"] for _, d in sorted_topics)
 total_cbw      = sum(d["label_counts"]["confident_but_wrong"] for _, d in sorted_topics)
 avg_gap        = (
@@ -498,7 +509,7 @@ for _, d in sorted_topics:
 
 
 # ────────────────────────────────────────────────────────────────────────────
-# Display helpers (logic unchanged, scoped to module level)
+# Display helpers
 # ────────────────────────────────────────────────────────────────────────────
 def gap_label(gap: float) -> str:
     if gap >= 1.0: return "High overconfidence"
@@ -517,26 +528,27 @@ def action_label(cbw: int, gap: float) -> str:
 def action_chip_html(cbw: int, gap: float) -> str:
     label = action_label(cbw, gap)
     styles = {
-        "Reteach first":     "color:#b91c1c;background:#fef2f2;",
-        "Reassure students": "color:#1d4ed8;background:#eff6ff;",
-        "Monitor":           "color:#374151;background:#f3f4f6;",
+        "Reteach first":     "color:#FF5C6C;background:rgba(255,92,108,0.12);border:1px solid rgba(255,92,108,0.25);",
+        "Reassure students": "color:#5AA9FF;background:rgba(90,169,255,0.12);border:1px solid rgba(90,169,255,0.25);",
+        "Monitor":           "color:#9A9AAC;background:rgba(154,154,172,0.10);border:1px solid rgba(154,154,172,0.20);",
     }
-    s = styles.get(label, "color:#333;background:#f3f4f6;")
+    s = styles.get(label, "color:#9A9AAC;background:rgba(154,154,172,0.10);")
     return f'<span class="ds-badge" style="{s}">{label}</span>'
 
 
 _ACTION_STRIPE = {
-    "Reteach first":     "#dc2626",
-    "Reassure students": "#2563eb",
-    "Monitor":           "#9ca3af",
+    "Reteach first":     "#FF5C6C",
+    "Reassure students": "#5AA9FF",
+    "Monitor":           "#3A3A50",
 }
 
 
 # ────────────────────────────────────────────────────────────────────────────
-# Page Header  (reads total_analyzed live from data)
+# Page Header
 # ────────────────────────────────────────────────────────────────────────────
 _analyzed_badge = (
-    f'<span class="ds-hbadge" style="background:#f3eefe;color:#57068C;">'
+    f'<span class="ds-hbadge" style="background:rgba(160,107,255,0.12);'
+    f'color:#A06BFF;border:1px solid rgba(160,107,255,0.25);">'
     f'{total_analyzed} analyzed</span>'
 ) if total_analyzed else ""
 
@@ -544,13 +556,11 @@ st.markdown(f"""
 <div class="ds-header">
   <div>
     <div class="ds-header-title">Faculty Dashboard</div>
-    <div class="ds-header-sub">
-      Confidence vs. demonstrated understanding across student reflections
-    </div>
+    <div class="ds-header-sub">Confidence vs. demonstrated understanding across student reflections</div>
   </div>
   <div class="ds-header-badges">
     {_analyzed_badge}
-    <span class="ds-hbadge" style="background:#f0f0f5;color:#555766;">
+    <span class="ds-hbadge" style="background:#1A1A24;color:#9A9AAC;border:1px solid #262633;">
       Simulated dataset
     </span>
   </div>
@@ -581,7 +591,7 @@ with tab_overview:
   </div>
 </div>""", unsafe_allow_html=True)
 
-    # Analyze button (unchanged logic) ─────────────────────────────────────
+    # Analyze button ────────────────────────────────────────────────────────
     if unanalyzed:
         st.write(f"**{len(unanalyzed)}** reflection(s) have not been analyzed yet.")
         if st.button("Analyze unanalyzed reflections", type="primary", key="analyze_btn"):
@@ -622,7 +632,7 @@ with tab_overview:
             st.rerun()
     else:
         st.markdown(
-            "<p style='font-size:12px;color:#555766;margin:4px 0 10px 0;'>"
+            "<p style='font-size:12px;color:#9A9AAC;margin:4px 0 10px 0;'>"
             "All reflections have been analyzed.</p>",
             unsafe_allow_html=True,
         )
@@ -634,27 +644,27 @@ with tab_overview:
         # 2. KPI Metrics ────────────────────────────────────────────────────
         m1, m2, m3, m4 = st.columns(4)
         m1.markdown(f"""
-<div class="ds-kpi-card" style="border-top:3px solid #57068C;">
-  <div class="ds-kpi-label" style="color:#57068C;">Total analyzed</div>
+<div class="ds-kpi-card" style="border-top:3px solid #A06BFF;">
+  <div class="ds-kpi-label" style="color:#A06BFF;">Total analyzed</div>
   <div class="ds-kpi-value">{total_analyzed}</div>
   <div class="ds-kpi-caption">Reflections processed by the model</div>
 </div>""", unsafe_allow_html=True)
         m2.markdown(f"""
-<div class="ds-kpi-card" style="border-top:3px solid #dc2626;">
-  <div class="ds-kpi-label" style="color:#dc2626;">Confident but wrong</div>
-  <div class="ds-kpi-value" style="color:#dc2626;">{total_cbw}</div>
+<div class="ds-kpi-card" style="border-top:3px solid #FF5C6C;">
+  <div class="ds-kpi-label" style="color:#FF5C6C;">Confident but wrong</div>
+  <div class="ds-kpi-value" style="color:#FF5C6C;">{total_cbw}</div>
   <div class="ds-kpi-caption">Highest-priority learning risk</div>
 </div>""", unsafe_allow_html=True)
         m3.markdown(f"""
-<div class="ds-kpi-card" style="border-top:3px solid #d97706;">
-  <div class="ds-kpi-label" style="color:#d97706;">Avg calibration gap</div>
-  <div class="ds-kpi-value" style="color:#d97706;">{avg_gap:+.2f}</div>
+<div class="ds-kpi-card" style="border-top:3px solid #F5B544;">
+  <div class="ds-kpi-label" style="color:#F5B544;">Avg calibration gap</div>
+  <div class="ds-kpi-value" style="color:#F5B544;">{avg_gap:+.2f}</div>
   <div class="ds-kpi-caption">Positive = students overconfident on average</div>
 </div>""", unsafe_allow_html=True)
         m4.markdown(f"""
-<div class="ds-kpi-card" style="border-top:3px solid #2563eb;">
-  <div class="ds-kpi-label" style="color:#2563eb;">Underconfidence topics</div>
-  <div class="ds-kpi-value" style="color:#2563eb;">{topics_with_uc}</div>
+<div class="ds-kpi-card" style="border-top:3px solid #5AA9FF;">
+  <div class="ds-kpi-label" style="color:#5AA9FF;">Underconfidence topics</div>
+  <div class="ds-kpi-value" style="color:#5AA9FF;">{topics_with_uc}</div>
   <div class="ds-kpi-caption">May need reassurance, not reteaching</div>
 </div>""", unsafe_allow_html=True)
 
@@ -667,56 +677,59 @@ with tab_overview:
 </div>""", unsafe_allow_html=True)
 
         _gc = global_counts
-        # Build HTML with no blank lines — blank lines inside an f-string HTML block
-        # cause Python-Markdown to exit HTML-block mode and render the rest as text.
+        # Build HTML as Python strings — no blank lines — to prevent Markdown
+        # from exiting HTML-block mode mid-string.
         _cell_uc = (
-            '<div class="ds-cal-cell" style="border-top:3px solid #3b82f6;">'
+            '<div class="ds-cal-cell" style="border-top:3px solid #5AA9FF;">'
             '<div class="ds-cal-quadrant">Low confidence · High understanding</div>'
-            '<div class="ds-cal-name" style="color:#3b82f6;">Underconfident</div>'
-            f'<div class="ds-cal-count" style="color:#3b82f6;">{_gc["underconfident"]}</div>'
+            '<div class="ds-cal-name" style="color:#5AA9FF;">Underconfident</div>'
+            f'<div class="ds-cal-count" style="color:#5AA9FF;">{_gc["underconfident"]}</div>'
             '<div class="ds-cal-response">Reassure students</div>'
             '</div>'
         )
         _cell_un = (
-            '<div class="ds-cal-cell" style="border-top:3px solid #22c55e;">'
+            '<div class="ds-cal-cell" style="border-top:3px solid #3DDC97;">'
             '<div class="ds-cal-quadrant">High confidence · High understanding</div>'
-            '<div class="ds-cal-name" style="color:#22c55e;">Understands</div>'
-            f'<div class="ds-cal-count" style="color:#22c55e;">{_gc["understands"]}</div>'
+            '<div class="ds-cal-name" style="color:#3DDC97;">Understands</div>'
+            f'<div class="ds-cal-count" style="color:#3DDC97;">{_gc["understands"]}</div>'
             '<div class="ds-cal-response">No action needed</div>'
             '</div>'
         )
         _cell_kc = (
-            '<div class="ds-cal-cell" style="border-top:3px solid #f59e0b;">'
+            '<div class="ds-cal-cell" style="border-top:3px solid #F5B544;">'
             '<div class="ds-cal-quadrant">Low confidence · Low understanding</div>'
-            '<div class="ds-cal-name" style="color:#f59e0b;">Knows confused</div>'
-            f'<div class="ds-cal-count" style="color:#f59e0b;">{_gc["knows_confused"]}</div>'
+            '<div class="ds-cal-name" style="color:#F5B544;">Knows confused</div>'
+            f'<div class="ds-cal-count" style="color:#F5B544;">{_gc["knows_confused"]}</div>'
             '<div class="ds-cal-response">Support and reteach</div>'
             '</div>'
         )
         _risk_tag = (
-            '<span style="font-size:9px;font-weight:800;background:#dc2626;color:#fff;'
+            '<span style="font-size:9px;font-weight:800;background:#FF5C6C;color:#fff;'
             'border-radius:3px;padding:2px 5px;flex-shrink:0;white-space:nowrap;">'
             'HIGHEST RISK</span>'
         )
         _cell_cbw = (
-            '<div class="ds-cal-cell" style="border-top:4px solid #dc2626;background:#fff8f8;">'
+            '<div class="ds-cal-cell" style="border-top:4px solid #FF5C6C;'
+            'background:rgba(255,92,108,0.05);">'
             '<div class="ds-cal-quadrant">High confidence · Low understanding</div>'
             '<div style="display:flex;align-items:baseline;gap:6px;flex-wrap:wrap;margin-bottom:2px;">'
-            f'<span class="ds-cal-name" style="color:#dc2626;">Confident but wrong</span>{_risk_tag}'
+            f'<span class="ds-cal-name" style="color:#FF5C6C;">Confident but wrong</span>{_risk_tag}'
             '</div>'
-            f'<div class="ds-cal-count" style="color:#dc2626;">{_gc["confident_but_wrong"]}</div>'
+            f'<div class="ds-cal-count" style="color:#FF5C6C;">{_gc["confident_but_wrong"]}</div>'
             '<div class="ds-cal-response">Reteach first</div>'
             '</div>'
         )
         _y_label = (
-            '<div style="writing-mode:vertical-rl;text-orientation:mixed;transform:rotate(180deg);'
-            'font-size:11px;font-weight:600;color:#555766;letter-spacing:.3px;'
-            'display:flex;align-items:center;justify-content:center;padding:4px 2px;">'
+            '<div style="writing-mode:vertical-rl;text-orientation:mixed;'
+            'transform:rotate(180deg);font-size:11px;font-weight:600;color:#9A9AAC;'
+            'letter-spacing:.3px;display:flex;align-items:center;'
+            'justify-content:center;padding:4px 2px;white-space:nowrap;">'
             '↑ Demonstrated understanding</div>'
         )
         _x_label = (
-            '<div style="text-align:center;font-size:11px;font-weight:600;color:#555766;'
-            'letter-spacing:.3px;padding-top:4px;">Student confidence →</div>'
+            '<div style="text-align:center;font-size:11px;font-weight:600;'
+            'color:#9A9AAC;letter-spacing:.3px;padding-top:4px;">'
+            'Student confidence →</div>'
         )
         _inner_grid = (
             '<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">'
@@ -724,10 +737,10 @@ with tab_overview:
             + '</div>'
         )
         _partial = (
-            '<div class="ds-cal-partial" style="border-top:3px solid #a78bfa;min-width:140px;">'
+            '<div class="ds-cal-partial" style="border-top:3px solid #C4B5FD;min-width:140px;">'
             '<div class="ds-cal-quadrant">Mixed signals</div>'
-            '<div class="ds-cal-name" style="color:#7c3aed;">Partial</div>'
-            f'<div class="ds-cal-count" style="color:#7c3aed;">{_gc["partial"]}</div>'
+            '<div class="ds-cal-name" style="color:#C4B5FD;">Partial</div>'
+            f'<div class="ds-cal-count" style="color:#C4B5FD;">{_gc["partial"]}</div>'
             '<div class="ds-cal-response">Review examples</div>'
             '</div>'
         )
@@ -735,8 +748,7 @@ with tab_overview:
             '<div style="display:flex;gap:10px;align-items:stretch;margin-bottom:8px;">'
             + _y_label
             + '<div style="flex:1;display:flex;flex-direction:column;gap:6px;">'
-            + _inner_grid
-            + _x_label
+            + _inner_grid + _x_label
             + '</div>'
             + _partial
             + '</div>'
@@ -757,7 +769,9 @@ with tab_overview:
                 count_desc = f"{hi} confident-but-wrong reflections each"
             else:
                 count_desc = f"between {lo} and {hi} confident-but-wrong reflections each"
-            names_html = ", ".join(f"<strong>{n}</strong>" for n, _ in top_cbw_topics)
+            names_html = ", ".join(
+                f'<strong style="color:#ECECF2;">{n}</strong>' for n, _ in top_cbw_topics
+            )
             st.markdown(f"""
 <div class="ds-callout">
   <div class="ds-callout-title">Top insight</div>
@@ -784,15 +798,15 @@ with tab_overview:
             _cbw  = _td["label_counts"]["confident_but_wrong"]
             _gap  = _td["calibration_gap"]
             _act  = action_label(_cbw, _gap)
-            _sc   = _ACTION_STRIPE.get(_act, "#9ca3af")
+            _sc   = _ACTION_STRIPE.get(_act, "#3A3A50")
             _chip = action_chip_html(_cbw, _gap)
             risk_rows_html += (
                 f'<div class="ds-risk-row">'
                 f'<div class="ds-risk-stripe" style="background:{_sc};"></div>'
                 f'<div class="ds-risk-rank">{_rank}</div>'
                 f'<div class="ds-risk-name">{_tname}</div>'
-                f'<div class="ds-risk-cbw" style="color:#dc2626;">{_cbw}'
-                f'<span style="font-size:11px;color:#aaa;font-weight:400;'
+                f'<div class="ds-risk-cbw" style="color:#FF5C6C;">{_cbw}'
+                f'<span style="font-size:11px;color:#3A3A50;font-weight:400;'
                 f'margin-left:3px;">CBW</span></div>'
                 f'<div class="ds-risk-gap">{_gap:+.2f}</div>'
                 f'<div class="ds-risk-action">{_chip}</div>'
@@ -812,11 +826,11 @@ with tab_overview:
                 gap = d["calibration_gap"]
                 rows_html += (
                     f"<tr>"
-                    f"<td style='width:40px;color:#bbb;font-weight:700;'>{rank}</td>"
+                    f"<td style='width:40px;color:#3A3A50;font-weight:700;'>{rank}</td>"
                     f"<td>{topic_name}</td>"
-                    f"<td style='width:120px;text-align:center;'>{cbw}</td>"
+                    f"<td style='width:120px;text-align:center;color:#FF5C6C;font-weight:700;'>{cbw}</td>"
                     f"<td style='width:190px;'>{gap:+.2f}"
-                    f"<span style='color:#555766;font-size:12px;margin-left:5px;'>"
+                    f"<span style='color:#9A9AAC;font-size:12px;margin-left:5px;'>"
                     f"{gap_label(gap)}</span></td>"
                     f"<td style='width:155px;'>{action_chip_html(cbw, gap)}</td>"
                     f"</tr>"
@@ -908,34 +922,34 @@ with tab_evidence:
 
         ev1, ev2, ev3 = st.columns(3)
         ev1.markdown(f"""
-<div class="ds-ev-card" style="border-top:3px solid #57068C;">
-  <div class="ds-ev-sublabel" style="color:#57068C;">Overall accuracy</div>
-  <div class="ds-ev-value" style="color:#20202A;">{accuracy:.0%}</div>
+<div class="ds-ev-card" style="border-top:3px solid #A06BFF;">
+  <div class="ds-ev-sublabel" style="color:#A06BFF;">Overall accuracy</div>
+  <div class="ds-ev-value" style="color:#ECECF2;">{accuracy:.0%}</div>
   <div class="ds-ev-label">{correct_ev} of {total_ev} correct</div>
 </div>""", unsafe_allow_html=True)
         ev2.markdown(f"""
-<div class="ds-ev-card" style="border-top:3px solid #d97706;">
-  <div class="ds-ev-sublabel" style="color:#d97706;">CBW precision</div>
-  <div class="ds-ev-value" style="color:#d97706;">{precision:.0%}</div>
+<div class="ds-ev-card" style="border-top:3px solid #F5B544;">
+  <div class="ds-ev-sublabel" style="color:#F5B544;">CBW precision</div>
+  <div class="ds-ev-value" style="color:#F5B544;">{precision:.0%}</div>
   <div class="ds-ev-label">Of flagged CBW, this share truly were</div>
 </div>""", unsafe_allow_html=True)
         ev3.markdown(f"""
-<div class="ds-ev-card" style="border-top:3px solid #dc2626;">
-  <div class="ds-ev-sublabel" style="color:#dc2626;">CBW recall — key metric</div>
-  <div class="ds-ev-value" style="color:#dc2626;">{recall:.0%}</div>
+<div class="ds-ev-card" style="border-top:3px solid #FF5C6C;">
+  <div class="ds-ev-sublabel" style="color:#FF5C6C;">CBW recall — key metric</div>
+  <div class="ds-ev-value" style="color:#FF5C6C;">{recall:.0%}</div>
   <div class="ds-ev-label">Of true CBW cases, this share were caught</div>
 </div>""", unsafe_allow_html=True)
 
         st.markdown("""
-<div class="ds-callout" style="border-left-color:#16a34a;margin-top:14px;">
-  <div class="ds-callout-body" style="color:#166534;">
+<div class="ds-callout" style="border-left-color:#3DDC97;margin-top:14px;">
+  <div class="ds-callout-body" style="color:#3DDC97;">
     The model caught every confident-but-wrong case in the simulated dataset,
     the group least likely to ask for help on its own.
   </div>
 </div>""", unsafe_allow_html=True)
 
         st.markdown(
-            "<p style='font-size:12px;color:#555766;line-height:1.5;margin:6px 0 14px 0;'>"
+            "<p style='font-size:12px;color:#9A9AAC;line-height:1.5;margin:6px 0 14px 0;'>"
             "These results are based on a simulated labeled dataset built to test whether the "
             "system can classify calibration patterns consistently. In a real deployment, "
             "instructor-labeled student reflections would be used to further validate the model."
@@ -973,7 +987,7 @@ with tab_evidence:
         st.markdown(
             '<div class="ds-data-panel">'
             '<div class="ds-data-panel-title">Confusion matrix'
-            '<span style="font-size:11px;font-weight:400;color:#555766;margin-left:8px;">'
+            '<span style="font-size:11px;font-weight:400;color:#9A9AAC;margin-left:8px;">'
             'rows: ground truth · columns: computed label</span></div>'
             + _heatmap_html(cm_df, ALL_LABELS)
             + '</div>',
@@ -1048,11 +1062,11 @@ with tab_robustness:
         passes    = sum(1 for r in adv_results if r["Result"] == "Pass")
         total_adv = len(ADVERSARIAL_CASES)
         if passes == total_adv:
-            rate_color = "#16a34a"
+            rate_color = "#3DDC97"
         elif passes >= total_adv // 2:
-            rate_color = "#d97706"
+            rate_color = "#F5B544"
         else:
-            rate_color = "#dc2626"
+            rate_color = "#FF5C6C"
 
         st.markdown(f"""
 <div class="ds-pass-card" style="border-top:3px solid {rate_color};">
@@ -1060,10 +1074,11 @@ with tab_robustness:
               letter-spacing:.5px;color:{rate_color};margin-bottom:4px;">
     Robustness pass rate
   </div>
-  <div style="font-size:34px;font-weight:800;line-height:1;color:{rate_color};">
+  <div style="font-size:34px;font-weight:800;line-height:1;color:{rate_color};
+              font-variant-numeric:tabular-nums;">
     {passes}/{total_adv}
   </div>
-  <div style="font-size:11px;color:#555766;margin-top:5px;">
+  <div style="font-size:11px;color:#9A9AAC;margin-top:5px;">
     adversarial cases correctly labeled confident_but_wrong
   </div>
 </div>""", unsafe_allow_html=True)

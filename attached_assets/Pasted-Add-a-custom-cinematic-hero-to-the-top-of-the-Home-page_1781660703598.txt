@@ -1,0 +1,101 @@
+Add a custom cinematic hero to the top of the Home page using `streamlit.components.v1.html` with an explicit height.
+
+This is the only section that should use fully custom HTML/CSS/JS inside an iframe. It is visual only.
+
+Hard rules:
+
+* Presentation only.
+* Do not change the database.
+* Do not change saved results.
+* Do not change model logic.
+* Do not change scoring logic.
+* Do not change label rules.
+* Do not change navigation logic.
+* Do not change any data or displayed numbers.
+* Do not change the Student Reflection page.
+* Do not change the Faculty Dashboard page.
+* Do not change the About & Responsible Use page.
+* Do not put working navigation or CTAs inside the iframe, since iframe buttons cannot reliably trigger Streamlit page changes.
+* Keep the existing working “Submit a reflection” and “View analytics” Streamlit buttons below the hero.
+* Keep the three explainer cards below the hero.
+* No new Python dependencies.
+* The iframe may load Google Fonts with graceful system font fallbacks.
+* Render the hero through `components.html(...)`, not as visible code.
+* Run the app and fix every error.
+
+Implementation:
+
+* Import Streamlit components if needed:
+  `import streamlit.components.v1 as components`
+* Use `components.html(hero_html, height=460, scrolling=False)` or the closest working equivalent.
+* The iframe should have no visible border, no internal scrollbars, no white background, and no obvious iframe box.
+* The iframe background should match the page background so it blends into the Home page.
+* Do not let the hero clip on common laptop widths.
+* On narrow screens, stack the text above the visual motif and reduce sizes.
+
+Hero spec:
+
+* Full-width dark panel.
+* Desktop height around 440px to 480px.
+* Mobile/narrow height can be taller if needed, but should remain comfortable.
+* Background: deep #0B0B12 with layered low-opacity radial glows:
+
+  * soft violet #7C5CFF toward the top left
+  * cool blue #5AA9FF toward the lower right
+* Add a very faint hairline grid that fades toward the edges.
+* Add a subtle slow drift animation on the glow.
+* Keep the effect tasteful, not neon, not crypto, not gaming.
+
+Left side:
+
+* Small monospace eyebrow:
+  `ACADEMIC LEARNING ANALYTICS`
+* Wordmark:
+  `Calibration Detector`
+* Strong display font, preferably Space Grotesk with system fallback.
+* One-line tagline:
+  `Where student confidence outpaces real understanding.`
+* Tagline should use Inter/system font and muted text.
+
+Right side:
+
+* Animated 2x2 calibration motif as the signature visual.
+* Four cells with thin hairline borders on the dark base.
+* Each cell has a small monospace label:
+
+  * Underconfident
+  * Understands
+  * Knows confused
+  * Confident but wrong
+* The Confident but wrong cell should have a soft, slow red glow using #FF5C6C to mark it as the highest-risk quadrant.
+* Add quiet axis hints:
+
+  * `confidence →` along the bottom
+  * `understanding ↑` along the left side
+* Axis hints should be subtle and readable.
+
+Motion:
+
+* Add a subtle fade and slide-up on load.
+* Motion should be lightweight CSS where possible.
+* Avoid heavy JavaScript.
+* Respect reduced-motion users with `@media (prefers-reduced-motion: reduce)` by disabling animations.
+* No bouncing, no distracting loops, no aggressive pulsing.
+
+After the hero:
+
+* Leave the existing real Streamlit navigation buttons below the hero.
+* Leave the three explainer cards below the hero.
+* Do not duplicate the CTAs inside the iframe.
+
+Before finishing:
+
+* Run the app.
+* Confirm Home loads.
+* Confirm the hero renders as a real visual, not visible HTML code.
+* Confirm there is no visible iframe border or white iframe background.
+* Confirm there are no internal iframe scrollbars.
+* Confirm the existing “Submit a reflection” and “View analytics” buttons still work.
+* Confirm no other page changed.
+* Summarize which files changed and what was done.
+* After adding the hero, verify that the Home page CTAs are still real Streamlit buttons outside the iframe. They must navigate to Student Reflection and Faculty Dashboard exactly as they did before. Do not recreate those buttons inside the HTML iframe.

@@ -795,12 +795,18 @@ with tab_overview:
         st.markdown("""
 <div class="ds-section-title">Instructor Action Plan</div>
 <div class="ds-section-sub">
-  Topics are ranked by confident-but-wrong count.
-  Action labels also consider calibration gap.
+  Priorities that need action now: topics whose recommended action is Reteach first,
+  ranked by confident-but-wrong count. Falls back to the top three if none qualify.
 </div>""", unsafe_allow_html=True)
 
+        _reteach_topics = [
+            (nm, d) for nm, d in sorted_topics
+            if action_label(d["label_counts"]["confident_but_wrong"], d["calibration_gap"]) == "Reteach first"
+        ]
+        _action_plan_topics = _reteach_topics if _reteach_topics else list(sorted_topics)[:3]
+
         risk_rows_html = ""
-        for _rank, (_tname, _td) in enumerate(sorted_topics, start=1):
+        for _rank, (_tname, _td) in enumerate(_action_plan_topics, start=1):
             _cbw  = _td["label_counts"]["confident_but_wrong"]
             _gap  = _td["calibration_gap"]
             _act  = action_label(_cbw, _gap)
@@ -941,7 +947,7 @@ with tab_evidence:
 </div>""", unsafe_allow_html=True)
         ev3.markdown(f"""
 <div class="ds-ev-card" style="border-top:3px solid #FF5C6C;">
-  <div class="ds-ev-sublabel" style="color:#FF5C6C;">CBW recall — key metric</div>
+  <div class="ds-ev-sublabel" style="color:#FF5C6C;">CBW recall · key metric</div>
   <div class="ds-ev-value" style="color:#FF5C6C;">{recall:.0%}</div>
   <div class="ds-ev-label">Of true CBW cases, this share were caught</div>
 </div>""", unsafe_allow_html=True)
@@ -1104,6 +1110,6 @@ with tab_robustness:
 
         st.markdown("**Reflection text per case:**")
         for r in adv_results:
-            icon = "✅" if r["Result"] == "Pass" else "❌"
+            icon = "✓" if r["Result"] == "Pass" else "✗"
             with st.expander(f"{icon} {r['Topic']}"):
                 st.write(r["Reflection"])

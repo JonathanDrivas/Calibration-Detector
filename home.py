@@ -68,7 +68,7 @@ st.markdown("""
     <div class="home-card-title">What it does</div>
     <div class="home-card-body">
       Reads short student reflections and flags topics where students are confident
-      but have shaky understanding — the group least likely to ask for help on their own.
+      but have shaky understanding, the group least likely to ask for help on their own.
     </div>
   </div>
   <div class="home-card">
@@ -86,7 +86,7 @@ st.markdown("""
     <div class="home-card-body">
       Students who are confident but wrong rarely seek help. Catching that
       gap early lets instructors address misconceptions before they
-      compound — without waiting for exam results.
+      compound, without waiting for exam results.
     </div>
   </div>
 </div>
@@ -102,8 +102,8 @@ st.markdown(
 
 cta1, cta2, _ = st.columns([1.5, 1.5, 4])
 with cta1:
-    if st.button("✏  Submit a reflection", type="primary", use_container_width=True):
+    if st.button("Submit a reflection", type="primary", use_container_width=True):
         st.switch_page("pages/1_Student_Reflection.py")
 with cta2:
-    if st.button("📊  View analytics", use_container_width=True):
+    if st.button("View analytics", use_container_width=True):
         st.switch_page("pages/2_Faculty_Dashboard.py")

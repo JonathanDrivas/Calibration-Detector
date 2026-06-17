@@ -175,9 +175,9 @@ hr                          { border-color: #262633 !important; opacity: 1 !impo
 """, unsafe_allow_html=True)
 
 pg = st.navigation([
-    st.Page("home.py",                              title="Home",                   icon="🎯"),
-    st.Page("pages/1_Student_Reflection.py",        title="Student Reflection",     icon="✏️"),
-    st.Page("pages/2_Faculty_Dashboard.py",         title="Faculty Dashboard",      icon="📊"),
-    st.Page("pages/3_About_and_Responsible_Use.py", title="About & Responsible Use",icon="ℹ️"),
+    st.Page("home.py",                              title="Home"),
+    st.Page("pages/1_Student_Reflection.py",        title="Student Reflection"),
+    st.Page("pages/2_Faculty_Dashboard.py",         title="Faculty Dashboard"),
+    st.Page("pages/3_About_and_Responsible_Use.py", title="About & Responsible Use"),
 ])
 pg.run()

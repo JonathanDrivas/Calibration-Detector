@@ -89,7 +89,7 @@ st.markdown("""
     <div class="about-card-body">
       The model reads understanding from text, which is an imperfect signal.
       Low-certainty cases are surfaced for human review, and the tool is designed
-      to support a teacher's judgment — not replace it.
+      to support a teacher's judgment, not replace it.
     </div>
   </div>
 

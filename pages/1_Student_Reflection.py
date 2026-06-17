@@ -97,7 +97,7 @@ with left_col:
   <div class="sr-step">
     <div class="sr-step-num">2</div>
     <div class="sr-step-text">
-      Write 2–4 sentences explaining the concept in your own words.
+      Write 2 to 4 sentences explaining the concept in your own words.
       Focus on what it means and why it matters, not on memorized definitions.
     </div>
   </div>

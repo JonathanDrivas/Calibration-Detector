@@ -1,0 +1,53 @@
+Presentation only. Do not change the database, saved results, imported data, model logic, scoring, label rules, action logic, Evidence calculations, Robustness calculations, or any formula. Do not rerun the model and do not clear any tables.
+
+Do not change any displayed number, count, gap, percentage, action label, or topic value. Read every value live from the existing computed results. The only allowed content change is filtering which rows appear in the Instructor Action Plan, as described below.
+
+Do not break any input, tab, navigation item, button, slider, selectbox, textarea, or form. Render all custom HTML through `st.markdown(..., unsafe_allow_html=True)`, never as a visible code block. Do not add dependencies. Run the app and fix every error.
+
+1. Remove the redundancy between the Instructor Action Plan and the Full Topic Ranking.
+
+They currently show the same ten topics with identical numbers.
+
+Change the Instructor Action Plan so it lists only topics whose recommended action is exactly:
+
+"Reteach first"
+
+Frame this section as the priorities that need action now.
+
+If no topic has recommended action "Reteach first", fall back to showing the top three topics by confident-but-wrong count.
+
+The Full Topic Ranking expander should still keep all ten topics as the complete reference.
+
+Do not change any values, counts, gaps, sorting logic, action logic, or action labels. Only change which rows appear in the Instructor Action Plan.
+
+2. Replace every emoji in the UI with clean inline SVG icons.
+
+This includes nav icons, button icons, card markers, callout markers, and any other visible UI emoji.
+
+Use clean Lucide-style or Feather-style inline SVG icons:
+
+* inline the SVG paths directly
+* do not add a dependency
+* size icons consistently for the dark theme
+* color icons using the existing accent or semantic colors
+* if an emoji has no clean equivalent, remove it instead of forcing a playful icon
+
+Do not use emoji as UI decoration anywhere.
+
+3. Replace every em dash and en dash in visible app text.
+
+Replace:
+
+* em dash `—`
+* en dash `–`
+
+Use:
+
+* a comma in normal sentences
+* a middot `·` in short labels or compact UI text
+
+Important:
+
+* Do not replace normal hyphens in words like "confident-but-wrong" or "topic-level."
+* Do not replace minus signs in numeric values like `-0.47`.
+* Do not alter database values or canonical label keys.

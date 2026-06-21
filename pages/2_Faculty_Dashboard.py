@@ -225,6 +225,10 @@ st.markdown("""
     padding: 18px 20px;
     box-shadow: inset 0 1px 0 rgba(255,255,255,0.03), 0 8px 24px rgba(0,0,0,0.35);
     text-align: center;
+    min-height: 120px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
 .ds-ev-sublabel {
     font-size: 10px; font-weight: 700; text-transform: uppercase;
@@ -1235,9 +1239,19 @@ with tab_topics:
 # TAB 3 — Evidence
 # ════════════════════════════════════════════════════════════════════════════
 with tab_evidence:
-    st.caption(
-        "Compares computed labels against ground-truth labels from the simulated dataset. "
-        "Uses only reflections that have a ground-truth label and have been analyzed."
+    st.markdown(
+        '<div style="margin-bottom:16px;">'
+        '<div style="font-size:10px;font-weight:700;letter-spacing:.6px;'
+        'text-transform:uppercase;color:#6B6B82;margin-bottom:5px;">'
+        'VALIDATION\u2002\u00b7\u2002SIMULATED BENCHMARK</div>'
+        '<div style="font-size:20px;font-weight:800;color:#ECECF2;'
+        'letter-spacing:-0.02em;margin-bottom:5px;">Model Evidence</div>'
+        '<div style="font-size:13px;color:#8A8A9A;line-height:1.5;">'
+        'Compares model-generated calibration labels against known ground-truth labels '
+        'from the simulated benchmark dataset.'
+        '</div>'
+        '</div>',
+        unsafe_allow_html=True,
     )
 
     if not evidence_pairs:
@@ -1266,44 +1280,35 @@ with tab_evidence:
 </div>""", unsafe_allow_html=True)
         ev2.markdown(f"""
 <div class="ds-ev-card" style="border-top:3px solid #F5B544;">
-  <div class="ds-ev-sublabel" style="color:#F5B544;">CBW precision</div>
+  <div class="ds-ev-sublabel" style="color:#F5B544;">Confident-but-wrong precision</div>
   <div class="ds-ev-value" style="color:#F5B544;">{precision:.0%}</div>
-  <div class="ds-ev-label">Of flagged CBW, this share truly were</div>
+  <div class="ds-ev-label">Of cases flagged as CBW, this share truly were</div>
 </div>""", unsafe_allow_html=True)
         ev3.markdown(f"""
 <div class="ds-ev-card" style="border-top:3px solid #FF5C6C;">
   <div class="ds-ev-sublabel" style="color:#FF5C6C;">CBW recall · key metric</div>
   <div class="ds-ev-value" style="color:#FF5C6C;">{recall:.0%}</div>
-  <div class="ds-ev-label">Of true CBW cases, this share were caught</div>
-</div>""", unsafe_allow_html=True)
-
-        st.markdown("""
-<div class="ds-callout" style="border-left-color:#3DDC97;margin-top:14px;">
-  <div class="ds-callout-body" style="color:#3DDC97;">
-    The model caught every confident-but-wrong case in the simulated dataset,
-    the group least likely to ask for help on its own.
-  </div>
+  <div class="ds-ev-label">Of true CBW cases, this share were caught by the model</div>
 </div>""", unsafe_allow_html=True)
 
         st.markdown(
-            "<p style='font-size:12px;color:#9A9AAC;line-height:1.5;margin:6px 0 14px 0;'>"
-            "These results are based on a simulated labeled dataset built to test whether the "
-            "system can classify calibration patterns consistently. In a real deployment, "
-            "instructor-labeled student reflections would be used to further validate the model."
-            "</p>",
+            '<div class="ds-callout" style="border-left-color:#3DDC97;margin-top:14px;">'
+            '<div class="ds-callout-body" style="color:#3DDC97;">'
+            'The model caught every confident-but-wrong case in the simulated benchmark, '
+            'the group least likely to ask for help on its own.'
+            '</div>'
+            '</div>',
             unsafe_allow_html=True,
         )
-
-        st.markdown("""
-<div class="ds-callout">
-  <div class="ds-callout-title">About this panel</div>
-  <div class="ds-callout-body">
-    Compares computed labels against simulated ground truth. The most important metric is
-    <strong>confident-but-wrong recall</strong>, because the tool is designed to catch
-    students who are confident but mistaken. Missing a CBW case (low recall) is a more serious
-    failure than a false positive.
-  </div>
-</div>""", unsafe_allow_html=True)
+        st.markdown(
+            '<div class="ds-callout" style="margin-top:8px;">'
+            '<div class="ds-callout-body">'
+            'This evidence uses simulated labeled reflections. In a real deployment, '
+            'instructor-labeled student reflections would be used to validate the model further.'
+            '</div>'
+            '</div>',
+            unsafe_allow_html=True,
+        )
 
         matrix: dict[str, dict[str, int]] = {l: {l2: 0 for l2 in ALL_LABELS} for l in ALL_LABELS}
         unknown_gt, unknown_pred = set(), set()
@@ -1323,9 +1328,12 @@ with tab_evidence:
 
         st.markdown(
             '<div class="ds-data-panel">'
-            '<div class="ds-data-panel-title">Confusion matrix'
-            '<span style="font-size:11px;font-weight:400;color:#9A9AAC;margin-left:8px;">'
-            'rows: ground truth · columns: computed label</span></div>'
+            '<div class="ds-data-panel-title">Confusion matrix</div>'
+            '<div style="font-size:11px;color:#8A8A9A;margin-bottom:12px;line-height:1.5;">'
+            'Rows are ground truth. Columns are model-computed labels. '
+            'Green diagonal cells are correct classifications. '
+            'Red off-diagonal cells are mistakes.'
+            '</div>'
             + _heatmap_html(cm_df, ALL_LABELS)
             + '</div>',
             unsafe_allow_html=True,

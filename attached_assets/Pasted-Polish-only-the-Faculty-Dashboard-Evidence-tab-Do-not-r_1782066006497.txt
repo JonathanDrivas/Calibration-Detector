@@ -1,0 +1,100 @@
+Polish only the Faculty Dashboard Evidence tab. Do not redesign the whole app.
+
+Hard rules:
+
+* Presentation and wording only.
+* Do not change the database.
+* Do not change saved reflections or results.
+* Do not rerun the model.
+* Do not clear any tables.
+* Do not change imported data.
+* Do not change model logic, scoring logic, label rules, action logic, Evidence calculations, Robustness calculations, or any formulas.
+* Do not change navigation logic.
+* Do not change any displayed number, count, gap, percentage, ranking, action label, or result label.
+* Read every value live. Do not hardcode.
+* Do not add dependencies.
+* Do not add iframes.
+* Do not break the four Faculty Dashboard tabs, Evidence tab, Robustness Check, Home CTAs, or Student Reflection form.
+* Use `st.markdown(..., unsafe_allow_html=True)` for custom visual HTML/CSS only.
+* Run the app and fix every error.
+
+Goal:
+Make the Evidence tab read like a polished model-validation panel. It should answer quickly: “Can instructors trust the model enough for this prototype?”
+
+1. Evidence intro
+   Replace the current plain intro sentence with a compact validation header.
+
+Use:
+
+* section eyebrow: `VALIDATION · SIMULATED BENCHMARK`
+* heading: `Model Evidence`
+* short subtitle: `Compares model-generated calibration labels against known ground-truth labels from the simulated benchmark dataset.`
+
+Keep this compact. Do not create a huge hero block.
+
+2. Metric cards
+   Keep the three metric cards and all values exactly the same:
+
+* Overall accuracy
+* Confident-but-wrong precision
+* Confident-but-wrong recall
+
+Wording changes:
+
+* Use the full phrase `Confident-but-wrong` at least once before using `CBW`.
+* The recall card may say `Confident-but-wrong recall · key metric`.
+* Keep the values unchanged.
+
+Visual polish:
+
+* Keep the same dark premium style.
+* Make the three cards equal height.
+* Keep the recall card visually emphasized, but not overly flashy.
+* Use tabular numbers.
+* Keep captions concise and readable.
+
+3. Combine repeated explanation boxes
+   The current green success note and the “About this panel” card repeat related ideas.
+
+Create two cleaner callouts:
+
+Callout 1, success signal:
+`The model caught every confident-but-wrong case in the simulated benchmark, the group least likely to ask for help on its own.`
+
+Callout 2, caveat:
+`This evidence uses simulated labeled reflections. In a real deployment, instructor-labeled student reflections would be used to validate the model further.`
+
+Keep both short. Do not use long paragraph blocks.
+
+4. Confusion matrix section
+   Keep the confusion matrix and all values exactly the same.
+
+Improve the section around it:
+
+* Add a compact heading:
+  `Confusion matrix`
+* Add helper text:
+  `Rows are ground truth. Columns are model-computed labels. Green diagonal cells are correct classifications. Red off-diagonal cells are mistakes.`
+* Keep heatmap coloring.
+* Keep diagonal cells muted green.
+* Keep off-diagonal mistake cells muted red.
+* Keep zero cells low contrast but still readable.
+* Make the matrix feel like a polished analytics panel, not a default table.
+
+5. Remove accidental text-selection look
+   Make sure no text appears highlighted blue by default. The Evidence explanation should render normally unless the user manually selects text.
+
+6. Do not change other tabs
+   Do not change Overview, Topic Details, Robustness Check, Student Reflection, Home, or About except for unavoidable shared CSS side effects.
+
+Before finishing:
+
+* Run the app.
+* Confirm Faculty Dashboard loads.
+* Confirm all four dashboard tabs work.
+* Confirm Evidence still shows 99% accuracy, 100% precision, and 100% recall.
+* Confirm the confusion matrix values are unchanged.
+* Confirm Overview values are unchanged.
+* Confirm Robustness Check still works.
+* Confirm Home, Student Reflection, and About still load.
+* Summarize which files changed.

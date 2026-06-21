@@ -63,6 +63,109 @@ body{background:#0B0B12;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',
 </body></html>"""
 components.html(_hero_html, height=328, scrolling=False)
 
+# ── AI Methodology Panel ───────────────────────────────────────────────────
+st.markdown("""
+<style>
+.aim-panel {
+    display: flex; gap: 24px; align-items: flex-start;
+    background: rgba(160,107,255,0.04);
+    border: 1px solid rgba(160,107,255,0.18);
+    border-left: 3px solid rgba(160,107,255,0.55);
+    border-radius: 12px;
+    padding: 20px 22px;
+    margin: 0 0 18px 0;
+}
+.aim-left { flex: 1; min-width: 0; }
+.aim-right { flex: 0 0 215px; min-width: 0; }
+.aim-eyebrow {
+    font-family: "SF Mono","Fira Code","Courier New",monospace;
+    font-size: 9px; font-weight: 700; letter-spacing: 1.4px;
+    text-transform: uppercase; color: #A06BFF; margin-bottom: 8px;
+}
+.aim-title {
+    font-size: 15px; font-weight: 800; color: #ECECF2;
+    letter-spacing: -0.02em; margin-bottom: 10px;
+}
+.aim-body {
+    font-size: 12.5px; color: #BCBCCC; line-height: 1.72;
+    margin-bottom: 12px;
+}
+.aim-note {
+    font-size: 11.5px; color: #8A8A9A; line-height: 1.55;
+    border-top: 1px solid rgba(255,255,255,0.06);
+    padding-top: 10px;
+    font-style: italic;
+}
+.aim-step-label {
+    font-family: "SF Mono","Fira Code","Courier New",monospace;
+    font-size: 9px; font-weight: 700; letter-spacing: 1.2px;
+    text-transform: uppercase; color: #6B6B82; margin-bottom: 10px;
+}
+.aim-step { display: flex; gap: 10px; align-items: flex-start; margin-bottom: 10px; }
+.aim-num {
+    width: 20px; height: 20px; border-radius: 50%;
+    background: rgba(160,107,255,0.12); border: 1px solid rgba(160,107,255,0.32);
+    color: #A06BFF; font-size: 10px; font-weight: 800;
+    font-family: "SF Mono","Fira Code",monospace;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0; margin-top: 1px;
+}
+.aim-step-title { font-size: 12px; font-weight: 700; color: #ECECF2; line-height: 1.3; margin-bottom: 2px; }
+.aim-step-text { font-size: 11px; color: #8A8A9A; line-height: 1.5; }
+@media(max-width:560px){ .aim-panel{flex-direction:column} .aim-right{flex:none;width:100%} }
+</style>
+
+<div class="aim-panel">
+  <div class="aim-left">
+    <div class="aim-eyebrow">AI METHOD</div>
+    <div class="aim-title">How the AI is used</div>
+    <div class="aim-body">
+      The engine calls Claude (claude-sonnet-4-6) through the built-in Anthropic integration.
+      For each reflection, the model receives the selected topic's correct description and common misconceptions.
+      It judges demonstrated understanding from 1 to 5 and can identify a misconception or return none.
+      The model does not infer student confidence from writing style or tone.
+      Confidence comes only from the student's 1 to 5 slider rating.
+      The final calibration label is computed by a fixed rule from understanding and confidence.
+      The AI judges understanding only. The app makes the categorical label decision deterministically.
+    </div>
+    <div class="aim-note">
+      This keeps the AI assessment separate from the final calibration label, which is computed by transparent app logic.
+    </div>
+  </div>
+  <div class="aim-right">
+    <div class="aim-step-label">PIPELINE</div>
+    <div class="aim-step">
+      <div class="aim-num">1</div>
+      <div class="aim-step-body">
+        <div class="aim-step-title">Topic context</div>
+        <div class="aim-step-text">Description and misconceptions provided to the model</div>
+      </div>
+    </div>
+    <div class="aim-step">
+      <div class="aim-num">2</div>
+      <div class="aim-step-body">
+        <div class="aim-step-title">Understanding score</div>
+        <div class="aim-step-text">Model rates 1 to 5, misconception identified or none</div>
+      </div>
+    </div>
+    <div class="aim-step">
+      <div class="aim-num">3</div>
+      <div class="aim-step-body">
+        <div class="aim-step-title">Student confidence</div>
+        <div class="aim-step-text">1 to 5 slider value, never inferred from text</div>
+      </div>
+    </div>
+    <div class="aim-step">
+      <div class="aim-num">4</div>
+      <div class="aim-step-body">
+        <div class="aim-step-title">Fixed-rule label</div>
+        <div class="aim-step-text">App computes calibration label deterministically</div>
+      </div>
+    </div>
+  </div>
+</div>
+""", unsafe_allow_html=True)
+
 # ── Principle cards + note ─────────────────────────────────────────────────
 st.markdown("""
 <style>
@@ -109,28 +212,6 @@ st.markdown("""
     font-size: 11px; color: #6B6B82; line-height: 1.6;
     margin-top: 8px;
 }
-.ab-ai {
-    background: rgba(160,107,255,0.04);
-    border: 1px solid rgba(160,107,255,0.14);
-    border-radius: 12px;
-    padding: 18px 20px;
-    margin-bottom: 14px;
-}
-.ab-ai-eyebrow {
-    font-family: "SF Mono","Fira Code","Courier New",monospace;
-    font-size: 9px; font-weight: 700; letter-spacing: 1.3px;
-    text-transform: uppercase; color: #A06BFF; margin-bottom: 10px;
-}
-.ab-ai-title {
-    font-size: 14px; font-weight: 700; color: #ECECF2;
-    margin-bottom: 12px; letter-spacing: -0.01em;
-}
-.ab-ai-row { display: flex; align-items: flex-start; gap: 9px; margin-bottom: 7px; }
-.ab-ai-dot {
-    width: 5px; height: 5px; border-radius: 50%;
-    background: #A06BFF; opacity: 0.6; flex-shrink: 0; margin-top: 6px;
-}
-.ab-ai-text { font-size: 13px; color: #BCBCCC; line-height: 1.6; }
 </style>
 
 <div class="ab-cards">
@@ -198,17 +279,6 @@ st.markdown("""
     </div>
   </div>
 
-</div>
-
-<div class="ab-ai">
-  <div class="ab-ai-eyebrow">AI usage</div>
-  <div class="ab-ai-title">How the AI is used, and its limits</div>
-  <div class="ab-ai-row"><div class="ab-ai-dot"></div><div class="ab-ai-text">The model judges demonstrated understanding only. It does not make calibration decisions.</div></div>
-  <div class="ab-ai-row"><div class="ab-ai-dot"></div><div class="ab-ai-text">The model used is Claude (claude-sonnet-4-6) through the built-in Anthropic integration.</div></div>
-  <div class="ab-ai-row"><div class="ab-ai-dot"></div><div class="ab-ai-text">The calibration label is computed by a fixed rule from model-rated understanding and student-provided confidence.</div></div>
-  <div class="ab-ai-row"><div class="ab-ai-dot"></div><div class="ab-ai-text">Confidence is the student's own 1 to 5 slider value. It is never inferred from writing style or tone.</div></div>
-  <div class="ab-ai-row"><div class="ab-ai-dot"></div><div class="ab-ai-text">Low-certainty reads are surfaced for human review, not acted on automatically.</div></div>
-  <div class="ab-ai-row"><div class="ab-ai-dot"></div><div class="ab-ai-text">Current validation uses simulated labels. A real deployment would need instructor-labeled student reflections for stronger validation.</div></div>
 </div>
 
 <div class="ab-note">

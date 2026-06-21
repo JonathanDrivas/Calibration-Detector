@@ -1,0 +1,83 @@
+Move and upgrade the AI usage explanation on the About & Responsible Use page so it appears near the top of the page.
+
+Do not redesign the app. Do not change data, database, metrics, model behavior, scoring, label logic, Evidence calculations, Robustness calculations, navigation, or any page other than About unless unavoidable shared CSS is affected. Do not add dependencies. Do not use em dashes.
+
+Goal:
+Showcase the AI methodology earlier on the About page, because this project should clearly communicate how AI is being used and what it does not control.
+
+Current state:
+The About page already has an AI usage section lower on the page titled:
+`How the AI is used, and its limits`
+
+Change:
+Move this section so it appears directly below the About hero and above the five responsible-use principle cards.
+
+Make it feel like a compact AI methodology panel, not a long policy section.
+
+Panel title:
+`How the AI is used`
+
+Small eyebrow:
+`AI METHOD`
+
+Required copy points:
+
+* The engine calls Claude, model `claude-sonnet-4-6`, through the built-in Anthropic integration.
+* The model receives the selected topic's correct description and common misconceptions.
+* The model judges demonstrated understanding from 1 to 5.
+* The model can identify a misconception or return none.
+* The model does not infer student confidence from writing style or tone.
+* Confidence comes only from the student's 1 to 5 slider rating.
+* The final calibration label is computed by a fixed rule from understanding and confidence.
+* The AI judges understanding only. The app makes the categorical label decision deterministically.
+
+Design:
+
+* Match the existing dark premium style.
+* Use a compact card or two-column panel.
+* Keep it readable and visually important, but not larger than the hero.
+* Use hairline border, subtle violet accent, and muted supporting text.
+* No emoji.
+* No neon effects.
+* No iframe.
+* Use `st.markdown(..., unsafe_allow_html=True)` only if needed for styling.
+
+Suggested layout:
+Left side:
+
+* short explanation paragraph
+
+Right side:
+
+* compact mini pipeline with four steps:
+
+  1. Topic context
+  2. Understanding score
+  3. Student confidence
+  4. Fixed-rule label
+
+Add one short responsible-use note inside the panel:
+`This keeps the AI assessment separate from the final calibration label, which is computed by transparent app logic.`
+
+After moving this section:
+
+* Do not duplicate the same AI usage section lower on the page.
+* Keep the five responsible-use principle cards below it.
+* Keep the full responsible-use note at the bottom.
+* Keep the real deployment note at the bottom.
+* Do not weaken any privacy, simulated-data, or human-review language.
+
+Before finishing:
+
+* Run the app.
+* Confirm About loads.
+* Confirm the AI usage panel appears directly below the hero.
+* Confirm the five principle cards are still present.
+* Confirm the full responsible-use note is still present.
+* Confirm there is no duplicate AI usage section lower on the page.
+* Confirm Home loads.
+* Confirm Student Reflection form works.
+* Confirm Faculty Dashboard loads.
+* Confirm all dashboard tabs still work.
+* Confirm Evidence values are unchanged.
+* Summarize files changed.

@@ -71,75 +71,79 @@ st.markdown("""
     border: 1px solid rgba(160,107,255,0.18);
     border-left: 3px solid rgba(160,107,255,0.55);
     border-radius: 14px;
-    padding: 20px 22px 18px 22px;
+    padding: 16px 18px 16px 18px;
     margin: 0 0 18px 0;
 }
 .aim-eyebrow {
     font-family: "SF Mono","Fira Code","Courier New",monospace;
     font-size: 9px; font-weight: 700; letter-spacing: 1.4px;
-    text-transform: uppercase; color: #A06BFF; margin-bottom: 8px;
+    text-transform: uppercase; color: #A06BFF; margin-bottom: 5px;
 }
 .aim-title {
     font-size: 15px; font-weight: 800; color: #ECECF2;
-    letter-spacing: -0.02em; margin-bottom: 8px;
+    letter-spacing: -0.02em; margin-bottom: 6px;
 }
 .aim-intro {
-    font-size: 12.5px; color: #BCBCCC; line-height: 1.65; margin-bottom: 11px;
+    font-size: 12px; color: #BCBCCC; line-height: 1.6; margin-bottom: 8px;
 }
-.aim-kv { display: flex; gap: 10px; margin-bottom: 5px; align-items: flex-start; }
+.aim-kv { display: flex; gap: 8px; margin-bottom: 3px; align-items: flex-start; }
 .aim-kv-key {
-    font-size: 10px; font-weight: 700; color: #6B6B82; letter-spacing: .3px;
+    font-size: 9.5px; font-weight: 700; color: #6B6B82; letter-spacing: .4px;
     text-transform: uppercase; font-family: "SF Mono","Fira Code",monospace;
-    white-space: nowrap; flex-shrink: 0; min-width: 68px; padding-top: 1px;
+    white-space: nowrap; flex-shrink: 0; min-width: 74px; padding-top: 1.5px;
 }
-.aim-kv-val { font-size: 12px; color: #BCBCCC; line-height: 1.5; }
+.aim-kv-val { font-size: 12px; color: #BCBCCC; line-height: 1.45; }
 .aim-note {
-    font-size: 11.5px; color: #8A8A9A; line-height: 1.55;
+    font-size: 11px; color: #8A8A9A; line-height: 1.5;
     border-top: 1px solid rgba(255,255,255,0.06);
-    padding-top: 9px; margin-top: 11px; font-style: italic;
+    padding-top: 7px; margin-top: 8px; font-style: italic;
 }
-.aim-example { font-size: 11px; color: #525268; margin-top: 6px; line-height: 1.5; }
+.aim-example { font-size: 10.5px; color: #525268; margin-top: 4px; line-height: 1.45; }
 .aim-cbw { color: #FF5C6C; font-weight: 600; }
-.aim-divider {
-    border: none; border-top: 1px solid rgba(255,255,255,0.06); margin: 16px 0 14px 0;
+.aim-section-head {
+    display: flex; align-items: center; gap: 10px; margin: 12px 0 12px 0;
 }
-.aim-pipe-label {
+.aim-section-line { flex: 1; height: 1px; background: rgba(255,255,255,0.06); }
+.aim-section-label {
     font-family: "SF Mono","Fira Code","Courier New",monospace;
     font-size: 9px; font-weight: 700; letter-spacing: 1.2px;
-    text-transform: uppercase; color: #6B6B82; margin-bottom: 14px;
+    text-transform: uppercase; color: #525268; flex-shrink: 0;
 }
-.aim-pipe { display: flex; align-items: flex-start; }
+.aim-pipe { position: relative; display: flex; align-items: flex-start; }
+.aim-pipe-line {
+    position: absolute; top: 16px; left: 9%; right: 9%;
+    height: 1.5px;
+    background: linear-gradient(90deg, rgba(160,107,255,0.6) 0%, rgba(160,107,255,0.18) 100%);
+    z-index: 0;
+}
 .aim-stage {
+    position: relative; z-index: 1;
     flex: 1; min-width: 0; display: flex; flex-direction: column;
-    align-items: center; text-align: center; padding: 0 4px;
+    align-items: center; text-align: center; padding: 0 3px;
 }
 .aim-node {
-    width: 34px; height: 34px; border-radius: 50%;
-    background: #0D0D18; border: 1.5px solid rgba(160,107,255,0.32);
-    color: #A06BFF; font-size: 12px; font-weight: 800;
+    width: 32px; height: 32px; border-radius: 50%;
+    background: #0D0D18; border: 1.5px solid rgba(160,107,255,0.38);
+    color: #A06BFF; font-size: 11px; font-weight: 800;
     font-family: "SF Mono","Fira Code",monospace;
     display: flex; align-items: center; justify-content: center;
-    margin-bottom: 9px; flex-shrink: 0;
+    margin-bottom: 7px; flex-shrink: 0;
 }
 .aim-node-hl {
-    border-color: rgba(160,107,255,0.72);
-    box-shadow: 0 0 14px rgba(160,107,255,0.22);
-    background: rgba(160,107,255,0.08);
+    border-color: rgba(160,107,255,0.78);
+    box-shadow: 0 0 12px rgba(160,107,255,0.28);
+    background: rgba(160,107,255,0.09);
 }
 .aim-stage-title {
-    font-size: 11.5px; font-weight: 700; color: #ECECF2;
-    line-height: 1.25; margin-bottom: 4px;
+    font-size: 11px; font-weight: 700; color: #ECECF2;
+    line-height: 1.25; margin-bottom: 3px;
 }
-.aim-stage-text { font-size: 10.5px; color: #8A8A9A; line-height: 1.45; }
-.aim-arrow {
-    flex-shrink: 0; color: #3A3A52; font-size: 14px;
-    padding: 0 1px; margin-top: 9px; align-self: flex-start;
-}
+.aim-stage-text { font-size: 10px; color: #8A8A9A; line-height: 1.4; }
 @media(max-width:600px){
-    .aim-pipe{flex-wrap:wrap; gap:6px}
-    .aim-stage{flex:0 0 44%; align-items:flex-start; text-align:left; flex-direction:row; gap:9px}
+    .aim-pipe{flex-wrap:wrap; gap:8px}
+    .aim-pipe-line{display:none}
+    .aim-stage{flex:0 0 44%; align-items:flex-start; text-align:left; flex-direction:row; gap:8px; padding:0}
     .aim-node{margin-bottom:0; flex-shrink:0}
-    .aim-arrow{display:none}
 }
 </style>
 
@@ -154,37 +158,37 @@ st.markdown("""
   <div class="aim-kv"><span class="aim-kv-key">Final label</span><span class="aim-kv-val">Deterministic app logic, not chosen by the AI</span></div>
   <div class="aim-note">This keeps the AI assessment separate from the final calibration label, which is computed by transparent app logic.</div>
   <div class="aim-example">Example: a confident but incorrect explanation can still receive a low understanding score and become <span class="aim-cbw">confident_but_wrong</span>.</div>
-  <hr class="aim-divider">
-  <div class="aim-pipe-label">5-STAGE PIPELINE</div>
+  <div class="aim-section-head">
+    <div class="aim-section-line"></div>
+    <div class="aim-section-label">5-STAGE PIPELINE</div>
+    <div class="aim-section-line"></div>
+  </div>
   <div class="aim-pipe">
+    <div class="aim-pipe-line"></div>
     <div class="aim-stage">
       <div class="aim-node aim-node-hl">1</div>
       <div class="aim-stage-title">Topic context</div>
-      <div class="aim-stage-text">Description and misconceptions sent to the model</div>
+      <div class="aim-stage-text">Topic description, misconceptions, reflection</div>
     </div>
-    <div class="aim-arrow">&#8594;</div>
     <div class="aim-stage">
       <div class="aim-node">2</div>
       <div class="aim-stage-title">Understanding score</div>
-      <div class="aim-stage-text">Model rates demonstrated understanding 1 to 5</div>
+      <div class="aim-stage-text">AI rates demonstrated understanding 1 to 5</div>
     </div>
-    <div class="aim-arrow">&#8594;</div>
     <div class="aim-stage">
       <div class="aim-node">3</div>
       <div class="aim-stage-title">Misconception check</div>
-      <div class="aim-stage-text">Main misconception named or none returned</div>
+      <div class="aim-stage-text">AI returns main misconception or none</div>
     </div>
-    <div class="aim-arrow">&#8594;</div>
     <div class="aim-stage">
       <div class="aim-node">4</div>
       <div class="aim-stage-title">Student confidence</div>
-      <div class="aim-stage-text">1 to 5 slider value, never inferred from text</div>
+      <div class="aim-stage-text">Slider value only, never inferred</div>
     </div>
-    <div class="aim-arrow">&#8594;</div>
     <div class="aim-stage">
       <div class="aim-node">5</div>
       <div class="aim-stage-title">Fixed-rule label</div>
-      <div class="aim-stage-text">App computes calibration label deterministically</div>
+      <div class="aim-stage-text">App computes final category</div>
     </div>
   </div>
 </div>

@@ -1,0 +1,110 @@
+Polish only the AI methodology panel on the About & Responsible Use page.
+
+Do not redesign the app. Do not change data, database, metrics, model behavior, scoring, label logic, Evidence calculations, Robustness calculations, navigation, or any page other than About unless unavoidable shared CSS is affected. Do not add dependencies. Do not use em dashes.
+
+Current issue:
+The AI method panel has the right information and the pipeline is back, but the section is too tall and the pipeline feels too spread out. Make it tighter, more visual, and more connected while keeping the same facts.
+
+Keep:
+
+* The panel directly below the About hero
+* Eyebrow: `AI METHOD`
+* Title: `How the AI is used`
+* The exact model fact: `Claude, claude-sonnet-4-6, via built-in Anthropic integration`
+* The responsible-use note about AI assessment being separate from the final calibration label
+* The example line about confident_but_wrong
+* The five-stage pipeline
+* The five principle cards below the panel
+* The full responsible-use note and real deployment note
+
+Do not:
+
+* Add another iframe
+* Add new controls
+* Move this panel lower
+* Duplicate the AI section elsewhere
+* Make the section taller
+* Change any app behavior
+
+Design goal:
+Make the panel feel like a compact product explainer.
+
+1. Reduce panel height
+
+* Reduce excess vertical padding.
+* Remove unnecessary empty space between the text section and the pipeline.
+* Keep the panel premium and readable, but make it feel less oversized.
+* Target roughly 20 to 30 percent less vertical height if possible.
+
+2. Make the upper facts more scannable
+   Keep the current fact rows, but tighten them visually:
+
+* MODEL
+* INPUT
+* OUTPUT
+* CONFIDENCE
+* FINAL LABEL
+
+Make the labels slightly more compact and aligned.
+Keep the text readable.
+Do not turn it back into a paragraph wall.
+
+3. Make the pipeline more connected
+   Replace the current floating circles with a stronger connected visual flow.
+
+Preferred pipeline style:
+
+* A horizontal glowing hairline running through all five stages
+* Numbered nodes sitting on the line
+* Each stage has a compact title and one short supporting line
+* Subtle arrows or connectors between nodes
+* Nodes and connectors should feel like one system flow
+
+Stage labels and text:
+
+1. `Topic context`
+   `Topic description, misconceptions, reflection`
+
+2. `Understanding score`
+   `AI rates demonstrated understanding 1 to 5`
+
+3. `Misconception check`
+   `AI returns main misconception or none`
+
+4. `Student confidence`
+   `Slider value only, never inferred`
+
+5. `Fixed-rule label`
+   `App computes final category`
+
+6. Improve visual hierarchy
+
+* Pipeline should be clearly visible but not overpower the text.
+* Use violet accent for the flow line and numbered nodes.
+* Use muted text for supporting lines.
+* Keep strong contrast for titles.
+* No emoji.
+* No neon excess.
+* No heavy animation.
+
+5. Keep responsive behavior
+
+* On smaller screens, stack the pipeline stages cleanly.
+* No text clipping.
+* No horizontal overflow.
+* No internal scrollbars.
+
+Before finishing:
+
+* Run the app.
+* Confirm About loads.
+* Confirm the AI method panel is directly below the hero.
+* Confirm the panel is tighter and not overly tall.
+* Confirm the pipeline looks connected and premium.
+* Confirm no AI text is duplicated lower on the page.
+* Confirm all five principle cards still appear below.
+* Confirm the full responsible-use note and real deployment note still appear.
+* Confirm Home, Student Reflection, and Faculty Dashboard load.
+* Confirm Dashboard tabs still work.
+* Confirm Evidence values are unchanged.
+* Summarize files changed.

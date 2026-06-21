@@ -1095,6 +1095,43 @@ with tab_overview:
   </div>
 </div>""", unsafe_allow_html=True)
 
+        # CSV export ─────────────────────────────────────────────────────────
+        _csv_rows = []
+        for _r, (_tn, _td) in enumerate(sorted_topics, start=1):
+            _csv_rows.append({
+                "rank":                      _r,
+                "topic":                     _tn,
+                "total_analyzed":            _td["_total"],
+                "understands_count":         _td["label_counts"]["understands"],
+                "underconfident_count":      _td["label_counts"]["underconfident"],
+                "partial_count":             _td["label_counts"]["partial"],
+                "knows_confused_count":      _td["label_counts"]["knows_confused"],
+                "confident_but_wrong_count": _td["label_counts"]["confident_but_wrong"],
+                "avg_student_confidence":    round(_td["avg_confidence"],   2),
+                "avg_model_understanding":   round(_td["avg_understanding"], 2),
+                "calibration_gap":           round(_td["calibration_gap"],  3),
+                "recommended_action":        action_label(
+                    _td["label_counts"]["confident_but_wrong"],
+                    _td["calibration_gap"],
+                ),
+            })
+        _csv_bytes = pd.DataFrame(_csv_rows).to_csv(index=False).encode("utf-8")
+        st.download_button(
+            label="Download faculty summary CSV",
+            data=_csv_bytes,
+            file_name="calibration_detector_faculty_summary.csv",
+            mime="text/csv",
+            type="secondary",
+            key="faculty_csv_dl",
+        )
+        st.markdown(
+            '<p style="font-size:11px;color:#525268;margin:-6px 0 14px 0;">'
+            'Exports topic-level summaries only. '
+            'Individual reflections and nicknames are not included.'
+            '</p>',
+            unsafe_allow_html=True,
+        )
+
         # 5. Instructor Action Plan ─────────────────────────────────────────
         st.markdown("""
 <div class="ds-section-title">Instructor Action Plan</div>

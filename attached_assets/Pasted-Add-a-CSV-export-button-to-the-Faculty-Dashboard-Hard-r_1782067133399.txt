@@ -1,0 +1,85 @@
+Add a CSV export button to the Faculty Dashboard.
+
+Hard rules:
+
+* Do not change the database.
+* Do not change saved reflections or results.
+* Do not rerun the model.
+* Do not clear any tables.
+* Do not change imported data.
+* Do not change model logic, scoring logic, label rules, action logic, Evidence calculations, Robustness calculations, or any formulas.
+* Do not change any displayed number, count, gap, percentage, ranking, action label, or result label.
+* Read every value live from existing computed results. Do not hardcode.
+* Do not add dependencies unless the app already uses pandas. If pandas is already available, using it is fine.
+* Do not break the four Faculty Dashboard tabs, Evidence tab, Robustness Check, Home CTAs, or Student Reflection form.
+* Run the app and fix every error.
+
+Goal:
+Add a privacy-safe CSV export for faculty. The export should help instructors download the topic-level summary and action plan without exposing individual student reflections.
+
+Placement:
+
+* Add the export button on the Faculty Dashboard Overview.
+* Place it near the Instructor Action Plan section, preferably above or beside the section heading.
+* Label the button:
+  `Download faculty summary CSV`
+
+Export behavior:
+
+* Use `st.download_button`.
+* Generate the CSV live from the same topic-level summary data already shown on the dashboard.
+* Do not save a file to disk unless necessary.
+* Do not modify the database.
+* Do not export raw individual submissions.
+
+CSV filename:
+`calibration_detector_faculty_summary.csv`
+
+CSV columns:
+
+* `rank`
+* `topic`
+* `total_analyzed`
+* `understands_count`
+* `underconfident_count`
+* `partial_count`
+* `knows_confused_count`
+* `confident_but_wrong_count`
+* `avg_student_confidence`
+* `avg_model_understanding`
+* `calibration_gap`
+* `recommended_action`
+
+Privacy rule:
+Do not include:
+
+* student nicknames
+* reflection text
+* individual student confidence values
+* individual model scores
+* misconceptions tied to individual nicknames
+* any row-level student data
+
+UI note:
+Add a small muted note under the button:
+`Exports topic-level summaries only. Individual reflections and nicknames are not included.`
+
+Style:
+
+* Match the current dark premium design.
+* The button should look like a secondary action, not the main call to action.
+* Do not make it visually louder than the Instructor Action Plan.
+
+Testing:
+
+* Run the app.
+* Confirm Faculty Dashboard loads.
+* Confirm the CSV download button appears on Overview.
+* Confirm clicking the button downloads a CSV.
+* Confirm the CSV includes topic-level rows and the requested columns.
+* Confirm the CSV does not include nicknames or reflection text.
+* Confirm all dashboard values remain unchanged.
+* Confirm Evidence numbers and matrix are unchanged.
+* Confirm Robustness Check still works.
+* Confirm Home, Student Reflection, and About still load.
+* Summarize which files changed.

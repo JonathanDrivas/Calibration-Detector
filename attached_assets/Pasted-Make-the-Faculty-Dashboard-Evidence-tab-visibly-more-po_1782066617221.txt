@@ -1,0 +1,113 @@
+Make the Faculty Dashboard Evidence tab visibly more polished and less like a report page.
+
+Hard rules:
+- Presentation and layout only.
+- Do not change the database.
+- Do not change saved reflections or results.
+- Do not rerun the model.
+- Do not clear any tables.
+- Do not change imported data.
+- Do not change model logic, scoring logic, label rules, action logic, Evidence calculations, Robustness calculations, or any formulas.
+- Do not change navigation logic.
+- Do not change any displayed number, count, gap, percentage, ranking, action label, or result label.
+- Read every value live. Do not hardcode.
+- Do not add dependencies.
+- Do not add iframes.
+- Do not break the four Faculty Dashboard tabs, Evidence tab, Robustness Check, Home CTAs, or Student Reflection form.
+- Use st.markdown(..., unsafe_allow_html=True) for custom visual HTML/CSS only.
+- Run the app and fix every error.
+
+Current issue:
+The Evidence tab technically works, but it still looks too much like a stacked report section. The change should be visually obvious while keeping every value and calculation unchanged.
+
+Goal:
+Make Evidence feel like a model-validation dashboard.
+
+1. Add a compact validation summary header
+
+Below the Evidence tab title area, add a dark validation summary panel.
+
+It should include:
+- small eyebrow: VALIDATION STATUS
+- main verdict: Benchmark passed
+- short sentence: The model correctly caught every confident-but-wrong case in the simulated benchmark.
+- small pill badges:
+  - Simulated benchmark
+  - Ground-truth labels
+  - Confident-but-wrong recall is key
+
+This is presentation only. Do not calculate a new pass/fail value. Use the existing displayed evidence values and current state.
+
+2. Redesign the metric cards as a tighter scorecard
+
+Keep the same three metrics and exact values:
+- Overall accuracy
+- Confident-but-wrong precision
+- Confident-but-wrong recall
+
+Make them look more like a validation scorecard:
+- equal-width cards
+- smaller vertical padding
+- stronger hierarchy
+- big numbers
+- concise labels
+- subtle accent borders
+- recall card visually emphasized as the key metric
+- use full phrase “Confident-but-wrong” at least once before using CBW
+
+Do not change metric values.
+
+3. Replace the two stacked callouts with smaller cards
+
+Current issue:
+The green success callout and purple caveat callout take too much horizontal space and still feel like plain text blocks.
+
+Change them into a two-card row:
+- left card: Why this matters
+  Text: The model caught every confident-but-wrong case in the simulated benchmark, the group least likely to ask for help on its own.
+- right card: Limitation
+  Text: This evidence uses simulated labeled reflections. In a real deployment, instructor-labeled student reflections would be used to validate the model further.
+
+Keep the meaning. Keep it short. Make the cards compact.
+
+4. Improve the confusion matrix section
+
+Keep the confusion matrix values exactly the same.
+
+Make the matrix section feel more intentional:
+- Put the matrix inside a centered dark panel.
+- Add a small legend above the matrix:
+  - green = correct classification
+  - red = mistake
+  - zero = no cases
+- Keep rows = ground truth and columns = model-computed labels.
+- Make the matrix slightly less tall if possible.
+- Make header text easier to read.
+- Keep the heatmap shading.
+- Keep zero cells low contrast but readable.
+- Do not make it stretch awkwardly across the whole page.
+
+5. Add a compact interpretation strip under the matrix
+
+Add a short one-line interpretation:
+“The two visible mistakes are mild boundary cases that landed in Partial, while all confident-but-wrong cases were caught.”
+
+Only add this if it matches the current matrix values. If not, use a generic sentence:
+“Use the off-diagonal cells to see where the model confused one label for another.”
+
+Do not change the matrix.
+
+6. Do not change other tabs
+
+Do not modify Overview, Topic Details, Robustness Check, Home, Student Reflection, or About except for unavoidable shared CSS side effects.
+
+Before finishing:
+- Run the app.
+- Confirm Faculty Dashboard loads.
+- Confirm all four dashboard tabs work.
+- Confirm Evidence still shows 99% accuracy, 100% precision, and 100% recall.
+- Confirm the confusion matrix values are unchanged.
+- Confirm Overview values are unchanged.
+- Confirm Robustness Check still works.
+- Confirm Home, Student Reflection, and About still load.
+- Summarize which files changed.

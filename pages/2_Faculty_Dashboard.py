@@ -222,10 +222,10 @@ st.markdown("""
     background: #14141C;
     border: 1px solid #262633;
     border-radius: 14px;
-    padding: 18px 20px;
-    box-shadow: inset 0 1px 0 rgba(255,255,255,0.03), 0 8px 24px rgba(0,0,0,0.35);
+    padding: 14px 18px;
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.03), 0 6px 18px rgba(0,0,0,0.30);
     text-align: center;
-    min-height: 120px;
+    min-height: 110px;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -1271,6 +1271,32 @@ with tab_evidence:
         precision = tp / (tp + fp) if (tp + fp) > 0 else 0.0
         recall    = tp / (tp + fn) if (tp + fn) > 0 else 0.0
 
+        st.markdown(
+            '<div style="background:rgba(61,220,151,0.05);border:1px solid rgba(61,220,151,0.18);'
+            'border-radius:14px;padding:16px 20px;margin-bottom:16px;">'
+            '<div style="font-size:9px;font-weight:800;letter-spacing:.7px;'
+            'text-transform:uppercase;color:#6B6B82;margin-bottom:6px;">VALIDATION STATUS</div>'
+            '<div style="font-size:18px;font-weight:800;color:#3DDC97;'
+            'letter-spacing:-0.01em;margin-bottom:5px;">Benchmark passed</div>'
+            '<div style="font-size:12px;color:#9A9AAC;line-height:1.5;margin-bottom:10px;">'
+            'The model correctly caught every confident-but-wrong case in the simulated benchmark.'
+            '</div>'
+            '<div style="display:flex;flex-wrap:wrap;gap:6px;">'
+            '<span style="font-size:10px;font-weight:600;color:#C4B5FD;'
+            'background:rgba(196,181,253,0.10);border:1px solid rgba(196,181,253,0.20);'
+            'border-radius:20px;padding:3px 10px;white-space:nowrap;">Simulated benchmark</span>'
+            '<span style="font-size:10px;font-weight:600;color:#C4B5FD;'
+            'background:rgba(196,181,253,0.10);border:1px solid rgba(196,181,253,0.20);'
+            'border-radius:20px;padding:3px 10px;white-space:nowrap;">Ground-truth labels</span>'
+            '<span style="font-size:10px;font-weight:600;color:#FF5C6C;'
+            'background:rgba(255,92,108,0.10);border:1px solid rgba(255,92,108,0.20);'
+            'border-radius:20px;padding:3px 10px;white-space:nowrap;">'
+            'Confident-but-wrong recall is key</span>'
+            '</div>'
+            '</div>',
+            unsafe_allow_html=True,
+        )
+
         ev1, ev2, ev3 = st.columns(3)
         ev1.markdown(f"""
 <div class="ds-ev-card" style="border-top:3px solid #A06BFF;">
@@ -1292,19 +1318,24 @@ with tab_evidence:
 </div>""", unsafe_allow_html=True)
 
         st.markdown(
-            '<div class="ds-callout" style="border-left-color:#3DDC97;margin-top:14px;">'
-            '<div class="ds-callout-body" style="color:#3DDC97;">'
+            '<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px;">'
+            '<div style="background:#14141C;border:1px solid rgba(61,220,151,0.18);'
+            'border-radius:12px;padding:14px 16px;">'
+            '<div style="font-size:9px;font-weight:800;letter-spacing:.5px;'
+            'text-transform:uppercase;color:#3DDC97;margin-bottom:7px;">WHY THIS MATTERS</div>'
+            '<div style="font-size:12px;color:#ECECF2;line-height:1.55;">'
             'The model caught every confident-but-wrong case in the simulated benchmark, '
             'the group least likely to ask for help on its own.'
             '</div>'
-            '</div>',
-            unsafe_allow_html=True,
-        )
-        st.markdown(
-            '<div class="ds-callout" style="margin-top:8px;">'
-            '<div class="ds-callout-body">'
+            '</div>'
+            '<div style="background:#14141C;border:1px solid rgba(154,154,172,0.15);'
+            'border-radius:12px;padding:14px 16px;">'
+            '<div style="font-size:9px;font-weight:800;letter-spacing:.5px;'
+            'text-transform:uppercase;color:#9A9AAC;margin-bottom:7px;">LIMITATION</div>'
+            '<div style="font-size:12px;color:#9A9AAC;line-height:1.55;">'
             'This evidence uses simulated labeled reflections. In a real deployment, '
             'instructor-labeled student reflections would be used to validate the model further.'
+            '</div>'
             '</div>'
             '</div>',
             unsafe_allow_html=True,
@@ -1329,13 +1360,27 @@ with tab_evidence:
         st.markdown(
             '<div class="ds-data-panel">'
             '<div class="ds-data-panel-title">Confusion matrix</div>'
-            '<div style="font-size:11px;color:#8A8A9A;margin-bottom:12px;line-height:1.5;">'
-            'Rows are ground truth. Columns are model-computed labels. '
-            'Green diagonal cells are correct classifications. '
-            'Red off-diagonal cells are mistakes.'
+            '<div style="display:flex;flex-wrap:wrap;gap:14px;margin-bottom:12px;align-items:center;">'
+            '<span style="font-size:11px;color:#9A9AAC;display:flex;align-items:center;gap:5px;">'
+            '<span style="display:inline-block;width:11px;height:11px;border-radius:2px;'
+            'background:rgba(61,220,151,0.35);flex-shrink:0;"></span>Correct</span>'
+            '<span style="font-size:11px;color:#9A9AAC;display:flex;align-items:center;gap:5px;">'
+            '<span style="display:inline-block;width:11px;height:11px;border-radius:2px;'
+            'background:rgba(255,92,108,0.35);flex-shrink:0;"></span>Mistake</span>'
+            '<span style="font-size:11px;color:#9A9AAC;display:flex;align-items:center;gap:5px;">'
+            '<span style="display:inline-block;width:11px;height:11px;border-radius:2px;'
+            'background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.07);'
+            'flex-shrink:0;"></span>No cases</span>'
+            '<span style="font-size:11px;color:#525268;margin-left:4px;">'
+            'Rows: ground truth \u00b7 Columns: model label</span>'
             '</div>'
             + _heatmap_html(cm_df, ALL_LABELS)
-            + '</div>',
+            + '<div style="margin-top:10px;font-size:11px;color:#525268;padding:7px 10px;'
+            'background:rgba(255,255,255,0.02);border-radius:6px;'
+            'border:1px solid rgba(255,255,255,0.04);">'
+            'Use the off-diagonal cells to see where the model confused one label for another.'
+            '</div>'
+            '</div>',
             unsafe_allow_html=True,
         )
 

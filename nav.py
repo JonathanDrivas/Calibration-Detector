@@ -45,11 +45,17 @@ def render_nav(current: str = "") -> None:
 [data-testid="stPageLink"] > a[aria-disabled="true"],
 [data-testid="stPageLink"] > a[tabindex="-1"],
 [data-testid="stPageLink"] > div > a[aria-disabled="true"],
-[data-testid="stPageLink"] > div > a[tabindex="-1"] {
+[data-testid="stPageLink"] > div > a[tabindex="-1"],
+[data-testid="stPageLink"] a[aria-current="page"],
+[data-testid="stPageLink"] > div > a[aria-current="page"],
+[data-testid="stPageLink"] a[data-disabled="true"],
+[data-testid="stPageLink"] span[data-disabled="true"] ~ a,
+div[data-testid="stPageLink"][data-active="true"] a {
     color: #A06BFF !important;
     font-weight: 700 !important;
     opacity: 1 !important;
     pointer-events: none !important;
+    cursor: default !important;
     background: rgba(160,107,255,0.08) !important;
 }
 

@@ -1,0 +1,122 @@
+Do a final polish pass on only the About & Responsible Use page hero and active navigation styling.
+
+Hard rules:
+
+* Presentation and layout only.
+* Do not change the database.
+* Do not change saved reflections or results.
+* Do not rerun the model.
+* Do not clear any tables.
+* Do not change imported data.
+* Do not change model logic, scoring logic, label rules, action logic, Evidence calculations, Robustness calculations, or any formulas.
+* Do not change navigation logic, except for visual active-state styling.
+* Do not add dependencies.
+* Do not break Home, Student Reflection, Faculty Dashboard, Evidence, Robustness Check, or any dashboard tab.
+* Do not remove or weaken any responsible-use text.
+* Run the app and fix every error.
+
+Current issue:
+The About hero is visually cleaner now, but it still has too much empty space. The governance motif on the right is too small and too far away from the headline. The About nav item also looks muted even though the user is on the About page.
+
+1. Tighten the About hero
+
+Keep the current custom hero concept:
+
+* `GOVERNANCE · RESPONSIBLE AI`
+* `Designed for trust, not surveillance`
+* governance/privacy/instructor judgment subtitle
+* shield/checkmark motif with five principle nodes
+
+Fix:
+
+* Reduce unused vertical space in the hero.
+* Bring the right-side governance motif closer to the headline.
+* Increase the size of the shield/checkmark motif slightly.
+* Increase the size/readability of the five principle labels slightly.
+* Keep all five labels fully visible:
+
+  * Diagnostic
+  * Topic-level
+  * Nicknames
+  * Human review
+  * Simulated data
+* Do not let labels clip or overflow.
+* Do not create internal iframe scrollbars.
+* Do not show iframe borders or white iframe background.
+
+2. Improve hero balance
+
+The hero should feel like a balanced two-column composition:
+
+* left side: text
+* right side: governance motif
+* both should feel connected and intentionally placed
+* avoid pushing the visual to the far right edge
+* avoid leaving a giant empty middle area
+
+3. Keep the hero serious
+
+Keep:
+
+* dark cinematic background
+* subtle grid
+* low-opacity violet/blue glow
+* hairline visual language
+* professional governance feel
+
+Avoid:
+
+* neon effects
+* cartoon styling
+* emoji
+* excessive animation
+* oversized blobs
+
+4. Fix active top navigation styling
+
+When the user is on the About page, the About nav item should look clearly active.
+
+Use:
+
+* bright text or violet accent
+* same active-state logic/style as the active tab/page elsewhere
+
+Do not change routing or navigation behavior.
+
+5. Keep the principle cards
+
+Do not redesign the five responsible-use cards unless a minor spacing adjustment is needed after the hero change.
+
+Keep all five cards and their wording:
+
+* Diagnostic, not evaluative
+* Topic-level review, never individual
+* Nicknames, not real identities
+* Human judgment stays central
+* Simulated data for this project
+
+6. Keep bottom notes
+
+Keep:
+
+* full responsible-use note
+* real deployment note
+
+Make no content changes to those notes.
+
+Before finishing:
+
+* Run the app.
+* Confirm About page loads.
+* Confirm About nav item looks active.
+* Confirm the hero is tighter and better balanced.
+* Confirm no hero labels are clipped.
+* Confirm no iframe border, white background, clipping, or internal scrollbar.
+* Confirm all five responsible-use principle cards are still present.
+* Confirm the full responsible-use note is still present.
+* Confirm Home loads.
+* Confirm Student Reflection form still works.
+* Confirm Faculty Dashboard loads.
+* Confirm all dashboard tabs still work.
+* Confirm no dashboard values changed.
+* Summarize which files changed.

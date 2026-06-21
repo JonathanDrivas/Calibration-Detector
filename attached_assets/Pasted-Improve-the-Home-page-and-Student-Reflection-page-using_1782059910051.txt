@@ -1,0 +1,181 @@
+Improve the Home page and Student Reflection page using the same custom visual workaround where it makes sense, while keeping all real functionality in Streamlit.
+
+Hard rules:
+
+* Presentation only.
+* Do not change the database.
+* Do not change saved reflections or results.
+* Do not rerun the model.
+* Do not clear any tables.
+* Do not change imported data.
+* Do not change model logic, scoring logic, label rules, action logic, Evidence calculations, Robustness calculations, or any formulas.
+* Do not change navigation logic.
+* Do not change any displayed dashboard number, count, gap, percentage, ranking, or action label.
+* Do not break the Home CTAs, topic selectbox, reflection textarea, confidence slider, form submission, dashboard tabs, Evidence tab, or Robustness Check.
+* Do not add dependencies.
+* Run the app and fix every error.
+
+Design approach:
+Use a hybrid design system:
+
+* Use custom HTML/CSS through `st.markdown(..., unsafe_allow_html=True)` for visual sections, cards, headers, callouts, labels, and display-only components.
+* Use `streamlit.components.v1.html` only for cinematic static visual sections, such as the existing Home hero.
+* Do not put functional buttons, forms, selectboxes, sliders, textareas, dashboard tabs, or model-run actions inside an iframe.
+* Keep all real app controls as real Streamlit widgets.
+* If a button needs to navigate, it must remain a Streamlit button, `st.page_link`, or the existing working navigation method.
+* If a form needs to save data, it must remain a Streamlit form or Streamlit input flow.
+* If a displayed value is live, compute it in Python first and inject only the rendered value into custom HTML. Do not hardcode values.
+
+HOME PAGE
+
+Goal:
+Make the Home page feel like a polished custom web landing page, not a default Streamlit page, while keeping the working CTAs outside the iframe.
+
+1. Existing Home hero iframe
+
+* Keep the existing cinematic hero iframe.
+* It may be visually polished, but do not put working buttons inside it.
+* Reduce wasted empty space inside the hero.
+* Bring the 2x2 motif closer to the wordmark so the composition feels intentional.
+* Make the motif slightly larger and more legible.
+* Avoid awkward word breaks like “Under-stands.”
+* Keep the confident-but-wrong quadrant subtly emphasized.
+* Keep the iframe borderless, dark, and seamless with no internal scrollbars.
+
+2. Home explainer cards
+
+* Restyle the three explainer cards using custom HTML/CSS through `st.markdown(..., unsafe_allow_html=True)`, not default Streamlit cards.
+* Keep the same three cards:
+
+  * What it does
+  * How it works
+  * Why calibration matters
+* Make them visually match the hero:
+
+  * dark panel
+  * hairline border
+  * subtle shadow
+  * small monospace section tag
+  * strong heading
+  * readable muted body text
+  * compact equal heights
+* Do not make them iframes unless absolutely necessary. `st.markdown` HTML is preferred.
+
+3. Home CTAs
+
+* Keep “Submit a reflection” and “View analytics” as real Streamlit navigation buttons or page links.
+* Do not move them inside the iframe.
+* Do not recreate them as fake HTML buttons.
+* Style their surrounding area with custom HTML/CSS if needed, but the actual clickable controls must remain Streamlit controls.
+* Confirm both buttons still navigate correctly.
+
+STUDENT REFLECTION PAGE
+
+Goal:
+Make the Student Reflection page feel like the same premium product, while preserving the real form behavior.
+
+4. Page header
+
+* Restyle the header using `st.markdown(..., unsafe_allow_html=True)`.
+* Use:
+
+  * eyebrow: `REFLECTION · SUBMIT`
+  * title: `Student Reflection`
+  * tagline: `Submit a short reflection and rate your confidence.`
+* Make it compact and visually aligned with the Home hero.
+
+5. Left instruction panel
+
+* Use custom HTML/CSS through `st.markdown(..., unsafe_allow_html=True)` for the left “How this works” and privacy content.
+* Make the numbered steps look premium:
+
+  * small circular number markers
+  * better spacing
+  * dark panel
+  * hairline border
+  * subtle shadow
+* Keep the meaning:
+
+  1. Choose the topic.
+  2. Write 2 to 4 sentences in your own words.
+  3. Rate confidence from 1 to 5.
+* Style the privacy note as a serious mini-callout.
+
+6. Form panel
+
+* Keep the topic selectbox, reflection textarea, confidence slider, and submit button as real Streamlit widgets.
+* Do not replace them with HTML inputs.
+* Do not put the form inside an iframe.
+* Restyle the container around the form so it feels custom:
+
+  * dark panel
+  * hairline border
+  * subtle shadow
+  * clean heading
+  * tighter spacing
+* Keep the textarea height reasonable.
+* Keep the confidence number visible.
+* Keep the submit button functional and violet.
+* Confirm the form still saves a reflection.
+
+7. Helper text
+
+* Add small helper text under the textarea:
+  `Write in your own words. Short is fine if the core idea is clear.`
+* Add small helper text under the confidence slider:
+  `1 = not confident · 5 = very confident`
+* Do not change how confidence is stored.
+
+FACULTY DASHBOARD AND ABOUT
+
+8. Do not redesign Faculty Dashboard or About in this task.
+
+* Only make tiny style consistency fixes if needed because of shared CSS.
+* Do not change dashboard layout, values, tabs, calculations, Evidence, or Robustness.
+
+STYLE TOKENS
+
+Use the existing dark design language:
+
+* background: #0B0B12
+* panel: #0F0F16 or #14141C
+* elevated panel: #15151F
+* hairline border: #20202C
+* text: #ECECF2
+* muted text: #8A8A9A
+* accent: #7C5CFF or #A06BFF
+* semantic red: #FF5C6C
+* semantic blue: #5AA9FF
+* semantic green: #3DDC97
+* semantic amber: #F5B544
+* semantic lavender: #C4B5FD
+
+Avoid:
+
+* fake buttons that do not navigate
+* putting working controls inside iframes
+* extra iframes beyond the Home hero
+* emojis
+* giant blank gaps
+* neon effects
+* heavy animation
+* moving live data into static hardcoded HTML
+* breaking Streamlit widgets
+
+Before finishing:
+
+* Run the app.
+* Confirm Home loads.
+* Confirm the hero renders correctly.
+* Confirm no visible iframe border, white iframe background, or internal iframe scrollbar.
+* Confirm Submit a reflection navigates correctly.
+* Confirm View analytics navigates correctly.
+* Confirm Student Reflection loads.
+* Confirm topic selectbox works.
+* Confirm textarea works.
+* Confirm confidence slider works.
+* Confirm submit saves a reflection.
+* Confirm Faculty Dashboard still loads.
+* Confirm About still loads.
+* Confirm no dashboard numbers changed.
+* Summarize which files changed.

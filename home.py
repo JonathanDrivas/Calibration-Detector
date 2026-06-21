@@ -116,9 +116,9 @@ html, body {
   width: 100%;
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  padding: 0 56px;
-  gap: 40px;
+  justify-content: flex-start;
+  padding: 0 52px;
+  gap: 52px;
   animation: fadeUp 0.65s ease both;
 }
 @keyframes fadeUp {
@@ -127,28 +127,28 @@ html, body {
 }
 
 /* ── Left: text ─────────────────────────────────────────────────────────── */
-.left { flex-shrink: 0; max-width: 460px; }
+.left { flex-shrink: 0; max-width: 400px; }
 
 .eyebrow {
   font-family: "SF Mono", "Fira Code", "Courier New", monospace;
   font-size: 10px; font-weight: 600; letter-spacing: 1.8px;
   text-transform: uppercase;
   color: #A06BFF;
-  margin-bottom: 16px;
+  margin-bottom: 12px;
 }
 
 .wordmark {
   font-family: "Space Grotesk", system-ui, -apple-system, sans-serif;
-  font-size: 50px; font-weight: 800; line-height: 1.0;
+  font-size: 46px; font-weight: 800; line-height: 1.0;
   color: #ECECF2;
   letter-spacing: -0.04em;
-  margin-bottom: 18px;
+  margin-bottom: 14px;
 }
 
 .tagline {
-  font-size: 15px; font-weight: 400; line-height: 1.6;
+  font-size: 14px; font-weight: 400; line-height: 1.6;
   color: #6B6B82;
-  max-width: 340px;
+  max-width: 320px;
 }
 
 /* ── Right: calibration motif ───────────────────────────────────────────── */
@@ -164,7 +164,7 @@ html, body {
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 248px;
+  height: 258px;
 }
 .axis-y-label {
   writing-mode: vertical-rl;
@@ -182,21 +182,21 @@ html, body {
 .cal-row + .cal-row { margin-top: 5px; }
 
 .cal-cell {
-  width: 124px; height: 116px;
+  width: 138px; height: 126px;
   border: 1px solid rgba(255,255,255,0.07);
   border-radius: 10px;
   background: rgba(255,255,255,0.022);
   display: flex; flex-direction: column;
   justify-content: flex-end;
-  padding: 11px 13px;
+  padding: 12px 14px;
   position: relative;
   overflow: hidden;
 }
 
 .cell-label {
   font-family: "SF Mono", "Fira Code", "Courier New", monospace;
-  font-size: 9px; font-weight: 600; letter-spacing: 0.3px;
-  line-height: 1.45;
+  font-size: 10px; font-weight: 600; letter-spacing: 0.2px;
+  line-height: 1.4;
   position: relative; z-index: 1;
 }
 
@@ -240,8 +240,8 @@ html, body {
     gap: 26px;
   }
   .wordmark { font-size: 34px; }
-  .cal-cell { width: 98px; height: 90px; }
-  .axis-y-wrap { height: 193px; }
+  .cal-cell { width: 108px; height: 96px; }
+  .axis-y-wrap { height: 205px; }
 }
 
 /* ── Reduced motion ─────────────────────────────────────────────────────── */
@@ -280,10 +280,10 @@ html, body {
         <div class="grid-area">
           <div class="cal-row">
             <div class="cal-cell cell-underconf">
-              <span class="cell-label">Under-<br>confident</span>
+              <span class="cell-label">Underconfident</span>
             </div>
             <div class="cal-cell cell-understands">
-              <span class="cell-label">Under-<br>stands</span>
+              <span class="cell-label">Understands</span>
             </div>
           </div>
           <div class="cal-row">

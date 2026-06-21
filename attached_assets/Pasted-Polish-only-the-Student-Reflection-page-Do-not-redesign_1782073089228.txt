@@ -1,0 +1,198 @@
+Polish only the Student Reflection page. Do not redesign the whole app.
+
+Hard rules:
+
+* Presentation and layout only.
+* Do not change the database schema.
+* Do not change saved reflections or results.
+* Do not rerun the model automatically.
+* Do not clear any tables.
+* Do not change imported data.
+* Do not change model logic, scoring logic, label rules, action logic, Evidence calculations, Robustness calculations, or any formulas.
+* Do not change navigation logic.
+* Do not add dependencies.
+* Do not add iframes.
+* Do not replace the topic selectbox, reflection textarea, confidence slider, or submit button with fake HTML controls.
+* The form must remain functional Streamlit input logic.
+* Do not break Home CTAs, Faculty Dashboard tabs, Evidence, Robustness Check, or About.
+* Use `st.markdown(..., unsafe_allow_html=True)` only for visual wrappers, helper text, cards, and styling.
+* Run the app and fix every error.
+
+Current issue:
+The Student Reflection page works, but it feels a little sparse and form-like. Make it feel like a guided student experience while keeping the real Streamlit form controls intact.
+
+Goal:
+Make the page feel clearer, warmer, and more intentional:
+
+* what the student should do
+* what happens after submission
+* why confidence matters
+* privacy reassurance
+
+1. Improve the top section
+
+Keep the existing page heading:
+
+* `REFLECTION · SUBMIT`
+* `Student Reflection`
+* `Submit a short reflection and rate your confidence.`
+
+Make the header feel more complete by adding a compact subline or pill row under the tagline:
+
+* `Private by design`
+* `Topic-level review`
+* `Not used for grades`
+
+These should be visual pills only. Do not add logic.
+
+2. Improve the left guidance panel
+
+Replace the current left panel with a more polished “Submission guide” card.
+
+Keep the same core instructions, but make it more visually useful.
+
+Suggested structure:
+
+Title:
+`Submission guide`
+
+Step 1:
+`Choose a topic`
+Text:
+`Pick the course concept your reflection is about.`
+
+Step 2:
+`Explain in your own words`
+Text:
+`Write 2 to 4 sentences. Short is fine if the core idea is clear.`
+
+Step 3:
+`Rate your confidence`
+Text:
+`Use 1 if you are unsure and 5 if you feel very confident.`
+
+Add a compact note inside the same card:
+`The goal is honest calibration, not perfect wording.`
+
+Design:
+
+* dark elevated panel
+* hairline border
+* stronger contrast
+* numbered circles
+* subtle vertical flow line between steps
+* no emoji
+* consistent spacing
+
+3. Add a small “What happens next” mini-card
+
+Below the left guidance panel, add a compact card:
+
+Title:
+`What happens next`
+
+Text:
+`The AI reads the reflection, estimates demonstrated understanding, and compares that with your confidence rating. Faculty see topic-level patterns, not a ranked list of students.`
+
+Keep it concise and student-friendly.
+
+4. Improve the privacy card
+
+Keep the privacy meaning intact, but make it easier to scan.
+
+Use:
+Title:
+`Privacy`
+
+Text:
+`Your reflection is stored under a randomly generated nickname, never your real name. Results are reviewed by topic to improve teaching and are never used for grades.`
+
+Make it visually distinct but not oversized.
+
+5. Improve the form panel
+
+Keep the form controls exactly as real Streamlit widgets.
+
+Polish the form container:
+
+* dark panel
+* hairline border
+* subtle shadow
+* better internal spacing
+* clean section label
+* no excessive empty space
+
+Keep:
+
+* topic selectbox
+* reflection textarea
+* confidence slider
+* submit button
+
+Do not change their behavior.
+
+6. Improve form helper text
+
+Keep or update helper text:
+
+Under textarea:
+`Write in your own words. A simple correct explanation is better than memorized wording.`
+
+Under slider:
+`1 = not confident · 5 = very confident`
+
+Add a small confidence guidance line if it fits:
+`Rate how confident you feel before seeing any feedback.`
+
+7. Button contrast
+
+Make sure the `Submit reflection` button text is clearly readable.
+
+Button should have:
+
+* violet background
+* white or near-white text
+* readable hover state
+* not oversized
+* same behavior as before
+
+8. Success state after submission
+
+If the page already shows a success message after submission, restyle it as a polished success card.
+
+It should say something like:
+`Reflection submitted`
+`Your response was saved under a nickname and will be included in topic-level analysis.`
+
+Do not change save behavior.
+
+9. Reduce dead space
+
+Tighten spacing between:
+
+* header
+* guidance panel
+* form panel
+
+Keep the two-column layout, but make the page feel more intentionally filled.
+
+10. Do not change other pages
+
+Do not modify Home, Faculty Dashboard, Evidence, Robustness Check, or About except for unavoidable shared CSS side effects.
+
+Before finishing:
+
+* Run the app.
+* Confirm Student Reflection loads.
+* Confirm topic selectbox works.
+* Confirm textarea works.
+* Confirm confidence slider works.
+* Confirm submit saves a reflection.
+* Confirm success state works if present.
+* Confirm Home loads.
+* Confirm Faculty Dashboard loads.
+* Confirm all dashboard tabs work.
+* Confirm Evidence and Robustness Check still work.
+* Confirm About loads.
+* Confirm no dashboard values changed except if a new test reflection is intentionally submitted.
+* Summarize which files changed.

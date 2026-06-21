@@ -1493,6 +1493,54 @@ with tab_robustness:
         unsafe_allow_html=True,
     )
 
+    # AI Analysis Pipeline ────────────────────────────────────────────────────
+    _step = lambda num, title, body, accent="#A06BFF": (
+        f'<div style="flex:1;min-width:130px;background:#14141C;border:1px solid #262633;'
+        f'border-radius:10px;padding:12px 14px;">'
+        f'<div style="width:20px;height:20px;border-radius:50%;background:{accent};'
+        f'color:#fff;font-size:10px;font-weight:800;display:flex;align-items:center;'
+        f'justify-content:center;margin-bottom:7px;flex-shrink:0;">{num}</div>'
+        f'<div style="font-size:11px;font-weight:700;color:#ECECF2;margin-bottom:4px;">{title}</div>'
+        f'<div style="font-size:11px;color:#9A9AAC;line-height:1.45;">{body}</div>'
+        f'</div>'
+    )
+    _arrow = (
+        '<div style="align-self:center;padding:0 5px;color:#3A3A50;'
+        'font-size:16px;font-weight:400;flex-shrink:0;">\u2192</div>'
+    )
+    st.markdown(
+        '<div style="margin-bottom:18px;">'
+        '<div class="ds-section-title" style="margin-bottom:4px;">AI Analysis Pipeline</div>'
+        '<div style="font-size:12px;color:#8A8A9A;margin-bottom:14px;line-height:1.55;">'
+        'The app does not grade by keyword matching. The AI reads each reflection, estimates '
+        'demonstrated understanding, identifies misconceptions, and then compares that '
+        'understanding with the student\u2019s own confidence rating.'
+        '</div>'
+        '<div style="display:flex;align-items:flex-start;gap:0;overflow-x:auto;">'
+        + _step(1, "Read reflection",
+                "The AI receives the student\u2019s topic, reflection text, and confidence rating.")
+        + _arrow
+        + _step(2, "Score understanding",
+                "The AI rates demonstrated understanding from 1\u20135 using the course concept rubric.")
+        + _arrow
+        + _step(3, "Detect misconception",
+                "The AI extracts the specific misconception or marks none when the explanation is sound.")
+        + _arrow
+        + _step(4, "Compare confidence",
+                "The app compares student confidence with AI-assessed understanding to detect calibration gaps.")
+        + _arrow
+        + _step(5, "Assign label",
+                'The result becomes one calibration label: understands, underconfident, partial, '
+                'knows_confused, or <span style="color:#FF5C6C;font-weight:600;">confident_but_wrong</span>.')
+        + '</div>'
+        '<div style="margin-top:10px;font-size:11px;color:#525268;line-height:1.55;">'
+        'The AI output supports instructor judgment. It is diagnostic, not grading, and '
+        'topic-level patterns matter more than any single model judgment.'
+        '</div>'
+        '</div>',
+        unsafe_allow_html=True,
+    )
+
     if st.button("Run adversarial robustness check", type="primary", key="adv_btn"):
         adv_progress = st.progress(0, text="Starting…")
         adv_results: list[dict] = []

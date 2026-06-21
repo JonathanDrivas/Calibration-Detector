@@ -1,0 +1,73 @@
+Add a compact “AI Analysis Pipeline” section to the Faculty Dashboard Robustness Check tab.
+
+Hard rules:
+- Presentation and explanatory text only.
+- Do not change the database.
+- Do not change saved reflections or results.
+- Do not rerun the model automatically.
+- Do not clear any tables.
+- Do not change imported data.
+- Do not change model logic, scoring logic, label rules, action logic, Evidence calculations, Robustness calculations, or any formulas.
+- Do not change navigation logic.
+- Do not change any displayed dashboard number, count, gap, percentage, ranking, action label, or result label.
+- Do not add dependencies.
+- Do not add iframes.
+- Do not break the four Faculty Dashboard tabs, Evidence tab, Robustness Check button, Home CTAs, or Student Reflection form.
+- Use st.markdown(..., unsafe_allow_html=True) for custom visual HTML/CSS only.
+- Run the app and fix every error.
+
+Goal:
+Make it clearer how the project uses AI and why the AI is central to the tool. This should help during a demo or class presentation.
+
+Placement:
+Add the section on the Robustness Check tab, below the three explanation cards and above the Run adversarial robustness check button.
+
+Section title:
+AI Analysis Pipeline
+
+Short intro:
+The app does not grade by keyword matching. The AI reads each reflection, estimates demonstrated understanding, identifies misconceptions, and then compares that understanding with the student’s own confidence rating.
+
+Create a compact horizontal pipeline with five steps:
+
+1. Read reflection
+Text: The AI receives the student’s topic, reflection text, and confidence rating.
+
+2. Score understanding
+Text: The AI rates demonstrated understanding from 1 to 5 using the course concept rubric.
+
+3. Detect misconception
+Text: The AI extracts the specific misconception or marks none when the explanation is sound.
+
+4. Compare confidence
+Text: The app compares student confidence with AI-assessed understanding to detect calibration gaps.
+
+5. Assign label
+Text: The result becomes one calibration label, such as understands, underconfident, partial, knows_confused, or confident_but_wrong.
+
+Style:
+- Use the same dark premium design system.
+- Make it look like a process flow, not a paragraph block.
+- Use small numbered nodes or connected cards.
+- Use violet as the main accent.
+- Use red only when referencing confident_but_wrong.
+- Keep it compact and readable.
+- Do not use emoji.
+
+Add a small note under the pipeline:
+The AI output supports instructor judgment. It is diagnostic, not grading, and topic-level patterns matter more than any single model judgment.
+
+Provider wording:
+- Do not hardcode “Claude” or a specific model name unless the app already displays the provider elsewhere.
+- Use “AI analysis engine/API” unless provider/model information is already available from existing config or UI.
+
+Before finishing:
+- Run the app.
+- Confirm Faculty Dashboard loads.
+- Confirm all four dashboard tabs work.
+- Confirm Robustness Check tab shows the AI Analysis Pipeline.
+- Confirm the Run adversarial robustness check button still works.
+- Confirm no dashboard values changed.
+- Confirm Overview, Evidence, and Topic Details values are unchanged.
+- Confirm Home, Student Reflection, and About still load.
+- Summarize which files changed.

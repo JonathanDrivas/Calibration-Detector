@@ -367,60 +367,60 @@ def _heatmap_html(cm_df: pd.DataFrame, labels: list) -> str:
 # ────────────────────────────────────────────────────────────────────────────
 # Topic Outcome Heatmap helper
 # ────────────────────────────────────────────────────────────────────────────
-def _outcome_heatmap_html(topics: list) -> str:
-    def _hex_rgb(h: str) -> tuple:
-        h = h.lstrip("#")
-        return int(h[0:2], 16), int(h[2:4], 16), int(h[4:6], 16)
-
-    def _cell_style(lbl: str, count: int) -> str:
-        if count == 0:
-            return "background:#111118;color:#3A3A50;"
-        r, g, b = _hex_rgb(LABEL_COLOR[lbl])
-        if count == 1:   alpha = 0.13
-        elif count <= 3: alpha = 0.27
-        elif count <= 6: alpha = 0.45
-        else:            alpha = 0.64
-        return f"background:rgba({r},{g},{b},{alpha});color:{LABEL_COLOR[lbl]};"
-
-    _th_corner = (
-        "padding:6px 10px;font-size:10px;font-weight:600;color:#6B6B82;"
-        "border:1px solid rgba(38,38,51,0.6);background:#14141C;white-space:nowrap;"
-    )
-    _th_col = (
-        "padding:6px 10px;font-size:10px;font-weight:700;text-transform:uppercase;"
-        "letter-spacing:.3px;border:1px solid rgba(38,38,51,0.6);background:#1A1A24;"
-        "white-space:nowrap;text-align:center;"
-    )
-    _td_topic = (
-        "padding:6px 10px;font-size:12px;font-weight:600;color:#ECECF2;"
-        "border:1px solid rgba(38,38,51,0.6);background:#14141C;"
-        "white-space:nowrap;max-width:200px;overflow:hidden;text-overflow:ellipsis;"
-    )
-    _td_cell = (
-        "padding:6px 10px;text-align:center;font-size:13px;font-weight:700;"
-        "font-variant-numeric:tabular-nums;border:1px solid rgba(38,38,51,0.6);"
-    )
-
-    header = f'<th style="{_th_corner}">Topic</th>'
+def _outcome_dist_html(topics: list) -> str:
+    legend_items = ""
     for lbl in ALL_LABELS:
         c = LABEL_COLOR[lbl]
-        header += f'<th style="{_th_col}color:{c};">{LABEL_DISPLAY[lbl]}</th>'
+        legend_items += (
+            f'<span style="display:inline-flex;align-items:center;margin-right:14px;'
+            f'margin-bottom:4px;font-size:11px;color:#9A9AAC;">'
+            f'<span style="width:10px;height:10px;border-radius:2px;background:{c};'
+            f'display:inline-block;margin-right:5px;flex-shrink:0;opacity:0.9;"></span>'
+            f'{LABEL_DISPLAY[lbl]}</span>'
+        )
+    legend = (
+        f'<div style="display:flex;flex-wrap:wrap;margin-bottom:12px;">'
+        f'{legend_items}</div>'
+    )
 
-    body = ""
+    rows_html = ""
     for topic_name, d in topics:
-        cells = f'<td style="{_td_topic}" title="{topic_name}">{topic_name}</td>'
+        total = d["_total"]
+        if total == 0:
+            continue
+        segments = ""
         for lbl in ALL_LABELS:
             count = d["label_counts"].get(lbl, 0)
-            display = str(count) if count > 0 else "\u2014"
-            cells += f'<td style="{_cell_style(lbl, count)}{_td_cell}">{display}</td>'
-        body += f"<tr>{cells}</tr>"
+            if count == 0:
+                continue
+            pct = count / total
+            c = LABEL_COLOR[lbl]
+            text = str(count) if pct >= 0.07 else ""
+            segments += (
+                f'<div title="{LABEL_DISPLAY[lbl]}: {count}" style="flex:{count};'
+                f'background:{c};opacity:0.88;display:flex;align-items:center;'
+                f'justify-content:center;font-size:10px;font-weight:800;'
+                f'color:rgba(0,0,0,0.55);white-space:nowrap;overflow:hidden;'
+                f'min-width:0;font-variant-numeric:tabular-nums;">{text}</div>'
+            )
+        rows_html += (
+            f'<div style="display:flex;align-items:center;gap:12px;margin-bottom:5px;">'
+            f'<div title="{topic_name}" style="width:170px;flex-shrink:0;font-size:12px;'
+            f'font-weight:600;color:#ECECF2;text-align:right;padding-right:6px;'
+            f'white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">{topic_name}</div>'
+            f'<div style="flex:1;height:24px;display:flex;border-radius:5px;'
+            f'overflow:hidden;background:#1A1A24;">{segments}</div>'
+            f'<div style="width:26px;flex-shrink:0;font-size:11px;color:#6B6B82;'
+            f'text-align:right;font-variant-numeric:tabular-nums;">{total}</div>'
+            f'</div>'
+        )
 
     return (
-        '<div class="ds-data-panel" style="overflow-x:auto;padding:12px 16px;">'
-        '<table style="border-collapse:collapse;width:100%;font-family:inherit;">'
-        f"<thead><tr>{header}</tr></thead>"
-        f"<tbody>{body}</tbody>"
-        "</table></div>"
+        '<div style="background:rgba(15,15,22,0.95);border:1px solid rgba(255,255,255,0.06);'
+        'border-radius:12px;padding:16px 20px;margin-bottom:12px;">'
+        + legend
+        + rows_html
+        + '</div>'
     )
 
 
@@ -987,14 +987,14 @@ with tab_overview:
 
         # 5b. Topic Outcome Heatmap ─────────────────────────────────────────
         st.markdown(
-            '<div class="ds-section-title">Topic Outcome Heatmap</div>'
+            '<div class="ds-section-title">Topic Outcome Distribution</div>'
             '<div class="ds-section-sub">'
-            'Shows how calibration outcomes are distributed across topics. '
-            'Red cells point to confident-but-wrong clusters that may need reteaching.'
+            'Each bar shows how a topic\u2019s analyzed reflections split across calibration outcomes. '
+            'Red segments show confident-but-wrong clusters that may need reteaching.'
             '</div>',
             unsafe_allow_html=True,
         )
-        st.markdown(_outcome_heatmap_html(sorted_topics), unsafe_allow_html=True)
+        st.markdown(_outcome_dist_html(sorted_topics), unsafe_allow_html=True)
 
         # 6. Full Topic Ranking ─────────────────────────────────────────────
         with st.expander("Full topic ranking", expanded=False):

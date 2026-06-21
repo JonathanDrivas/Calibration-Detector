@@ -1,0 +1,92 @@
+Replace the Topic Outcome Heatmap with a real graph-style visualization.
+
+Hard rules:
+
+* Presentation only.
+* Do not change the database.
+* Do not change saved reflections or results.
+* Do not rerun the model.
+* Do not clear any tables.
+* Do not change imported data.
+* Do not change model logic, scoring logic, label rules, action logic, Evidence calculations, Robustness calculations, or any formulas.
+* Do not change navigation logic.
+* Do not change any displayed number, count, gap, percentage, ranking, action label, or result label.
+* Read every value live from the existing computed results. Do not hardcode.
+* Do not add dependencies.
+* Do not use matplotlib.
+* Do not add iframes.
+* Do not break the four Faculty Dashboard tabs, Evidence tab, Robustness Check, Home CTAs, or Student Reflection form.
+* Use `st.markdown(..., unsafe_allow_html=True)` for custom visual HTML/CSS only.
+* Run the app and fix every error.
+
+Current issue:
+The Topic Outcome Heatmap looks like another colored table. Replace it with a graph that feels like an actual dashboard visualization.
+
+Replace the current Topic Outcome Heatmap with:
+
+`Topic Outcome Distribution`
+
+Visualization:
+
+* Use a horizontal stacked bar chart by topic.
+* Each row is one topic.
+* Each row has the topic name on the left.
+* Each row has one horizontal bar on the right.
+* The bar is divided into segments for:
+
+  * Understands
+  * Underconfident
+  * Partial
+  * Knows confused
+  * Confident but wrong
+* Segment widths should be proportional to the live count for that outcome within the topic.
+* Each segment should show the count if there is enough space.
+* If a segment is too small for text, hide the label inside the segment but keep the segment visible.
+* Add a clean legend above or below the chart.
+
+Use semantic colors:
+
+* Understands = #3DDC97
+* Underconfident = #5AA9FF
+* Partial = #C4B5FD
+* Knows confused = #F5B544
+* Confident but wrong = #FF5C6C
+
+Design:
+
+* Dark premium dashboard style.
+* No table grid lines.
+* No spreadsheet-like layout.
+* Bars should look like a chart, not table cells.
+* Use hairline borders, rounded bar ends, and subtle dark panels.
+* Keep labels readable.
+* Keep the chart compact enough that it does not dominate the page.
+
+Heading:
+`Topic Outcome Distribution`
+
+Helper text:
+`Each bar shows how a topic's analyzed reflections split across calibration outcomes. Red segments show confident-but-wrong clusters that may need reteaching.`
+
+Placement:
+
+* Put this graph below Instructor Action Plan and above Full Topic Ranking.
+* Keep the Full Topic Ranking as the complete reference below it.
+
+Important:
+
+* Remove the old heatmap/table version from this location.
+* Do not alter the Evidence confusion matrix. That is a separate validation heatmap and should remain unchanged.
+
+Before finishing:
+
+* Run the app.
+* Confirm Faculty Dashboard loads.
+* Confirm the new Topic Outcome Distribution renders as horizontal stacked bars, not a table.
+* Confirm all counts come from live existing results.
+* Confirm Instructor Action Plan values are unchanged.
+* Confirm Full Topic Ranking values are unchanged.
+* Confirm Evidence numbers and matrix are unchanged.
+* Confirm Robustness Check still works.
+* Confirm Home, Student Reflection, and About still load.
+* Summarize which files changed.

@@ -365,30 +365,21 @@ def _heatmap_html(cm_df: pd.DataFrame, labels: list) -> str:
 
 
 # ────────────────────────────────────────────────────────────────────────────
-# Topic Outcome Heatmap helper
+# Calibration Gap Ladder helper
 # ────────────────────────────────────────────────────────────────────────────
-def _risk_map_html(topics: list) -> str:
-    # SVG canvas & margins
-    W, H   = 720, 400
-    ML, MR, MT, MB = 56, 20, 22, 52
-    PW, PH = W - ML - MR, H - MT - MB
-
-    # Axis range (data lives 1-5, add padding)
-    AX_LO, AX_HI = 0.55, 5.45
-    MID = 3.0   # zone midpoint
-
+def _gap_ladder_html(topics: list) -> str:
     _AC = {
         "Reteach first":     "#FF5C6C",
         "Reassure students": "#5AA9FF",
         "Monitor":           "#9A9AAC",
     }
+    _AC_SHORT = {
+        "Reteach first":     "Reteach",
+        "Reassure students": "Reassure",
+        "Monitor":           "Monitor",
+    }
 
-    def sx(v): return ML + (v - AX_LO) / (AX_HI - AX_LO) * PW
-    def sy(v): return MT + PH - (v - AX_LO) / (AX_HI - AX_LO) * PH
-
-    mx, my = sx(MID), sy(MID)
     all_data = [(n, d) for n, d in topics if d["_total"] > 0]
-
     if not all_data:
         return (
             '<div style="background:rgba(15,15,22,0.95);border:1px solid rgba(255,255,255,0.06);'
@@ -399,126 +390,137 @@ def _risk_map_html(topics: list) -> str:
     max_cbw = max((d["label_counts"].get("confident_but_wrong", 0) for _, d in all_data), default=0)
     max_cbw = max(max_cbw, 1)
 
-    def _short(name: str, cap: int = 13) -> str:
-        if len(name) <= cap:
-            return name
-        acc = name.split()[0]
-        for w in name.split()[1:]:
-            cand = acc + " " + w
-            if len(cand) <= cap:
-                acc = cand
-            else:
-                break
-        return acc if len(acc) <= cap else acc[:cap - 1] + "\u2026"
+    # Auto-range axis; always bracket 0 by at least 0.5
+    gaps   = [d["calibration_gap"] for _, d in all_data]
+    g_lo, g_hi = min(gaps), max(gaps)
+    pad    = max(0.5, (g_hi - g_lo) * 0.18)
+    ax_lo  = min(g_lo - pad, -0.5)
+    ax_hi  = max(g_hi + pad,  0.5)
 
-    # Zone fills
-    zones = (
-        f'<rect x="{mx:.1f}" y="{my:.1f}" width="{ML + PW - mx:.1f}" height="{MT + PH - my:.1f}" fill="rgba(255,92,108,0.06)"/>'
-        f'<rect x="{ML}" y="{MT}" width="{mx - ML:.1f}" height="{my - MT:.1f}" fill="rgba(90,169,255,0.04)"/>'
+    # SVG layout
+    ROW_H = 38
+    N     = len(all_data)
+    ML, TW, MR = 180, 390, 112
+    W  = ML + TW + MR
+    MT, MB = 22, 38
+    H  = MT + N * ROW_H + MB
+
+    def tx(v):
+        return ML + (v - ax_lo) / (ax_hi - ax_lo) * TW
+
+    zero_x = tx(0.0)
+
+    # Alternating row fills
+    row_bg = ""
+    for i in range(N):
+        ry   = MT + i * ROW_H
+        fill = "rgba(255,255,255,0.018)" if i % 2 == 0 else "transparent"
+        row_bg += f'<rect x="0" y="{ry}" width="{W}" height="{ROW_H}" fill="{fill}"/>'
+
+    # Vertical gridlines at integers (except 0)
+    vgrid = ""
+    for v in range(int(ax_lo) - 1, int(ax_hi) + 2):
+        if ax_lo <= v <= ax_hi and v != 0:
+            gx = tx(float(v))
+            vgrid += (
+                f'<line x1="{gx:.1f}" y1="{MT}" x2="{gx:.1f}" y2="{MT + N * ROW_H}" '
+                f'stroke="rgba(255,255,255,0.04)" stroke-width="1"/>'
+            )
+
+    # Zero line
+    zero_line = (
+        f'<line x1="{zero_x:.1f}" y1="{MT - 4}" x2="{zero_x:.1f}" y2="{MT + N * ROW_H + 4}" '
+        f'stroke="rgba(255,255,255,0.22)" stroke-width="1.5"/>'
     )
 
-    # Grid lines
-    grid = ""
-    for t in [1, 2, 3, 4, 5]:
-        gx, gy = sx(float(t)), sy(float(t))
-        grid += (
-            f'<line x1="{gx:.1f}" y1="{MT}" x2="{gx:.1f}" y2="{MT + PH}" stroke="rgba(255,255,255,0.04)" stroke-width="1"/>'
-            f'<line x1="{ML}" y1="{gy:.1f}" x2="{ML + PW}" y2="{gy:.1f}" stroke="rgba(255,255,255,0.04)" stroke-width="1"/>'
+    # Horizontal track per row
+    track = ""
+    for i in range(N):
+        cy = MT + i * ROW_H + ROW_H // 2
+        track += (
+            f'<line x1="{ML}" y1="{cy}" x2="{ML + TW}" y2="{cy}" '
+            f'stroke="rgba(255,255,255,0.05)" stroke-width="1"/>'
         )
 
-    # Mid-dividers (dashed)
-    dividers = (
-        f'<line x1="{mx:.1f}" y1="{MT}" x2="{mx:.1f}" y2="{MT + PH}" stroke="rgba(255,255,255,0.13)" stroke-width="1" stroke-dasharray="4 3"/>'
-        f'<line x1="{ML}" y1="{my:.1f}" x2="{ML + PW}" y2="{my:.1f}" stroke="rgba(255,255,255,0.13)" stroke-width="1" stroke-dasharray="4 3"/>'
-    )
-
-    # Plot border
-    border = f'<rect x="{ML}" y="{MT}" width="{PW}" height="{PH}" fill="none" stroke="rgba(255,255,255,0.08)" stroke-width="1"/>'
-
-    # Zone labels
-    zs = 'font-size="9" font-weight="600" font-family="SF Mono,Fira Code,monospace"'
-    p  = 7
-    zone_labels = (
-        f'<text x="{ML + PW - p}" y="{MT + 13}" text-anchor="end" {zs} fill="rgba(61,220,151,0.40)">ALIGNED UNDERSTANDING</text>'
-        f'<text x="{ML + PW - p}" y="{MT + PH - p}" text-anchor="end" {zs} fill="rgba(255,92,108,0.55)">HIGH-RISK OVERCONFIDENCE</text>'
-        f'<text x="{ML + p}" y="{MT + 13}" text-anchor="start" {zs} fill="rgba(90,169,255,0.40)">REASSURANCE OPPORTUNITY</text>'
-        f'<text x="{ML + p}" y="{MT + PH - p}" text-anchor="start" {zs} fill="rgba(154,154,172,0.35)">NEEDS SUPPORT</text>'
-    )
-
-    # Tick labels
-    ts = 'font-size="10" fill="#50506A" font-family="SF Mono,Fira Code,monospace"'
-    ticks = ""
-    for t in [1, 2, 3, 4, 5]:
-        gx, gy = sx(float(t)), sy(float(t))
-        ticks += (
-            f'<text x="{gx:.1f}" y="{MT + PH + 16}" text-anchor="middle" {ts}>{t}</text>'
-            f'<text x="{ML - 6}" y="{gy + 4:.1f}" text-anchor="end" {ts}>{t}</text>'
-        )
-
-    # Axis labels
-    als = 'font-size="11" fill="#9A9AAC" font-weight="600" font-family="system-ui,sans-serif"'
-    axis_labels = (
-        f'<text x="{ML + PW // 2}" y="{H - 5}" text-anchor="middle" {als}>Student confidence \u2192</text>'
-        f'<text transform="rotate(-90)" x="{-(MT + PH // 2)}" y="13" text-anchor="middle" {als}>Demonstrated understanding \u2191</text>'
-    )
-
-    # Bubbles then labels (two passes so labels sit on top)
-    circles, lbl_svg = "", ""
-    for topic_name, d in all_data:
+    # Data: names | bubbles | badges
+    names_svg, bubbles_svg, badge_svg = "", "", ""
+    for i, (topic_name, d) in enumerate(all_data):
+        cy   = int(MT + i * ROW_H + ROW_H / 2)
         cbw  = d["label_counts"].get("confident_but_wrong", 0)
-        conf = max(AX_LO, min(AX_HI, d["avg_confidence"]))
-        und  = max(AX_LO, min(AX_HI, d["avg_understanding"]))
         gap  = d["calibration_gap"]
         act  = action_label(cbw, gap)
         col  = _AC.get(act, "#9A9AAC")
-        r    = 8.0 + 18.0 * (cbw / max_cbw) ** 0.5
-        cx, cy = sx(conf), sy(und)
-        tip  = f"{topic_name} | CBW: {cbw} | Gap: {gap:+.2f} | {act}"
-        circles += (
-            f'<circle cx="{cx:.1f}" cy="{cy:.1f}" r="{r:.1f}" '
-            f'fill="{col}" fill-opacity="0.70" stroke="{col}" stroke-width="1.5" stroke-opacity="0.95">'
-            f'<title>{tip}</title></circle>'
-        )
-        short = _short(topic_name)
-        ly    = min(cy + r + 11, MT + PH - 3)
-        lbl_svg += (
-            f'<text x="{cx:.1f}" y="{ly:.1f}" text-anchor="middle" '
-            f'font-size="9" fill="#ECECF2" fill-opacity="0.78" '
-            f'font-family="system-ui,sans-serif" font-weight="500">{short}</text>'
+        r    = 7.0 + 12.0 * (cbw / max_cbw) ** 0.5
+        bx   = tx(max(ax_lo, min(ax_hi, gap)))
+
+        # Topic name (right-aligned, left column)
+        short = topic_name if len(topic_name) <= 24 else topic_name[:22] + "\u2026"
+        names_svg += (
+            f'<text x="{ML - 10}" y="{cy + 4}" text-anchor="end" font-size="11" '
+            f'fill="#D0D0E0" font-family="system-ui,sans-serif" font-weight="500">{short}</text>'
         )
 
-    # HTML legend above chart
-    leg = ""
-    for act, col in _AC.items():
-        leg += (
-            f'<span style="display:inline-flex;align-items:center;margin-right:16px;'
-            f'margin-bottom:4px;font-size:11px;color:#9A9AAC;">'
-            f'<svg width="12" height="12" style="margin-right:5px;flex-shrink:0;">'
-            f'<circle cx="6" cy="6" r="5" fill="{col}" fill-opacity="0.70" stroke="{col}" stroke-width="1"/>'
-            f'</svg>{act}</span>'
+        # Bubble + count + gap label
+        tip = f"{topic_name} | Gap: {gap:+.2f} | CBW: {cbw} | {act}"
+        bubbles_svg += (
+            f'<circle cx="{bx:.1f}" cy="{cy}" r="{r:.1f}" fill="{col}" fill-opacity="0.72" '
+            f'stroke="{col}" stroke-width="1.5" stroke-opacity="0.9">'
+            f'<title>{tip}</title></circle>'
         )
-    leg += (
-        '<span style="display:inline-flex;align-items:center;font-size:11px;color:#6B6B82;">'
-        '<svg width="22" height="12" style="margin-right:5px;flex-shrink:0;">'
-        '<circle cx="4" cy="6" r="3" fill="rgba(255,255,255,0.28)"/>'
-        '<circle cx="15" cy="6" r="5.5" fill="rgba(255,255,255,0.28)"/>'
-        '</svg>size \u2192 confident-but-wrong count</span>'
+        if cbw > 0:
+            bubbles_svg += (
+                f'<text x="{bx:.1f}" y="{cy + 4}" text-anchor="middle" font-size="9" '
+                f'font-weight="800" fill="rgba(0,0,0,0.55)">{cbw}</text>'
+            )
+        # Gap value beside bubble
+        offset    = r + 5
+        gx_lbl    = bx + offset if gap >= 0 else bx - offset
+        g_anchor  = "start" if gap >= 0 else "end"
+        bubbles_svg += (
+            f'<text x="{gx_lbl:.1f}" y="{cy + 4}" text-anchor="{g_anchor}" font-size="9" '
+            f'fill="#50506A" font-family="SF Mono,Fira Code,monospace">{gap:+.2f}</text>'
+        )
+
+        # Action badge (right column)
+        badge_svg += (
+            f'<text x="{ML + TW + 14}" y="{cy + 4}" text-anchor="start" font-size="10" '
+            f'font-weight="700" fill="{col}">{_AC_SHORT.get(act, act)}</text>'
+        )
+
+    # Bottom axis labels
+    bottom_y = MT + N * ROW_H + 24
+    axis_lbl = (
+        f'<text x="{ML + 2}" y="{bottom_y}" text-anchor="start" font-size="10" '
+        f'fill="rgba(90,169,255,0.65)" font-weight="600" font-family="system-ui,sans-serif">'
+        f'\u2190 Underconfidence</text>'
+        f'<text x="{zero_x:.1f}" y="{bottom_y}" text-anchor="middle" font-size="10" '
+        f'fill="rgba(255,255,255,0.30)" font-weight="600" font-family="system-ui,sans-serif">'
+        f'Calibrated</text>'
+        f'<text x="{ML + TW - 2}" y="{bottom_y}" text-anchor="end" font-size="10" '
+        f'fill="rgba(255,92,108,0.65)" font-weight="600" font-family="system-ui,sans-serif">'
+        f'Overconfidence risk \u2192</text>'
     )
-    legend_html = f'<div style="display:flex;flex-wrap:wrap;margin-bottom:10px;">{leg}</div>'
+
+    # Zero marker at top of zero line
+    zero_top = (
+        f'<text x="{zero_x:.1f}" y="{MT - 6}" text-anchor="middle" font-size="9" '
+        f'fill="rgba(255,255,255,0.28)" font-family="SF Mono,Fira Code,monospace">0</text>'
+    )
 
     svg = (
         f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {W} {H}" '
         f'style="width:100%;height:auto;display:block;">'
         f'<rect width="{W}" height="{H}" fill="transparent"/>'
-        + zones + grid + dividers + border + zone_labels + ticks + axis_labels
-        + circles + lbl_svg
+        + row_bg + vgrid + zero_line + track
+        + names_svg + bubbles_svg + badge_svg
+        + axis_lbl + zero_top
         + '</svg>'
     )
 
     return (
         '<div style="background:rgba(15,15,22,0.95);border:1px solid rgba(255,255,255,0.06);'
         'border-radius:12px;padding:16px 20px;margin-bottom:12px;">'
-        + legend_html + svg + '</div>'
+        + svg + '</div>'
     )
 
 
@@ -1083,16 +1085,16 @@ with tab_overview:
             )
         st.markdown(risk_rows_html, unsafe_allow_html=True)
 
-        # 5b. Calibration Risk Map ──────────────────────────────────────────
+        # 5b. Calibration Gap Ladder ────────────────────────────────────────
         st.markdown(
-            '<div class="ds-section-title">Calibration Risk Map</div>'
+            '<div class="ds-section-title">Calibration Gap Ladder</div>'
             '<div class="ds-section-sub">'
-            'Each topic is plotted by average confidence and average demonstrated understanding. '
-            'Larger bubbles show more confident-but-wrong reflections.'
+            'Topics to the right show overconfidence. Topics to the left show underconfidence. '
+            'Larger markers mean more confident-but-wrong reflections.'
             '</div>',
             unsafe_allow_html=True,
         )
-        st.markdown(_risk_map_html(sorted_topics), unsafe_allow_html=True)
+        st.markdown(_gap_ladder_html(sorted_topics), unsafe_allow_html=True)
 
         # 6. Full Topic Ranking ─────────────────────────────────────────────
         with st.expander("Full topic ranking", expanded=False):

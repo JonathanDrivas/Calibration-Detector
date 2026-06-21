@@ -1,0 +1,96 @@
+Replace the current Calibration Risk Map bubble chart with a cleaner graph called `Calibration Gap Ladder`.
+
+Hard rules:
+
+* Presentation/display only.
+* Do not change the database.
+* Do not change saved reflections or results.
+* Do not rerun the model.
+* Do not clear any tables.
+* Do not change imported data.
+* Do not change model logic, scoring logic, label rules, action logic, Evidence calculations, Robustness calculations, or any formulas.
+* Do not change navigation logic.
+* Do not change any displayed number, count, gap, percentage, ranking, action label, or result label.
+* Read every value live from the existing computed results. Do not hardcode.
+* Do not add dependencies.
+* Do not use matplotlib.
+* Do not add iframes.
+* Do not break the four Faculty Dashboard tabs, Evidence tab, Robustness Check, Home CTAs, or Student Reflection form.
+* Use `st.markdown(..., unsafe_allow_html=True)` for custom visual HTML/CSS/SVG only.
+* Run the app and fix every error.
+
+Current issue:
+The Calibration Risk Map bubble chart causes too much overlap because the topics cluster near the same confidence and understanding values. The bubbles and labels sit on top of each other, which makes the chart hard to read.
+
+Replace it with a `Calibration Gap Ladder`.
+
+Chart concept:
+
+* Each topic appears as one row.
+* X-axis = calibration gap.
+* Calibration gap uses the existing value already shown in the dashboard:
+  average student confidence minus average model-assessed understanding.
+* A vertical center line at 0 separates:
+
+  * left side: underconfidence / reassurance opportunity
+  * right side: overconfidence / reteaching risk
+* Each topic has a dot or bubble positioned by its calibration gap.
+* Bubble size = confident-but-wrong count for that topic.
+* Bubble color = recommended action:
+
+  * Reteach first = red
+  * Reassure students = blue
+  * Monitor = gray
+* Show the confident-but-wrong count beside or inside the bubble if readable.
+* Show the action badge at the far right of each row.
+* Keep topic names on the left.
+* Sort rows the same way as the current topic ranking, by confident-but-wrong count descending.
+
+Heading:
+`Calibration Gap Ladder`
+
+Helper text:
+`Topics to the right show overconfidence. Topics to the left show underconfidence. Larger markers mean more confident-but-wrong reflections.`
+
+Design:
+
+* Premium dark dashboard style.
+* Use a dark panel with hairline border.
+* Use subtle horizontal row guides.
+* Use a clear vertical zero line.
+* Use compact readable topic labels.
+* Do not make it look like a table.
+* Do not use spreadsheet-style cells.
+* Avoid overlapping labels.
+* Keep it compact enough that it does not dominate the whole page.
+
+Axis labels:
+
+* Left side label: `Underconfidence`
+* Center marker: `Calibrated`
+* Right side label: `Overconfidence risk`
+
+Important:
+
+* Remove the current overlapping Calibration Risk Map bubble chart from this location.
+* Do not remove the Instructor Action Plan.
+* Do not remove the Full Topic Ranking.
+* Do not alter the Evidence confusion matrix.
+* Do not change the Calibration Grid.
+* This new visual is diagnostic, while Evidence remains validation.
+
+Before finishing:
+
+* Run the app.
+* Confirm Faculty Dashboard loads.
+* Confirm all four dashboard tabs work.
+* Confirm the new Calibration Gap Ladder renders as a readable graph.
+* Confirm marker positions come from live existing calibration gap values.
+* Confirm bubble sizes come from live confident-but-wrong counts.
+* Confirm action colors come from live recommended action labels.
+* Confirm Instructor Action Plan values are unchanged.
+* Confirm Full Topic Ranking values are unchanged.
+* Confirm Evidence numbers and matrix are unchanged.
+* Confirm Robustness Check still works.
+* Confirm Home, Student Reflection, and About still load.
+* Summarize which files changed.

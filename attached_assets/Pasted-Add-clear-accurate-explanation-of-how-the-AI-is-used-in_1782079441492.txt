@@ -1,0 +1,82 @@
+Add clear, accurate explanation of how the AI is used in three specific places.
+
+Do not redesign or restyle the app. Do not change any metrics, logic, data, database, model behavior, scoring, label rules, Evidence calculations, Robustness calculations, navigation, or any section not named below. Match the existing visual style of each page. Keep all copy concise. Do not use em dashes anywhere.
+
+Use only these facts, which are true of the current code in `ai.py`:
+
+* The engine calls Claude, model `claude-sonnet-4-6`, through the built-in Anthropic integration.
+* For each reflection, the model is given the selected topic's correct description and common misconceptions.
+* The model rates demonstrated understanding from 1 to 5.
+* The model identifies the main misconception or returns none.
+* The model is given explicit scoring rules.
+* Brevity and plain wording are not penalized.
+* Confident vocabulary or buzzwords over a wrong explanation are not rewarded.
+* A reflection that uses correct terms but explains the concept incorrectly scores 1 or 2.
+* The model does not infer confidence from the text.
+* Confidence is the student's own 1 to 5 rating from the slider and is handled separately.
+* The calibration label is computed by a fixed rule from confidence and understanding in `compute_label`.
+* The model judges understanding only. The categorical calibration label is deterministic.
+
+PLACE 1: Faculty Dashboard, existing AI Analysis Pipeline section
+
+Expand the existing AI Analysis Pipeline section so it explains the workflow more clearly in short, readable lines.
+
+Make clear:
+
+* The AI reads the reflection in the context of the selected topic.
+* The AI receives the topic's correct description and common misconceptions.
+* The AI scores demonstrated understanding from 1 to 5.
+* The AI detects the main misconception or returns none.
+* The student's confidence is not inferred by the AI. It comes only from the slider.
+* The final calibration label is computed by the app using fixed rules, not chosen by the AI.
+
+Keep the pipeline compact and readable. Do not turn it into a wall of text.
+
+Add one compact worked example, clearly labeled as a static example and not database output:
+
+Example:
+Reflection: "The early majority is the most venturesome group, the first to adopt anything new."
+Topic: Diffusion of Innovation
+Student confidence: 5
+Model understanding: 2
+Detected misconception: confuses the early majority with the venturesome first adopters
+Computed label: confident_but_wrong
+
+Add one short line under the example:
+`This is the case the tool is designed to catch: high confidence paired with weak demonstrated understanding.`
+
+PLACE 2: About and Responsible Use page
+
+Add a short subsection titled:
+`How the AI is used, and its limits`
+
+In concise sentences, state:
+
+* The model judges demonstrated understanding only.
+* The model used is Claude, model `claude-sonnet-4-6`, through the built-in Anthropic integration.
+* The calibration label is computed by a fixed rule from model-rated understanding and student-provided confidence.
+* Confidence is the student's own value and is never inferred from writing style or tone.
+* Low-certainty reads are meant for human review.
+* Current validation uses simulated labels.
+* A real deployment would need instructor-labeled student reflections for stronger validation.
+
+Do not remove or weaken any existing responsible-use language.
+
+PLACE 3: Faculty Dashboard, Evidence tab
+
+If it is not already there, add one short caveat line:
+
+`Accuracy is measured against simulated ground-truth labels built around the same calibration categories, so it shows internal consistency for the prototype rather than proof on real student writing.`
+
+Keep it visually secondary but readable.
+
+After the changes:
+
+* Run the app.
+* Confirm nothing else moved, restyled, or broke.
+* Confirm all four dashboard tabs still work.
+* Confirm Evidence values are unchanged.
+* Confirm Robustness Check still works.
+* Confirm Student Reflection form still works.
+* Confirm Home and About load correctly.
+* Summarize which files changed.

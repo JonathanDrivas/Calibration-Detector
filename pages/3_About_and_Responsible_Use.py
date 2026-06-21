@@ -109,6 +109,28 @@ st.markdown("""
     font-size: 11px; color: #6B6B82; line-height: 1.6;
     margin-top: 8px;
 }
+.ab-ai {
+    background: rgba(160,107,255,0.04);
+    border: 1px solid rgba(160,107,255,0.14);
+    border-radius: 12px;
+    padding: 18px 20px;
+    margin-bottom: 14px;
+}
+.ab-ai-eyebrow {
+    font-family: "SF Mono","Fira Code","Courier New",monospace;
+    font-size: 9px; font-weight: 700; letter-spacing: 1.3px;
+    text-transform: uppercase; color: #A06BFF; margin-bottom: 10px;
+}
+.ab-ai-title {
+    font-size: 14px; font-weight: 700; color: #ECECF2;
+    margin-bottom: 12px; letter-spacing: -0.01em;
+}
+.ab-ai-row { display: flex; align-items: flex-start; gap: 9px; margin-bottom: 7px; }
+.ab-ai-dot {
+    width: 5px; height: 5px; border-radius: 50%;
+    background: #A06BFF; opacity: 0.6; flex-shrink: 0; margin-top: 6px;
+}
+.ab-ai-text { font-size: 13px; color: #BCBCCC; line-height: 1.6; }
 </style>
 
 <div class="ab-cards">
@@ -176,6 +198,17 @@ st.markdown("""
     </div>
   </div>
 
+</div>
+
+<div class="ab-ai">
+  <div class="ab-ai-eyebrow">AI usage</div>
+  <div class="ab-ai-title">How the AI is used, and its limits</div>
+  <div class="ab-ai-row"><div class="ab-ai-dot"></div><div class="ab-ai-text">The model judges demonstrated understanding only. It does not make calibration decisions.</div></div>
+  <div class="ab-ai-row"><div class="ab-ai-dot"></div><div class="ab-ai-text">The model used is Claude (claude-sonnet-4-6) through the built-in Anthropic integration.</div></div>
+  <div class="ab-ai-row"><div class="ab-ai-dot"></div><div class="ab-ai-text">The calibration label is computed by a fixed rule from model-rated understanding and student-provided confidence.</div></div>
+  <div class="ab-ai-row"><div class="ab-ai-dot"></div><div class="ab-ai-text">Confidence is the student's own 1-5 slider value. It is never inferred from writing style or tone.</div></div>
+  <div class="ab-ai-row"><div class="ab-ai-dot"></div><div class="ab-ai-text">Low-certainty reads are surfaced for human review, not acted on automatically.</div></div>
+  <div class="ab-ai-row"><div class="ab-ai-dot"></div><div class="ab-ai-text">Current validation uses simulated labels. A real deployment would need instructor-labeled student reflections for stronger validation.</div></div>
 </div>
 
 <div class="ab-note">

@@ -1378,6 +1378,14 @@ with tab_evidence:
             '</div>',
             unsafe_allow_html=True,
         )
+        st.markdown(
+            '<p style="font-size:11.5px;color:#525268;line-height:1.55;margin:10px 0 14px 0;">'
+            'Accuracy is measured against simulated ground-truth labels built around the same '
+            'calibration categories, so it shows internal consistency for the prototype rather '
+            'than proof on real student writing.'
+            '</p>',
+            unsafe_allow_html=True,
+        )
 
         matrix: dict[str, dict[str, int]] = {l: {l2: 0 for l2 in ALL_LABELS} for l in ALL_LABELS}
         unknown_gt, unknown_pred = set(), set()
@@ -1471,22 +1479,43 @@ body{background:#0B0B12;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',
 <div class="glow"></div>
 <div class="inner">
 <div class="ttl">AI Analysis Pipeline</div>
-<div class="sub">The model reads meaning first, then the app compares demonstrated understanding against student confidence.</div>
+<div class="sub">The model judges understanding only. The calibration label is computed by the app using fixed rules, not chosen by the AI.</div>
 <div class="flow">
-<div class="step"><div class="num">1</div><div class="sttl">Read reflection</div><div class="sbod">Topic, reflection text, and confidence enter the AI engine.</div></div>
+<div class="step"><div class="num">1</div><div class="sttl">Context in</div><div class="sbod">The AI receives the topic description, common misconceptions, and the student's reflection text.</div></div>
 <div class="arr">&#8594;</div>
-<div class="step"><div class="num">2</div><div class="sttl">Score understanding</div><div class="sbod">The AI rates demonstrated understanding from 1 to 5.</div></div>
+<div class="step"><div class="num">2</div><div class="sttl">Score understanding</div><div class="sbod">The AI rates demonstrated understanding 1 to 5. Brevity and plain wording are not penalized.</div></div>
 <div class="arr">&#8594;</div>
-<div class="step"><div class="num">3</div><div class="sttl">Find misconception</div><div class="sbod">The AI identifies the misconception or marks none.</div></div>
+<div class="step"><div class="num">3</div><div class="sttl">Detect misconception</div><div class="sbod">The AI names the main misconception or returns none. Confident vocabulary over a wrong explanation is not rewarded.</div></div>
 <div class="arr">&#8594;</div>
-<div class="step"><div class="num">4</div><div class="sttl">Compare confidence</div><div class="sbod">The app compares confidence against understanding.</div></div>
+<div class="step"><div class="num">4</div><div class="sttl">Confidence from slider</div><div class="sbod">Confidence comes only from the student's 1-5 slider rating. The AI does not infer it from the text.</div></div>
 <div class="arr">&#8594;</div>
-<div class="step"><div class="num">5</div><div class="sttl">Assign label</div><div class="sbod">The result becomes a calibration label such as <span class="cbw">confident_but_wrong</span>.</div></div>
+<div class="step"><div class="num">5</div><div class="sttl">Label by fixed rule</div><div class="sbod">The app applies a fixed rule to understanding and confidence to produce the label, such as <span class="cbw">confident_but_wrong</span>.</div></div>
 </div>
 </div>
 </div>
 </body></html>"""
     components.html(_pipe_html, height=256, scrolling=False)
+    st.markdown(
+        '<div style="background:#0F0F1A;border:1px solid rgba(255,92,108,0.25);'
+        'border-radius:10px;padding:14px 16px;margin-bottom:14px;">'
+        '<div style="font-size:9px;font-weight:800;letter-spacing:.5px;text-transform:uppercase;'
+        'color:#6B6B82;margin-bottom:10px;">WORKED EXAMPLE &middot; STATIC, NOT DATABASE OUTPUT</div>'
+        '<div style="font-size:12px;color:#BCBCCC;line-height:1.8;">'
+        '<span style="color:#8A8A9A;">Reflection:</span> '
+        '<em>"The early majority is the most venturesome group, the first to adopt anything new."</em><br>'
+        '<span style="color:#8A8A9A;">Topic:</span> Diffusion of Innovation'
+        '&emsp;<span style="color:#8A8A9A;">Student confidence:</span> 5'
+        '&emsp;<span style="color:#8A8A9A;">Model understanding:</span> 2<br>'
+        '<span style="color:#8A8A9A;">Detected misconception:</span> confuses the early majority with the venturesome first adopters<br>'
+        '<span style="color:#8A8A9A;">Computed label:</span> '
+        '<strong style="color:#FF5C6C;">confident_but_wrong</strong>'
+        '</div>'
+        '<div style="font-size:11.5px;color:#737385;margin-top:8px;font-style:italic;">'
+        'This is the case the tool is designed to catch: high confidence paired with weak demonstrated understanding.'
+        '</div>'
+        '</div>',
+        unsafe_allow_html=True,
+    )
     st.markdown(
         '<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:14px;">'
         '<div style="background:#14141C;border:1px solid #2C2C3A;border-radius:10px;padding:12px 14px;">'

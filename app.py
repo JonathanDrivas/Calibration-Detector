@@ -11,7 +11,7 @@ st.set_page_config(
 
 st.markdown("""
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@700;800&display=swap');
 
 /* ── Global font ─────────────────────────────────────────────────── */
 html, body, [class*="css"], button, input, textarea, select {
@@ -19,13 +19,21 @@ html, body, [class*="css"], button, input, textarea, select {
                  "Segoe UI", sans-serif !important;
 }
 
-/* ── App background with radial glow ─────────────────────────────── */
+/* ── App background: glows + hairline grid ───────────────────────── */
 [data-testid="stAppViewContainer"] {
-    background:
-        radial-gradient(ellipse 1200px 600px at 50% -10%,
-            rgba(160,107,255,0.10) 0%, transparent 60%),
-        #0B0B12 !important;
+    background-color: #0B0B12 !important;
+    background-image:
+        linear-gradient(rgba(255,255,255,0.016) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.016) 1px, transparent 1px),
+        radial-gradient(ellipse 1100px 580px at 15% 0%,
+            rgba(124,92,255,0.08) 0%, transparent 62%),
+        radial-gradient(ellipse 800px 480px at 88% 100%,
+            rgba(90,169,255,0.06) 0%, transparent 62%) !important;
+    background-size: 52px 52px, 52px 52px, auto, auto !important;
     background-attachment: fixed !important;
+}
+@media (prefers-reduced-motion: reduce) {
+    [data-testid="stAppViewContainer"] { background-image: none !important; }
 }
 [data-testid="stHeader"]     { background: transparent !important; }
 [data-testid="stDecoration"] { display: none !important; }

@@ -1,0 +1,118 @@
+Goal: extend the new Home hero's visual language across the whole app so every page feels like the same premium product. Apply it through global CSS and by restyling existing custom-HTML elements. Keep the Home hero iframe as is. Do not add more iframes.
+
+Hard rules:
+
+* Presentation only.
+* Do not change the database, saved results, imported data, model logic, scoring, label rules, action logic, Evidence calculations, Robustness calculations, navigation logic, or any formula.
+* Do not change any displayed number, count, gap, percentage, ranking, action label, or result label.
+* Read every value live. Do not hardcode.
+* Do not rerun the model.
+* Do not clear any tables.
+* Do not change the Home hero iframe. Leave it as-is unless a tiny spacing fix is required to blend it with the rest of the page.
+* Do not break the confidence slider, topic selectbox, textarea, form submission, the four dashboard tabs, the Evidence tab, or the Robustness Check.
+* Keep all live data and all interactive widgets as Streamlit-rendered elements.
+* Do not move any KPI card, table, action plan, confusion matrix, badge, input, dashboard tab, dashboard Calibration Grid, or form element into an iframe.
+* The Home hero stays the only iframe.
+* Render injected HTML through `st.markdown(..., unsafe_allow_html=True)`, never as a visible code block.
+* No new dependencies.
+* Do not hide Streamlit errors with CSS.
+* Run the app and fix every error.
+
+Apply the hero language everywhere:
+
+1. Shared background
+   Give every page the hero's depth:
+
+* deep #0B0B12 base
+* layered low-opacity radial glows
+* very faint hairline grid fading toward the edges
+* background should sit behind all content at low opacity so it never hurts readability
+* keep motion extremely subtle or static
+* respect `prefers-reduced-motion`
+* no distracting animation, no neon, no crypto/gaming look
+
+2. Page headers
+   Restyle the existing headers on Student Reflection, Faculty Dashboard, and About to match the hero:
+
+* small monospace eyebrow above the heading
+* Space Grotesk-style display heading
+* muted one-line tagline
+* compact height so the real content stays visible
+* keep these as Streamlit-rendered HTML
+* if a badge uses live data, such as analyzed count, it must stay live and not be hardcoded
+
+3. Faculty Dashboard Calibration Grid
+   Restyle the dashboard Calibration Grid so it visually rhymes with the Home hero motif:
+
+* same 2x2 visual language
+* hairline borders
+* monospace quadrant labels
+* semantic accent colors
+* soft red glow on the confident-but-wrong cell
+* keep live counts and structure exactly the same
+* do not move it into an iframe
+
+4. About page
+   Present the responsible-use principles as cinematic dark cards in the same design system:
+
+* do not change the governance meaning
+* do not remove any content
+* do not weaken the privacy/responsible-use language
+* keep it readable and serious
+
+5. Student Reflection page
+   Apply the same visual system to the form page:
+
+* dark panels
+* hairline borders
+* premium form styling
+* violet focus states
+* readable labels
+* keep topic selectbox, textarea, confidence slider, and submit behavior exactly the same
+* make sure the form still submits reflections normally
+* make sure the confidence slider remains usable and visible
+* do not replace the form with custom HTML
+
+6. Faculty Dashboard tabs and panels
+   Apply the same premium system to:
+
+* tabs
+* KPI cards
+* action plan rows
+* topic expanders
+* Evidence metric cards
+* heatmap panel
+* Robustness Check cards and expanders
+
+Keep the current layout and values. This is styling unification, not a logic or data change.
+
+7. Home page below the hero
+   Keep the existing Home hero iframe exactly as it is. Restyle only the content below it so it matches the same premium visual system:
+
+* keep the real Streamlit CTAs working
+* keep the explainer cards
+* do not duplicate CTAs inside the iframe
+* do not move the CTAs into HTML/iframe content
+
+8. Fonts
+   Keep fonts consistent:
+
+* Space Grotesk or fallback display font for large headings
+* Inter or system fallback for body text
+* monospace for numbers, labels, badges, axis labels, and section tags
+* tabular numbers for stats
+
+Before finishing:
+
+* Run the app and fix all errors.
+* Confirm Home loads.
+* Confirm Student Reflection loads.
+* Confirm Faculty Dashboard loads.
+* Confirm About loads.
+* Confirm navigation and both Home CTAs work.
+* Confirm the form, slider, topic selectbox, textarea, and submit button work.
+* Confirm all four dashboard tabs work.
+* Confirm Evidence works and numbers are unchanged.
+* Confirm Robustness Check works.
+* Confirm every number, label, percentage, count, gap, ranking, and action is unchanged.
+* Summarize which files changed.

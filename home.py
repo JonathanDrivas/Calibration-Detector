@@ -7,28 +7,36 @@ st.markdown("""
 <style>
 .home-cards {
     display: grid; grid-template-columns: repeat(3, 1fr);
-    gap: 14px; margin: 8px 0 24px 0;
+    gap: 12px; margin: 8px 0 24px 0;
 }
 .home-card {
-    background: #14141C;
-    border: 1px solid #262633;
+    background: rgba(20,20,28,0.85);
+    border: 1px solid rgba(255,255,255,0.06);
     border-radius: 14px;
     padding: 22px 20px;
-    box-shadow: inset 0 1px 0 rgba(255,255,255,0.03), 0 8px 24px rgba(0,0,0,0.35);
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.025), 0 8px 28px rgba(0,0,0,0.4);
+    transition: border-color 0.2s ease;
 }
+.home-card:hover { border-color: rgba(255,255,255,0.10); }
 .home-card-dot {
-    width: 8px; height: 8px; border-radius: 50%;
-    margin-bottom: 14px;
+    width: 7px; height: 7px; border-radius: 50%;
+    margin-bottom: 14px; opacity: 0.9;
+}
+.home-card-tag {
+    font-family: "SF Mono","Fira Code","Courier New",monospace;
+    font-size: 9px; font-weight: 700; letter-spacing: 1.2px;
+    text-transform: uppercase; margin-bottom: 9px;
 }
 .home-card-title {
-    font-size: 14px; font-weight: 700; color: #ECECF2;
-    margin-bottom: 8px; letter-spacing: -0.01em;
+    font-family: "Space Grotesk", system-ui, sans-serif;
+    font-size: 15px; font-weight: 700; color: #ECECF2;
+    margin-bottom: 8px; letter-spacing: -0.02em;
 }
 .home-card-body {
-    font-size: 13px; color: #9A9AAC; line-height: 1.6;
+    font-size: 13px; color: #9A9AAC; line-height: 1.65;
 }
 .home-divider {
-    border: none; border-top: 1px solid #262633; margin: 0 0 20px 0;
+    border: none; border-top: 1px solid rgba(255,255,255,0.06); margin: 0 0 20px 0;
 }
 </style>
 """, unsafe_allow_html=True)
@@ -306,7 +314,7 @@ components.html(_hero_html, height=460, scrolling=False)
 st.markdown("""
 <div class="home-cards">
   <div class="home-card">
-    <div class="home-card-dot" style="background:#A06BFF;"></div>
+    <div class="home-card-tag" style="color:#A06BFF;">01 &middot; Overview</div>
     <div class="home-card-title">What it does</div>
     <div class="home-card-body">
       Reads short student reflections and flags topics where students are confident
@@ -314,7 +322,7 @@ st.markdown("""
     </div>
   </div>
   <div class="home-card">
-    <div class="home-card-dot" style="background:#5AA9FF;"></div>
+    <div class="home-card-tag" style="color:#5AA9FF;">02 &middot; Method</div>
     <div class="home-card-title">How it works</div>
     <div class="home-card-body">
       Students submit a brief reflection and a confidence rating. An AI model
@@ -323,7 +331,7 @@ st.markdown("""
     </div>
   </div>
   <div class="home-card">
-    <div class="home-card-dot" style="background:#FF5C6C;"></div>
+    <div class="home-card-tag" style="color:#FF5C6C;">03 &middot; Impact</div>
     <div class="home-card-title">Why calibration matters</div>
     <div class="home-card-body">
       Students who are confident but wrong rarely seek help. Catching that
@@ -337,8 +345,9 @@ st.markdown("""
 # ── CTA navigation ────────────────────────────────────────────────────────────
 st.markdown(
     '<hr class="home-divider">'
-    '<div style="font-size:12px;color:#555566;margin-bottom:10px;font-weight:600;'
-    'text-transform:uppercase;letter-spacing:.5px;">Get started</div>',
+    '<div style="font-family:\'SF Mono\',\'Fira Code\',\'Courier New\',monospace;'
+    'font-size:10px;color:#A06BFF;margin-bottom:10px;font-weight:600;'
+    'letter-spacing:1.8px;text-transform:uppercase;">Get started</div>',
     unsafe_allow_html=True,
 )
 

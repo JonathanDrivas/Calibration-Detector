@@ -59,25 +59,26 @@ st.markdown("""
 [data-testid="stSidebarNav"] a[aria-current="page"] span { color: #ECECF2 !important; }
 
 /* ── Page header ─────────────────────────────────────────────────── */
-.ds-header {
-    background: #14141C;
-    border: 1px solid #262633;
-    border-radius: 14px;
-    padding: 14px 22px;
-    margin-bottom: 16px;
-    box-shadow: inset 0 1px 0 rgba(255,255,255,0.03), 0 8px 24px rgba(0,0,0,0.4);
+.ds-page-header { padding: 22px 0 16px 0; }
+.ds-ph-eyebrow {
+    font-family: "SF Mono","Fira Code","Courier New",monospace;
+    font-size: 10px; font-weight: 600; letter-spacing: 1.8px;
+    text-transform: uppercase; color: #A06BFF; margin-bottom: 10px;
+}
+.ds-ph-title {
+    font-family: "Space Grotesk", system-ui, -apple-system, sans-serif;
+    font-size: 34px; font-weight: 800; color: #ECECF2;
+    letter-spacing: -0.04em; line-height: 1.05; margin-bottom: 10px;
+}
+.ds-ph-meta {
     display: flex; align-items: center; justify-content: space-between;
     flex-wrap: wrap; gap: 10px;
 }
-.ds-header-title {
-    font-size: 20px; font-weight: 800; color: #ECECF2;
-    letter-spacing: -0.03em; margin-bottom: 2px; line-height: 1.2;
-}
-.ds-header-sub { font-size: 13px; color: #9A9AAC; }
-.ds-header-badges { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+.ds-ph-tagline { font-size: 14px; color: #6B6B82; }
 .ds-hbadge {
-    font-size: 11px; font-weight: 600; border-radius: 999px;
-    padding: 4px 11px; white-space: nowrap;
+    font-family: "SF Mono","Fira Code","Courier New",monospace;
+    font-size: 10px; font-weight: 600; border-radius: 999px;
+    padding: 4px 12px; white-space: nowrap;
 }
 
 /* ── Section headings ────────────────────────────────────────────── */
@@ -131,32 +132,50 @@ st.markdown("""
 
 /* ── Calibration grid cells ──────────────────────────────────────── */
 .ds-cal-cell {
-    background: #14141C;
-    border: 1px solid #262633;
+    background: rgba(255,255,255,0.012);
+    border: 1px solid rgba(255,255,255,0.07);
     border-radius: 12px;
     padding: 14px 16px;
-    box-shadow: inset 0 1px 0 rgba(255,255,255,0.02), 0 4px 12px rgba(0,0,0,0.3);
     display: flex; flex-direction: column;
     min-height: 112px;
+    position: relative; overflow: hidden;
 }
 .ds-cal-quadrant {
-    font-size: 9px; font-weight: 700; text-transform: uppercase;
+    font-family: "SF Mono","Fira Code","Courier New",monospace;
+    font-size: 9px; font-weight: 600; text-transform: uppercase;
     letter-spacing: .5px; color: #3A3A50; margin-bottom: 5px;
 }
 .ds-cal-name   { font-size: 13px; font-weight: 700; margin-bottom: 2px; }
 .ds-cal-count  {
+    font-family: "SF Mono","Fira Code","Courier New",monospace;
     font-size: 28px; font-weight: 800; line-height: 1; margin-bottom: 6px;
     font-variant-numeric: tabular-nums;
 }
-.ds-cal-response { font-size: 11px; color: #9A9AAC; margin-top: auto; }
+.ds-cal-response {
+    font-family: "SF Mono","Fira Code","Courier New",monospace;
+    font-size: 10px; color: #9A9AAC; margin-top: auto; letter-spacing: .2px;
+}
 .ds-cal-partial {
-    background: #14141C;
-    border: 1px solid #262633;
+    background: rgba(255,255,255,0.012);
+    border: 1px solid rgba(255,255,255,0.07);
     border-radius: 12px;
     padding: 14px 16px;
-    box-shadow: inset 0 1px 0 rgba(255,255,255,0.02), 0 4px 12px rgba(0,0,0,0.3);
     display: flex; flex-direction: column; justify-content: center;
     min-height: 112px;
+    position: relative; overflow: hidden;
+}
+.ds-cal-cbw-glow {
+    position: absolute; inset: -40px;
+    background: radial-gradient(ellipse at center, rgba(255,92,108,0.16) 0%, transparent 65%);
+    pointer-events: none;
+    animation: cbwGridPulse 4.5s ease-in-out infinite;
+}
+@keyframes cbwGridPulse {
+    0%,100% { opacity: 0.5; }
+    50%      { opacity: 1.0; }
+}
+@media (prefers-reduced-motion: reduce) {
+    .ds-cal-cbw-glow { animation: none; opacity: 0.7; }
 }
 
 /* ── Action badges ───────────────────────────────────────────────── */
@@ -559,16 +578,17 @@ _analyzed_badge = (
 ) if total_analyzed else ""
 
 st.markdown(f"""
-<div class="ds-header">
-  <div>
-    <div class="ds-header-title">Faculty Dashboard</div>
-    <div class="ds-header-sub">Confidence vs. demonstrated understanding across student reflections</div>
-  </div>
-  <div class="ds-header-badges">
-    {_analyzed_badge}
-    <span class="ds-hbadge" style="background:#1A1A24;color:#9A9AAC;border:1px solid #262633;">
-      Simulated dataset
-    </span>
+<div class="ds-page-header">
+  <div class="ds-ph-eyebrow">Analytics &middot; Faculty View</div>
+  <div class="ds-ph-title">Faculty Dashboard</div>
+  <div class="ds-ph-meta">
+    <span class="ds-ph-tagline">Confidence vs. demonstrated understanding across student reflections</span>
+    <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;">
+      {_analyzed_badge}
+      <span class="ds-hbadge" style="background:rgba(255,255,255,0.04);color:#9A9AAC;border:1px solid rgba(255,255,255,0.08);">
+        Simulated dataset
+      </span>
+    </div>
   </div>
 </div>
 """, unsafe_allow_html=True)
@@ -686,27 +706,27 @@ with tab_overview:
         # Build HTML as Python strings — no blank lines — to prevent Markdown
         # from exiting HTML-block mode mid-string.
         _cell_uc = (
-            '<div class="ds-cal-cell" style="border-top:3px solid #5AA9FF;">'
+            '<div class="ds-cal-cell" style="border-color:rgba(90,169,255,0.22);background:rgba(90,169,255,0.04);">'
             '<div class="ds-cal-quadrant">Low confidence · High understanding</div>'
             '<div class="ds-cal-name" style="color:#5AA9FF;">Underconfident</div>'
             f'<div class="ds-cal-count" style="color:#5AA9FF;">{_gc["underconfident"]}</div>'
-            '<div class="ds-cal-response">Reassure students</div>'
+            '<div class="ds-cal-response" style="color:#5AA9FF;opacity:0.7;">Reassure students</div>'
             '</div>'
         )
         _cell_un = (
-            '<div class="ds-cal-cell" style="border-top:3px solid #3DDC97;">'
+            '<div class="ds-cal-cell" style="border-color:rgba(61,220,151,0.22);background:rgba(61,220,151,0.04);">'
             '<div class="ds-cal-quadrant">High confidence · High understanding</div>'
             '<div class="ds-cal-name" style="color:#3DDC97;">Understands</div>'
             f'<div class="ds-cal-count" style="color:#3DDC97;">{_gc["understands"]}</div>'
-            '<div class="ds-cal-response">No action needed</div>'
+            '<div class="ds-cal-response" style="color:#3DDC97;opacity:0.7;">No action needed</div>'
             '</div>'
         )
         _cell_kc = (
-            '<div class="ds-cal-cell" style="border-top:3px solid #F5B544;">'
+            '<div class="ds-cal-cell" style="border-color:rgba(245,181,68,0.22);background:rgba(245,181,68,0.04);">'
             '<div class="ds-cal-quadrant">Low confidence · Low understanding</div>'
             '<div class="ds-cal-name" style="color:#F5B544;">Knows confused</div>'
             f'<div class="ds-cal-count" style="color:#F5B544;">{_gc["knows_confused"]}</div>'
-            '<div class="ds-cal-response">Support and reteach</div>'
+            '<div class="ds-cal-response" style="color:#F5B544;opacity:0.7;">Support and reteach</div>'
             '</div>'
         )
         _risk_tag = (
@@ -715,14 +735,14 @@ with tab_overview:
             'HIGHEST RISK</span>'
         )
         _cell_cbw = (
-            '<div class="ds-cal-cell" style="border-top:4px solid #FF5C6C;'
-            'background:rgba(255,92,108,0.05);">'
+            '<div class="ds-cal-cell" style="border-color:rgba(255,92,108,0.30);background:rgba(255,92,108,0.05);">'
+            '<div class="ds-cal-cbw-glow"></div>'
             '<div class="ds-cal-quadrant">High confidence · Low understanding</div>'
             '<div style="display:flex;align-items:baseline;gap:6px;flex-wrap:wrap;margin-bottom:2px;">'
             f'<span class="ds-cal-name" style="color:#FF5C6C;">Confident but wrong</span>{_risk_tag}'
             '</div>'
             f'<div class="ds-cal-count" style="color:#FF5C6C;">{_gc["confident_but_wrong"]}</div>'
-            '<div class="ds-cal-response">Reteach first</div>'
+            '<div class="ds-cal-response" style="color:#FF5C6C;opacity:0.7;">Reteach first</div>'
             '</div>'
         )
         _y_label = (
@@ -743,11 +763,11 @@ with tab_overview:
             + '</div>'
         )
         _partial = (
-            '<div class="ds-cal-partial" style="border-top:3px solid #C4B5FD;min-width:140px;">'
+            '<div class="ds-cal-partial" style="border-color:rgba(196,181,253,0.22);background:rgba(196,181,253,0.04);min-width:140px;">'
             '<div class="ds-cal-quadrant">Mixed signals</div>'
             '<div class="ds-cal-name" style="color:#C4B5FD;">Partial</div>'
             f'<div class="ds-cal-count" style="color:#C4B5FD;">{_gc["partial"]}</div>'
-            '<div class="ds-cal-response">Review examples</div>'
+            '<div class="ds-cal-response" style="color:#C4B5FD;opacity:0.7;">Review examples</div>'
             '</div>'
         )
         _cal_html = (

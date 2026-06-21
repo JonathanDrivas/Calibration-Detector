@@ -25,14 +25,18 @@ render_nav("reflection")
 
 st.markdown("""
 <style>
-.sr-header {
-    padding: 24px 0 18px 0;
+.sr-page-header { padding: 22px 0 18px 0; }
+.sr-eyebrow {
+    font-family: "SF Mono","Fira Code","Courier New",monospace;
+    font-size: 10px; font-weight: 600; letter-spacing: 1.8px;
+    text-transform: uppercase; color: #A06BFF; margin-bottom: 10px;
 }
-.sr-header-title {
-    font-size: 26px; font-weight: 800; color: #ECECF2;
-    letter-spacing: -0.03em; margin-bottom: 6px;
+.sr-title {
+    font-family: "Space Grotesk", system-ui, -apple-system, sans-serif;
+    font-size: 34px; font-weight: 800; color: #ECECF2;
+    letter-spacing: -0.04em; line-height: 1.05; margin-bottom: 8px;
 }
-.sr-header-sub { font-size: 14px; color: #9A9AAC; line-height: 1.5; }
+.sr-tagline { font-size: 14px; color: #6B6B82; line-height: 1.6; }
 .sr-explain-card {
     background: #14141C;
     border: 1px solid #262633;
@@ -76,9 +80,10 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 st.markdown("""
-<div class="sr-header">
-  <div class="sr-header-title">Student Reflection</div>
-  <div class="sr-header-sub">
+<div class="sr-page-header">
+  <div class="sr-eyebrow">Reflection &middot; Submit</div>
+  <div class="sr-title">Student Reflection</div>
+  <div class="sr-tagline">
     Submit a short reflection on a course topic along with your confidence rating.
   </div>
 </div>

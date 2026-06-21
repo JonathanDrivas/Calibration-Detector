@@ -1,0 +1,123 @@
+Upgrade the AI Analysis Pipeline on the Faculty Dashboard Robustness Check tab into a polished custom visual using the same workaround as the Home hero.
+
+Hard rules:
+
+* Presentation and layout only.
+* Do not change the database.
+* Do not change saved reflections or results.
+* Do not rerun the model automatically.
+* Do not clear any tables.
+* Do not change imported data.
+* Do not change model logic, scoring logic, label rules, action logic, Evidence calculations, Robustness calculations, or any formulas.
+* Do not change navigation logic.
+* Do not change any displayed dashboard number, count, gap, percentage, ranking, action label, or result label.
+* Do not add dependencies.
+* Do not break the four Faculty Dashboard tabs, Evidence tab, Robustness Check button, Home CTAs, or Student Reflection form.
+* Run the app and fix every error.
+
+Goal:
+Make the AI Analysis Pipeline look like a premium visual explanation of how the AI works, not just five plain cards. It should match the Home hero’s cinematic dark style, but stay compact and professional.
+
+Important functionality rule:
+
+* The AI Analysis Pipeline may be rendered with `streamlit.components.v1.html` because it is static visual explanation only.
+* Do not put the `Run adversarial robustness check` button inside the iframe.
+* Do not put robustness results, tables, expanders, or any live test output inside the iframe.
+* The run button must remain a real Streamlit button below the pipeline.
+* The robustness results must remain real Streamlit-rendered output.
+* Do not create fake HTML buttons.
+
+Placement:
+
+* Move the AI Analysis Pipeline directly under the Robustness tab header/subtitle.
+* Do not duplicate it. Show it once.
+* Put the three robustness explanation cards below the pipeline.
+* Put the real Streamlit run button below the explanation cards.
+
+Pipeline visual:
+Use `components.html(...)` with an explicit height, around 260px to 340px on desktop.
+
+Make it a self-contained custom HTML/CSS visual:
+
+* dark background matching #0B0B12
+* no visible iframe border
+* no white iframe background
+* no internal scrollbars
+* subtle grid or radial glow matching the Home hero
+* compact, not huge
+* responsive on narrower screens
+
+Pipeline title inside the visual:
+`AI Analysis Pipeline`
+
+Subtitle:
+`The model reads meaning first, then the app compares demonstrated understanding against student confidence.`
+
+Show five connected steps:
+
+1. `Read reflection`
+   Text: `Topic, reflection text, and confidence rating enter the analysis engine.`
+
+2. `Score understanding`
+   Text: `The AI rates demonstrated understanding from 1 to 5 using the course concept rubric.`
+
+3. `Detect misconception`
+   Text: `The AI identifies the misconception or marks none when the explanation is sound.`
+
+4. `Compare confidence`
+   Text: `The app compares confidence with understanding to find calibration gaps.`
+
+5. `Assign label`
+   Text: `The result becomes understands, underconfident, partial, knows_confused, or confident_but_wrong.`
+
+Design details:
+
+* Use connected nodes or a left-to-right flow line.
+* Use numbered circles or small step badges.
+* Use violet as the main accent.
+* Use red only for `confident_but_wrong`.
+* Use monospace labels for the step number or tag.
+* Use readable body text.
+* Use subtle hover or load animation only if lightweight.
+* Respect `prefers-reduced-motion`.
+* No emoji.
+* No neon/cyberpunk excess.
+* No bouncing animation.
+* No fake buttons.
+
+Below the pipeline:
+Keep or add a small note outside the iframe using normal Streamlit/HTML:
+`The AI output supports instructor judgment. It is diagnostic, not grading, and topic-level patterns matter more than any single model judgment.`
+
+Button polish:
+
+* Keep the `Run adversarial robustness check` button as a real Streamlit button.
+* Fix the button contrast.
+* Use violet background and white or near-white text.
+* Make the hover state readable.
+* Do not change what the button does.
+
+Robustness explanation cards:
+
+* Keep the three concepts but make them shorter and lighter:
+
+  * `Adversarial inputs`
+  * `Same AI path`
+  * `Pass condition`
+* They should support the pipeline, not compete with it.
+
+Before finishing:
+
+* Run the app.
+* Confirm Faculty Dashboard loads.
+* Confirm all four dashboard tabs work.
+* Confirm Robustness Check tab shows the new custom AI Analysis Pipeline.
+* Confirm the pipeline appears once.
+* Confirm there is no iframe border, white background, clipping, or internal scrollbar.
+* Confirm the Run adversarial robustness check button remains outside the iframe.
+* Confirm the button text is clearly readable.
+* Confirm the button still works.
+* Confirm robustness cases are not saved to the database.
+* Confirm Overview, Evidence, and Topic Details values are unchanged.
+* Confirm Home, Student Reflection, and About still load.
+* Summarize which files changed.

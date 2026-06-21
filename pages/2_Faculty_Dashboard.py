@@ -1,5 +1,6 @@
 import pandas as pd
 import streamlit as st
+import streamlit.components.v1 as components
 from collections import defaultdict
 from nav import render_nav
 
@@ -1446,100 +1447,92 @@ with tab_robustness:
         '</div>',
         unsafe_allow_html=True,
     )
+    _pipe_html = """<!DOCTYPE html>
+<html><head><meta charset="utf-8"><style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:#0B0B12;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;overflow:hidden;padding:20px 8px 12px}
+.glow{position:fixed;top:40%;left:50%;transform:translate(-50%,-50%);width:700px;height:200px;background:radial-gradient(ellipse at center,rgba(160,107,255,0.07) 0%,transparent 70%);pointer-events:none}
+.wrap{position:relative;z-index:1;text-align:center}
+.ttl{font-size:13px;font-weight:800;letter-spacing:-.01em;color:#ECECF2;margin-bottom:3px}
+.sub{font-size:11px;color:#6B6B82;line-height:1.5;max-width:580px;margin:0 auto 16px}
+.flow{display:flex;align-items:flex-start;justify-content:center;gap:0}
+.step{flex:1;min-width:108px;max-width:170px;background:#14141C;border:1px solid #262633;border-radius:10px;padding:11px 12px;text-align:left;transition:border-color .2s}
+@media(prefers-reduced-motion:reduce){.step{transition:none}}
+.step:hover{border-color:rgba(160,107,255,.28)}
+.num{width:20px;height:20px;border-radius:50%;background:#A06BFF;color:#fff;font-size:10px;font-weight:800;font-family:'SF Mono','Fira Code',monospace;display:flex;align-items:center;justify-content:center;margin-bottom:7px}
+.sttl{font-size:11px;font-weight:700;color:#ECECF2;margin-bottom:4px;line-height:1.3}
+.sbod{font-size:10px;color:#9A9AAC;line-height:1.5}
+.cbw{color:#FF5C6C;font-weight:600}
+.arr{align-self:center;padding:0 4px;color:#3A3A50;font-size:13px;flex-shrink:0;margin-bottom:18px}
+</style></head>
+<body>
+<div class="glow"></div>
+<div class="wrap">
+<div class="ttl">AI Analysis Pipeline</div>
+<div class="sub">The model reads meaning first, then the app compares demonstrated understanding against student confidence.</div>
+<div class="flow">
+<div class="step"><div class="num">1</div><div class="sttl">Read reflection</div><div class="sbod">Topic, reflection text, and confidence rating enter the analysis engine.</div></div>
+<div class="arr">&#8594;</div>
+<div class="step"><div class="num">2</div><div class="sttl">Score understanding</div><div class="sbod">The AI rates demonstrated understanding from 1 to 5 using the course concept rubric.</div></div>
+<div class="arr">&#8594;</div>
+<div class="step"><div class="num">3</div><div class="sttl">Detect misconception</div><div class="sbod">The AI identifies the misconception or marks none when the explanation is sound.</div></div>
+<div class="arr">&#8594;</div>
+<div class="step"><div class="num">4</div><div class="sttl">Compare confidence</div><div class="sbod">The app compares confidence with understanding to find calibration gaps.</div></div>
+<div class="arr">&#8594;</div>
+<div class="step"><div class="num">5</div><div class="sttl">Assign label</div><div class="sbod">The result becomes understands, underconfident, partial, knows_confused, or <span class="cbw">confident_but_wrong</span>.</div></div>
+</div>
+</div>
+</body></html>"""
+    components.html(_pipe_html, height=272, scrolling=False)
+    st.markdown(
+        '<p style="font-size:11px;color:#525268;margin:2px 0 14px 0;line-height:1.5;">'
+        'The AI output supports instructor judgment. It is diagnostic, not grading, and '
+        'topic-level patterns matter more than any single model judgment.</p>',
+        unsafe_allow_html=True,
+    )
     st.markdown(
         '<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:16px;">'
-        '<div style="background:#14141C;border:1px solid #262633;border-radius:12px;padding:14px 16px;">'
+        '<div style="background:#14141C;border:1px solid #262633;border-radius:10px;padding:12px 14px;">'
         '<div style="font-size:9px;font-weight:800;letter-spacing:.5px;text-transform:uppercase;'
-        'color:#A06BFF;margin-bottom:7px;">WHAT IS BEING TESTED</div>'
-        '<div style="font-size:12px;color:#9A9AAC;line-height:1.55;">'
-        'Six built-in test reflections are intentionally written to sound confident '
-        'while containing misconceptions. Each uses student confidence\u202f=\u202f5.'
+        'color:#A06BFF;margin-bottom:6px;">ADVERSARIAL INPUTS</div>'
+        '<div style="font-size:11px;color:#9A9AAC;line-height:1.5;">'
+        'Six test reflections that sound confident but contain misconceptions. '
+        'Each uses student confidence\u202f=\u202f5.'
         '</div>'
         '</div>'
-        '<div style="background:#14141C;border:1px solid #262633;border-radius:12px;padding:14px 16px;">'
+        '<div style="background:#14141C;border:1px solid #262633;border-radius:10px;padding:12px 14px;">'
         '<div style="font-size:9px;font-weight:800;letter-spacing:.5px;text-transform:uppercase;'
-        'color:#5AA9FF;margin-bottom:7px;">HOW IT RUNS</div>'
-        '<div style="font-size:12px;color:#9A9AAC;line-height:1.55;">'
-        'When you click the button, the app sends each test reflection through the same '
-        'AI analysis engine used for normal submissions. The cases are temporary and are '
-        'not saved to the database.'
+        'color:#5AA9FF;margin-bottom:6px;">SAME AI PATH</div>'
+        '<div style="font-size:11px;color:#9A9AAC;line-height:1.5;">'
+        'Each case runs through the same analysis engine as real submissions. '
+        'Results are temporary and never saved to the database.'
         '</div>'
         '</div>'
-        '<div style="background:#14141C;border:1px solid #262633;border-radius:12px;padding:14px 16px;">'
+        '<div style="background:#14141C;border:1px solid #262633;border-radius:10px;padding:12px 14px;">'
         '<div style="font-size:9px;font-weight:800;letter-spacing:.5px;text-transform:uppercase;'
-        'color:#3DDC97;margin-bottom:7px;">WHAT PASS MEANS</div>'
-        '<div style="font-size:12px;color:#9A9AAC;line-height:1.55;">'
-        'A pass means the model labels the case as '
-        '<strong style="color:#FF5C6C;">confident_but_wrong</strong>, showing it did not '
-        'mistake confident wording for real understanding.'
+        'color:#3DDC97;margin-bottom:6px;">PASS CONDITION</div>'
+        '<div style="font-size:11px;color:#9A9AAC;line-height:1.5;">'
+        'The model must label each case '
+        '<strong style="color:#FF5C6C;">confident_but_wrong</strong>. '
+        'A pass means it was not fooled by confident wording.'
         '</div>'
         '</div>'
         '</div>',
         unsafe_allow_html=True,
     )
-    st.markdown(
-        '<div style="font-size:12px;color:#8A8A9A;line-height:1.65;margin-bottom:16px;'
-        'padding:12px 16px;background:rgba(255,255,255,0.02);border-radius:10px;'
-        'border:1px solid rgba(255,255,255,0.05);">'
-        'These tests are designed to catch a common AI failure mode: over-crediting confident '
-        'language and course vocabulary. The reflections are deliberately wrong or incomplete, '
-        'but written as if the student is sure. Passing the check means the model identifies them '
-        'as <strong style="color:#FF5C6C;">confident_but_wrong</strong> instead of treating '
-        'them as understood.'
-        '<br><br>'
-        '<span style="color:#525268;">Robustness checks are not saved to the database and '
-        'do not affect Overview, Evidence, or Topic Details metrics.</span>'
-        '</div>',
-        unsafe_allow_html=True,
-    )
-
-    # AI Analysis Pipeline ────────────────────────────────────────────────────
-    _step = lambda num, title, body, accent="#A06BFF": (
-        f'<div style="flex:1;min-width:130px;background:#14141C;border:1px solid #262633;'
-        f'border-radius:10px;padding:12px 14px;">'
-        f'<div style="width:20px;height:20px;border-radius:50%;background:{accent};'
-        f'color:#fff;font-size:10px;font-weight:800;display:flex;align-items:center;'
-        f'justify-content:center;margin-bottom:7px;flex-shrink:0;">{num}</div>'
-        f'<div style="font-size:11px;font-weight:700;color:#ECECF2;margin-bottom:4px;">{title}</div>'
-        f'<div style="font-size:11px;color:#9A9AAC;line-height:1.45;">{body}</div>'
-        f'</div>'
-    )
-    _arrow = (
-        '<div style="align-self:center;padding:0 5px;color:#3A3A50;'
-        'font-size:16px;font-weight:400;flex-shrink:0;">\u2192</div>'
-    )
-    st.markdown(
-        '<div style="margin-bottom:18px;">'
-        '<div class="ds-section-title" style="margin-bottom:4px;">AI Analysis Pipeline</div>'
-        '<div style="font-size:12px;color:#8A8A9A;margin-bottom:14px;line-height:1.55;">'
-        'The app does not grade by keyword matching. The AI reads each reflection, estimates '
-        'demonstrated understanding, identifies misconceptions, and then compares that '
-        'understanding with the student\u2019s own confidence rating.'
-        '</div>'
-        '<div style="display:flex;align-items:flex-start;gap:0;overflow-x:auto;">'
-        + _step(1, "Read reflection",
-                "The AI receives the student\u2019s topic, reflection text, and confidence rating.")
-        + _arrow
-        + _step(2, "Score understanding",
-                "The AI rates demonstrated understanding from 1\u20135 using the course concept rubric.")
-        + _arrow
-        + _step(3, "Detect misconception",
-                "The AI extracts the specific misconception or marks none when the explanation is sound.")
-        + _arrow
-        + _step(4, "Compare confidence",
-                "The app compares student confidence with AI-assessed understanding to detect calibration gaps.")
-        + _arrow
-        + _step(5, "Assign label",
-                'The result becomes one calibration label: understands, underconfident, partial, '
-                'knows_confused, or <span style="color:#FF5C6C;font-weight:600;">confident_but_wrong</span>.')
-        + '</div>'
-        '<div style="margin-top:10px;font-size:11px;color:#525268;line-height:1.55;">'
-        'The AI output supports instructor judgment. It is diagnostic, not grading, and '
-        'topic-level patterns matter more than any single model judgment.'
-        '</div>'
-        '</div>',
-        unsafe_allow_html=True,
-    )
+    st.markdown("""<style>
+div[data-testid="stButton"] button[data-testid="baseButton-primary"] {
+    background-color: #A06BFF !important;
+    color: #FFFFFF !important;
+    border: none !important;
+    font-weight: 600 !important;
+}
+div[data-testid="stButton"] button[data-testid="baseButton-primary"]:hover {
+    background-color: #8B50F5 !important;
+    color: #FFFFFF !important;
+    border: none !important;
+}
+</style>""", unsafe_allow_html=True)
 
     if st.button("Run adversarial robustness check", type="primary", key="adv_btn"):
         adv_progress = st.progress(0, text="Starting…")

@@ -1,0 +1,126 @@
+Do a final Faculty Dashboard information-architecture polish pass. Do not redesign the visual style.
+
+Hard rules:
+
+* Presentation and layout only.
+* Do not change the database.
+* Do not change saved reflections or results.
+* Do not rerun the model.
+* Do not clear any tables.
+* Do not change imported data.
+* Do not change model logic, scoring logic, label rules, action logic, Evidence calculations, Robustness calculations, or any formulas.
+* Do not change navigation logic except active nav styling if needed.
+* Do not change any displayed number, count, gap, percentage, ranking, action label, or result label.
+* Read every value live. Do not hardcode.
+* Do not add dependencies.
+* Do not add iframes.
+* Do not break the four Faculty Dashboard tabs, Evidence tab, Robustness Check, Home CTAs, or Student Reflection form.
+* Use `st.markdown(..., unsafe_allow_html=True)` for custom visual HTML/CSS only.
+* Run the app and fix every error.
+
+Goal:
+The Faculty Dashboard now looks much better, but the Overview has too much detail. Make the Overview feel like a clear executive summary, and move deeper analysis into the right place.
+
+1. Simplify the Overview structure.
+
+The Overview should show only:
+
+* Dashboard header
+* Key Risk Signal
+* KPI cards
+* Calibration Grid
+* Top Insight
+* Instructor Action Plan
+* Full Topic Ranking expander, collapsed by default if possible
+
+Do not add new visuals to the Overview.
+
+2. Move the Calibration Gap Ladder.
+
+Move the Calibration Gap Ladder out of the Overview and into the Topic Details tab, near the top, before the individual topic expanders.
+
+Reason:
+The Gap Ladder is a strong diagnostic visual, but it is deeper analysis. It fits better in Topic Details than in the Overview.
+
+Keep:
+
+* all live values
+* marker positions
+* bubble sizes
+* action labels
+* topic ordering
+* styling
+
+Do not change the calculations or the data.
+
+If moving it is too risky, keep it on the Overview but place it inside a collapsed expander called:
+`Explore calibration gaps`
+
+3. Full Topic Ranking.
+
+Make the Full Topic Ranking expander collapsed by default if possible.
+
+If collapsed by default is not reliable in Streamlit, keep it visually secondary:
+
+* lighter border
+* smaller heading
+* tighter spacing
+* less visual dominance
+
+Keep all ten topics, all columns, sorting, values, and labels unchanged.
+
+4. Instructor Action Plan.
+
+Keep the Instructor Action Plan exactly as currently implemented:
+
+* only topics whose action is `Reteach first`
+* same values
+* same ordering
+* same action labels
+* same note about additional reteach topics if shown
+
+Only minor spacing polish is allowed.
+
+5. Active top navigation styling.
+
+Fix the top navigation active-page styling if needed.
+
+When the user is on Faculty Dashboard, the Dashboard nav item should look clearly active, not muted.
+
+Use the current accent color or bright text. Do not change routing or page behavior.
+
+6. Add a small benchmark/live status note.
+
+Add a subtle status line near the KPI area or Evidence intro showing:
+
+* labeled benchmark reflections used for Evidence
+* live/unlabeled analyzed reflections, if any
+
+Use live counts:
+
+* labeled benchmark reflections = analyzed reflections with non-null/non-blank `ground_truth_label`
+* live/unlabeled analyzed reflections = analyzed reflections with null/blank `ground_truth_label`
+
+This is display-only. Do not change Evidence calculations.
+
+Example wording:
+`Evidence benchmark: 190 labeled · Live submissions: 1 unlabeled`
+
+If there are zero live/unlabeled submissions, show:
+`Evidence benchmark: 190 labeled`
+
+Do not hardcode these numbers.
+
+Before finishing:
+
+* Run the app.
+* Confirm Faculty Dashboard loads.
+* Confirm all four dashboard tabs work.
+* Confirm Overview is shorter and cleaner.
+* Confirm Calibration Gap Ladder appears in Topic Details or inside a collapsed Overview expander.
+* Confirm Full Topic Ranking is collapsed or visually secondary.
+* Confirm all KPI numbers are unchanged.
+* Confirm Evidence numbers and matrix are unchanged.
+* Confirm Robustness Check still works.
+* Confirm Home, Student Reflection, and About still load.
+* Summarize which files changed.

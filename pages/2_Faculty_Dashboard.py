@@ -915,6 +915,22 @@ with tab_overview:
   <div class="ds-kpi-caption">May need reassurance, not reteaching</div>
 </div>""", unsafe_allow_html=True)
 
+        # Benchmark / live status line ─────────────────────────────────────
+        _labeled_n   = len(evidence_rows)
+        _unlabeled_n = max(0, total_analyzed - _labeled_n)
+        if _unlabeled_n > 0:
+            _bench_text = (
+                f"Evidence benchmark: {_labeled_n:,}\u202flabeled"
+                f"\u2002\u00b7\u2002Live submissions: {_unlabeled_n:,}\u202funlabeled"
+            )
+        else:
+            _bench_text = f"Evidence benchmark: {_labeled_n:,}\u202flabeled"
+        st.markdown(
+            f'<p style="font-size:11px;color:#525268;margin:4px 0 16px 0;'
+            f'font-variant-numeric:tabular-nums;">{_bench_text}</p>',
+            unsafe_allow_html=True,
+        )
+
         # 3. Calibration Grid ───────────────────────────────────────────────
         st.markdown("""
 <div class="ds-section-title">Calibration Grid</div>
@@ -1111,17 +1127,6 @@ with tab_overview:
             )
         st.markdown(risk_rows_html, unsafe_allow_html=True)
 
-        # 5b. Calibration Gap Ladder ────────────────────────────────────────
-        st.markdown(
-            '<div class="ds-section-title">Calibration Gap Ladder</div>'
-            '<div class="ds-section-sub">'
-            'Topics to the right show overconfidence. Topics to the left show underconfidence. '
-            'Larger markers mean more confident-but-wrong reflections.'
-            '</div>',
-            unsafe_allow_html=True,
-        )
-        st.markdown(_gap_ladder_html(sorted_topics), unsafe_allow_html=True)
-
         # 6. Full Topic Ranking ─────────────────────────────────────────────
         with st.expander("Full topic ranking", expanded=False):
             st.caption(
@@ -1163,6 +1168,20 @@ with tab_topics:
         st.caption(
             "Sorted by **Confident but wrong** count. "
             "Calibration gap = avg student confidence − avg model-assessed understanding."
+        )
+        st.markdown(
+            '<div class="ds-section-title" style="margin-top:6px;">Calibration Gap Ladder</div>'
+            '<div class="ds-section-sub">'
+            'Topics to the right show overconfidence. Topics to the left show underconfidence. '
+            'Larger markers mean more confident-but-wrong reflections.'
+            '</div>',
+            unsafe_allow_html=True,
+        )
+        st.markdown(_gap_ladder_html(sorted_topics), unsafe_allow_html=True)
+        st.markdown(
+            '<div style="margin:20px 0 6px 0;border-top:1px solid rgba(255,255,255,0.06);'
+            'padding-top:18px;"><div class="ds-section-title">Individual Topics</div></div>',
+            unsafe_allow_html=True,
         )
         for rank, (topic_name, d) in enumerate(sorted_topics, start=1):
             counts    = d["label_counts"]

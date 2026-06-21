@@ -1,26 +1,72 @@
 import streamlit as st
+import streamlit.components.v1 as components
 from nav import render_nav
 
 render_nav("about")
 
+# ── Hero ──────────────────────────────────────────────────────────────────────
+_hero_html = """<!DOCTYPE html>
+<html><head><meta charset="utf-8"><style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:#0B0B12;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;overflow:hidden;padding:28px 22px 22px}
+.grid{position:fixed;top:0;left:0;width:100%;height:100%;background-image:linear-gradient(rgba(255,255,255,.018) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.018) 1px,transparent 1px);background-size:32px 32px;pointer-events:none;z-index:0}
+.gv{position:fixed;top:65%;left:28%;transform:translate(-50%,-50%);width:520px;height:280px;background:radial-gradient(ellipse,rgba(160,107,255,.09) 0%,transparent 70%);pointer-events:none;z-index:0}
+.gb{position:fixed;top:35%;left:72%;transform:translate(-50%,-50%);width:380px;height:200px;background:radial-gradient(ellipse,rgba(90,169,255,.06) 0%,transparent 70%);pointer-events:none;z-index:0}
+.hero{position:relative;z-index:1;display:flex;gap:36px;align-items:center}
+.text{flex:1;min-width:0}
+.eyebrow{font-size:10px;font-weight:700;letter-spacing:1.6px;text-transform:uppercase;color:#6B6B82;margin-bottom:12px;font-family:'SF Mono','Fira Code',monospace}
+.title{font-size:28px;font-weight:800;color:#ECECF2;letter-spacing:-.03em;line-height:1.1;margin-bottom:14px}
+.sub{font-size:13px;color:#8A8A9A;line-height:1.65;max-width:420px}
+.visual{flex:0 0 230px;height:248px}
+@media(max-width:520px){.hero{flex-direction:column}.visual{width:100%;flex:none;height:200px}}
+@media(prefers-reduced-motion:reduce){}
+</style></head>
+<body>
+<div class="grid"></div>
+<div class="gv"></div>
+<div class="gb"></div>
+<div class="hero">
+  <div class="text">
+    <div class="eyebrow">GOVERNANCE&#8201;&middot;&#8201;RESPONSIBLE AI</div>
+    <div class="title">Designed for trust,<br>not surveillance</div>
+    <div class="sub">Calibration Detector turns student reflections into topic-level teaching signals while keeping the focus on privacy, transparency, and instructor judgment.</div>
+  </div>
+  <div class="visual">
+    <svg viewBox="0 0 230 248" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%">
+      <defs>
+        <radialGradient id="cg" cx="50%" cy="50%" r="42%">
+          <stop offset="0%" stop-color="#A06BFF" stop-opacity=".18"/>
+          <stop offset="100%" stop-color="#A06BFF" stop-opacity="0"/>
+        </radialGradient>
+      </defs>
+      <ellipse cx="115" cy="124" rx="72" ry="72" fill="url(#cg)"/>
+      <line x1="115" y1="124" x2="115" y2="48" stroke="#252535" stroke-width="1"/>
+      <line x1="115" y1="124" x2="187" y2="96" stroke="#252535" stroke-width="1"/>
+      <line x1="115" y1="124" x2="160" y2="186" stroke="#252535" stroke-width="1"/>
+      <line x1="115" y1="124" x2="70"  y2="186" stroke="#252535" stroke-width="1"/>
+      <line x1="115" y1="124" x2="43"  y2="96"  stroke="#252535" stroke-width="1"/>
+      <path d="M115,96 L134,105 L134,128 Q134,143 115,149 Q96,143 96,128 L96,105 Z" fill="rgba(160,107,255,0.1)" stroke="rgba(160,107,255,0.65)" stroke-width="1.5"/>
+      <polyline points="105,124 112,133 127,114" fill="none" stroke="#A06BFF" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+      <circle cx="115" cy="48"  r="5" fill="#0D0D18" stroke="#A06BFF" stroke-width="1.5"/>
+      <circle cx="187" cy="96"  r="5" fill="#0D0D18" stroke="#5AA9FF" stroke-width="1.5"/>
+      <circle cx="160" cy="186" r="5" fill="#0D0D18" stroke="#3DDC97" stroke-width="1.5"/>
+      <circle cx="70"  cy="186" r="5" fill="#0D0D18" stroke="#F5B544" stroke-width="1.5"/>
+      <circle cx="43"  cy="96"  r="5" fill="#0D0D18" stroke="#C4B5FD" stroke-width="1.5"/>
+      <text x="115" y="34"  text-anchor="middle" font-size="9.5" fill="#A06BFF" font-family="-apple-system,sans-serif" font-weight="700">Diagnostic</text>
+      <text x="196" y="93"  text-anchor="start"  font-size="9.5" fill="#5AA9FF" font-family="-apple-system,sans-serif" font-weight="700">Topic-level</text>
+      <text x="168" y="204" text-anchor="start"  font-size="9.5" fill="#3DDC97" font-family="-apple-system,sans-serif" font-weight="700">Nicknames</text>
+      <text x="62"  y="204" text-anchor="end"    font-size="9.5" fill="#F5B544" font-family="-apple-system,sans-serif" font-weight="700">Human review</text>
+      <text x="34"  y="93"  text-anchor="end"    font-size="9.5" fill="#C4B5FD" font-family="-apple-system,sans-serif" font-weight="700">Simulated data</text>
+    </svg>
+  </div>
+</div>
+</body></html>"""
+components.html(_hero_html, height=380, scrolling=False)
+
+# ── Principle cards + note ─────────────────────────────────────────────────
 st.markdown("""
 <style>
-/* ── Page header ─────────────────────────────────────────────────── */
-.ab-page-header { padding: 22px 0 20px 0; }
-.ab-eyebrow {
-    font-family: "SF Mono","Fira Code","Courier New",monospace;
-    font-size: 10px; font-weight: 600; letter-spacing: 1.8px;
-    text-transform: uppercase; color: #A06BFF; margin-bottom: 10px;
-}
-.ab-title {
-    font-family: "Space Grotesk", system-ui, -apple-system, sans-serif;
-    font-size: 34px; font-weight: 800; color: #ECECF2;
-    letter-spacing: -0.04em; line-height: 1.05; margin-bottom: 10px;
-}
-.ab-tagline { font-size: 14px; color: #6B6B82; line-height: 1.6; max-width: 560px; }
-
-/* ── Governance cards ────────────────────────────────────────────── */
-.ab-cards { display: flex; flex-direction: column; gap: 10px; margin: 24px 0 28px 0; }
+.ab-cards { display: flex; flex-direction: column; gap: 10px; margin: 8px 0 22px 0; }
 .ab-card {
     border-radius: 14px;
     padding: 20px 22px;
@@ -40,32 +86,30 @@ st.markdown("""
     font-size: 14px; font-weight: 700; color: #ECECF2;
     margin-bottom: 7px; letter-spacing: -0.01em;
 }
-.ab-card-text { font-size: 13px; color: #9A9AAC; line-height: 1.65; }
+.ab-card-text { font-size: 13px; color: #BCBCCC; line-height: 1.65; }
 
-/* ── Full note ───────────────────────────────────────────────────── */
 .ab-note {
-    background: rgba(255,255,255,0.012);
-    border: 1px solid rgba(255,255,255,0.06);
+    background: rgba(255,255,255,0.02);
+    border: 1px solid rgba(255,255,255,0.08);
     border-radius: 12px;
     padding: 16px 18px;
-    font-size: 12px; color: #555566; line-height: 1.7;
-    margin-top: 4px;
+    font-size: 12px; color: #8A8A9A; line-height: 1.7;
+    margin-top: 4px; margin-bottom: 10px;
 }
 .ab-note-label {
     font-family: "SF Mono","Fira Code","Courier New",monospace;
     font-size: 9px; font-weight: 700; letter-spacing: 1.2px;
-    text-transform: uppercase; color: #3A3A50; margin-bottom: 8px;
+    text-transform: uppercase; color: #6B6B82; margin-bottom: 8px;
+}
+.ab-closing {
+    background: rgba(255,255,255,0.015);
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 10px;
+    padding: 13px 16px;
+    font-size: 11px; color: #6B6B82; line-height: 1.6;
+    margin-top: 8px;
 }
 </style>
-
-<div class="ab-page-header">
-  <div class="ab-eyebrow">Governance &amp; Ethics</div>
-  <div class="ab-title">About &amp; Responsible Use</div>
-  <div class="ab-tagline">
-    The Calibration Detector turns short student reflections into a topic-level picture
-    of where a class is struggling. It is a diagnostic tool, not an evaluative one.
-  </div>
-</div>
 
 <div class="ab-cards">
 
@@ -146,5 +190,10 @@ st.markdown("""
   an imperfect signal, so low-certainty cases are routed for human review and the tool is
   meant to support a teacher's judgment, never replace it. It runs only on simulated data
   for this project and is written to respect FERPA in any real deployment.
+</div>
+
+<div class="ab-closing">
+  In a real deployment, this tool would require instructor review, consent language,
+  access controls, and institution-approved data handling before use with real student submissions.
 </div>
 """, unsafe_allow_html=True)

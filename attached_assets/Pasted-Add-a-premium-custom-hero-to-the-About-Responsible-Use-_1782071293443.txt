@@ -1,0 +1,128 @@
+Add a premium custom hero to the About & Responsible Use page.
+
+Hard rules:
+
+* Presentation and layout only.
+* Do not change the database.
+* Do not change saved reflections or results.
+* Do not rerun the model.
+* Do not clear any tables.
+* Do not change imported data.
+* Do not change model logic, scoring logic, label rules, action logic, Evidence calculations, Robustness calculations, or any formulas.
+* Do not change navigation logic.
+* Do not add dependencies.
+* Do not break Home, Student Reflection, Faculty Dashboard, Evidence, Robustness Check, or any dashboard tab.
+* Do not remove any responsible-use content.
+* Do not weaken the privacy, transparency, simulated-data, or human-judgment language.
+* Run the app and fix every error.
+
+Goal:
+Make the About & Responsible Use page feel like a polished governance page for a serious AI education product, instead of just a list of policy cards.
+
+Use the same visual direction as the Home hero:
+
+* dark cinematic background
+* subtle grid
+* low-opacity violet/blue glows
+* hairline borders
+* high contrast text
+* premium, serious, not flashy
+
+1. Add a custom About hero
+
+Use `streamlit.components.v1.html` with an explicit height.
+
+This hero is visual only and safe because the About page has no working form controls.
+
+Hero content:
+
+* Eyebrow: `GOVERNANCE · RESPONSIBLE AI`
+* Large title: `Designed for trust, not surveillance`
+* Subtitle:
+  `Calibration Detector turns student reflections into topic-level teaching signals while keeping the focus on privacy, transparency, and instructor judgment.`
+
+Visual motif:
+Create a clean governance visual on the right side:
+
+* central shield/checkmark or protected-data motif using pure HTML/CSS/SVG
+* five small orbiting or connected principle nodes:
+
+  * Diagnostic
+  * Topic-level
+  * Nicknames
+  * Human review
+  * Simulated data
+* Use subtle line connectors, hairline borders, and muted glow.
+* Do not use emoji.
+* Do not make it cartoonish.
+* No neon/cyberpunk excess.
+
+Hero behavior:
+
+* no visible iframe border
+* no white iframe background
+* no internal scrollbar
+* responsive on smaller screens
+* respect `prefers-reduced-motion`
+* keep motion very subtle if any
+
+Recommended height:
+
+* desktop: around 360px to 430px
+* mobile/narrow screens: stack text above visual and reduce height as needed
+
+2. Keep the existing principle cards below the hero
+
+Keep all five existing principle cards and their wording:
+
+* Diagnostic, not evaluative
+* Topic-level review, never individual
+* Nicknames, not real identities
+* Human judgment stays central
+* Simulated data for this project
+
+Polish the cards slightly if needed:
+
+* make spacing consistent
+* keep the dark premium style
+* make principle numbers readable
+* keep vertical accent bars
+* improve contrast where text is too muted
+
+3. Improve the full responsible-use note
+
+The full responsible-use note at the bottom is currently very faint and easy to miss.
+
+Make it more readable:
+
+* keep it visually secondary
+* increase text contrast slightly
+* put it in a compact dark panel with a hairline border
+* keep all wording intact unless there is duplicate text that already exists above
+* do not remove it
+
+4. Add one concise closing note
+
+At the bottom of the page, add a small final note:
+
+`In a real deployment, this tool would require instructor review, consent language, access controls, and institution-approved data handling before use with real student submissions.`
+
+Keep it compact and serious.
+
+5. Do not change other pages
+
+Do not modify Home, Student Reflection, Faculty Dashboard, Evidence, or Robustness Check except for unavoidable shared CSS side effects.
+
+Before finishing:
+
+* Run the app.
+* Confirm About page loads.
+* Confirm the custom hero renders without iframe border, white background, clipping, or internal scrollbar.
+* Confirm all five responsible-use principle cards are still present.
+* Confirm the full responsible-use note is still present and readable.
+* Confirm Home loads.
+* Confirm Student Reflection form still works.
+* Confirm Faculty Dashboard loads.
+* Confirm all dashboard tabs still work.
+* Confirm no dashboard values changed.
+* Summarize which files changed.

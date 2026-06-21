@@ -5,38 +5,55 @@ from nav import render_nav
 # ── CSS ──────────────────────────────────────────────────────────────────────
 st.markdown("""
 <style>
+.home-section-label {
+    font-family: "SF Mono","Fira Code","Courier New",monospace;
+    font-size: 9px; font-weight: 700; letter-spacing: 2px;
+    text-transform: uppercase; color: #404055;
+    margin: 22px 0 13px 0;
+}
 .home-cards {
     display: grid; grid-template-columns: repeat(3, 1fr);
-    gap: 10px; margin: 4px 0 20px 0;
+    gap: 12px; margin: 0 0 22px 0;
 }
 .home-card {
-    background: rgba(20,20,28,0.85);
-    border: 1px solid rgba(255,255,255,0.06);
-    border-radius: 12px;
-    padding: 18px 16px;
-    box-shadow: inset 0 1px 0 rgba(255,255,255,0.025), 0 6px 20px rgba(0,0,0,0.35);
-    transition: border-color 0.2s ease;
+    background: rgba(14,14,22,0.94);
+    border: 1px solid rgba(255,255,255,0.07);
+    border-radius: 10px;
+    padding: 20px 18px;
+    box-shadow: 0 4px 22px rgba(0,0,0,0.42);
+    transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease;
+    position: relative;
+    overflow: hidden;
 }
-.home-card:hover { border-color: rgba(255,255,255,0.10); }
-.home-card-dot {
-    width: 7px; height: 7px; border-radius: 50%;
-    margin-bottom: 14px; opacity: 0.9;
+.home-card::before {
+    content: "";
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
 }
+.home-card-v::before { background: linear-gradient(90deg,#A06BFF 0%,transparent 80%); }
+.home-card-b::before { background: linear-gradient(90deg,#5AA9FF 0%,transparent 80%); }
+.home-card-r::before { background: linear-gradient(90deg,#FF5C6C 0%,transparent 80%); }
+.home-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 36px rgba(0,0,0,0.55);
+    border-color: rgba(255,255,255,0.12);
+}
+.home-card-icon { display: block; margin-bottom: 14px; }
 .home-card-tag {
     font-family: "SF Mono","Fira Code","Courier New",monospace;
-    font-size: 9px; font-weight: 700; letter-spacing: 1.2px;
-    text-transform: uppercase; margin-bottom: 9px;
+    font-size: 9px; font-weight: 700; letter-spacing: 1.4px;
+    text-transform: uppercase; margin-bottom: 8px;
 }
 .home-card-title {
-    font-family: "Space Grotesk", system-ui, sans-serif;
-    font-size: 15px; font-weight: 700; color: #ECECF2;
-    margin-bottom: 8px; letter-spacing: -0.02em;
+    font-size: 15px; font-weight: 700; color: #DCDCE8;
+    margin-bottom: 9px; letter-spacing: -0.02em; line-height: 1.25;
 }
 .home-card-body {
-    font-size: 13px; color: #9A9AAC; line-height: 1.65;
+    font-size: 12.5px; color: #737385; line-height: 1.68;
 }
 .home-divider {
-    border: none; border-top: 1px solid rgba(255,255,255,0.06); margin: 18px 0 16px 0;
+    border: none; border-top: 1px solid rgba(255,255,255,0.06); margin: 12px 0 0 0;
 }
 </style>
 """, unsafe_allow_html=True)
@@ -326,35 +343,55 @@ with cta2:
     if st.button("View analytics", use_container_width=True):
         st.switch_page("pages/2_Faculty_Dashboard.py")
 
-# ── Explainer cards (below CTAs) ──────────────────────────────────────────────
+# ── Pillar cards (below CTAs) ─────────────────────────────────────────────────
 st.markdown('<hr class="home-divider">', unsafe_allow_html=True)
+st.markdown('<div class="home-section-label">System overview</div>', unsafe_allow_html=True)
 st.markdown("""
 <div class="home-cards">
-  <div class="home-card">
+  <div class="home-card home-card-v">
+    <span class="home-card-icon">
+      <svg width="26" height="26" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="13" cy="13" r="2.5" fill="#A06BFF"/>
+        <path d="M8 13 A5 5 0 0 1 18 13" stroke="#A06BFF" stroke-width="1.3" stroke-linecap="round" fill="none" opacity="0.55"/>
+        <path d="M4 13 A9 9 0 0 1 22 13" stroke="#A06BFF" stroke-width="1.1" stroke-linecap="round" fill="none" opacity="0.28"/>
+      </svg>
+    </span>
     <div class="home-card-tag" style="color:#A06BFF;">01 &middot; Overview</div>
     <div class="home-card-title">What it does</div>
-    <div class="home-card-body">
-      Reads short student reflections and flags topics where students are confident
-      but have shaky understanding, the group least likely to ask for help on their own.
-    </div>
+    <div class="home-card-body">Reads short student reflections and surfaces topics where confidence is high but demonstrated understanding is shaky.</div>
   </div>
-  <div class="home-card">
+  <div class="home-card home-card-b">
+    <span class="home-card-icon">
+      <svg width="26" height="26" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="5"  cy="13" r="2.5" fill="#5AA9FF"/>
+        <circle cx="13" cy="7"  r="2.5" fill="#5AA9FF" opacity="0.7"/>
+        <circle cx="13" cy="19" r="2.5" fill="#5AA9FF" opacity="0.7"/>
+        <circle cx="21" cy="13" r="2.5" fill="#5AA9FF" opacity="0.45"/>
+        <line x1="7.4" y1="12.1" x2="10.6" y2="8.9"  stroke="#5AA9FF" stroke-width="1" opacity="0.45"/>
+        <line x1="7.4" y1="13.9" x2="10.6" y2="17.1" stroke="#5AA9FF" stroke-width="1" opacity="0.45"/>
+        <line x1="15.4" y1="8.9"  x2="18.6" y2="12.1" stroke="#5AA9FF" stroke-width="1" opacity="0.3"/>
+        <line x1="15.4" y1="17.1" x2="18.6" y2="13.9" stroke="#5AA9FF" stroke-width="1" opacity="0.3"/>
+      </svg>
+    </span>
     <div class="home-card-tag" style="color:#5AA9FF;">02 &middot; Method</div>
     <div class="home-card-title">How it works</div>
-    <div class="home-card-body">
-      Students submit a brief reflection and a confidence rating. An AI model
-      assesses their demonstrated understanding independently, then compares the two
-      to produce a calibration label for every topic.
-    </div>
+    <div class="home-card-body">Students submit a reflection and confidence rating. The AI assesses understanding, then the app compares the two signals.</div>
   </div>
-  <div class="home-card">
+  <div class="home-card home-card-r">
+    <span class="home-card-icon">
+      <svg width="26" height="26" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="13" cy="13" r="9"   stroke="#FF5C6C" stroke-width="1.2" fill="none" opacity="0.35"/>
+        <circle cx="13" cy="13" r="5"   stroke="#FF5C6C" stroke-width="1.2" fill="none" opacity="0.6"/>
+        <circle cx="13" cy="13" r="2"   fill="#FF5C6C"/>
+        <line x1="13" y1="4"  x2="13" y2="7.5"  stroke="#FF5C6C" stroke-width="1.2" stroke-linecap="round" opacity="0.45"/>
+        <line x1="13" y1="18.5" x2="13" y2="22" stroke="#FF5C6C" stroke-width="1.2" stroke-linecap="round" opacity="0.45"/>
+        <line x1="4"  y1="13" x2="7.5"  y2="13" stroke="#FF5C6C" stroke-width="1.2" stroke-linecap="round" opacity="0.45"/>
+        <line x1="18.5" y1="13" x2="22" y2="13" stroke="#FF5C6C" stroke-width="1.2" stroke-linecap="round" opacity="0.45"/>
+      </svg>
+    </span>
     <div class="home-card-tag" style="color:#FF5C6C;">03 &middot; Impact</div>
     <div class="home-card-title">Why calibration matters</div>
-    <div class="home-card-body">
-      Students who are confident but wrong rarely seek help. Catching that
-      gap early lets instructors address misconceptions before they
-      compound, without waiting for exam results.
-    </div>
+    <div class="home-card-body">Confident-but-wrong students rarely ask for help. Catching that gap early helps instructors address misconceptions before they compound.</div>
   </div>
 </div>
 """, unsafe_allow_html=True)

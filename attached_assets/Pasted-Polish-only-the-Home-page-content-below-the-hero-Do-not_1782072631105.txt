@@ -1,0 +1,160 @@
+Polish only the Home page content below the hero. Do not redesign the hero.
+
+Hard rules:
+
+* Presentation and layout only.
+* Do not change the database.
+* Do not change saved reflections or results.
+* Do not rerun the model.
+* Do not clear any tables.
+* Do not change imported data.
+* Do not change model logic, scoring logic, label rules, action logic, Evidence calculations, Robustness calculations, or any formulas.
+* Do not change navigation logic.
+* Do not add dependencies.
+* Do not add new iframes.
+* Keep the existing Home hero iframe as is, except for minor spacing only if needed.
+* Keep “Submit a reflection” and “View analytics” as real Streamlit buttons outside the iframe.
+* Do not put buttons inside the iframe.
+* Do not break Home CTAs, Student Reflection form, Faculty Dashboard tabs, Evidence, Robustness Check, or About.
+* Use `st.markdown(..., unsafe_allow_html=True)` for custom visual HTML/CSS.
+* Run the app and fix every error.
+
+Current issue:
+The Home hero looks premium, but the three cards below it feel plain and disconnected from the hero. The bottom section should feel like a polished continuation of the product story.
+
+Goal:
+Make the lower Home page section feel like a refined product overview, not three generic cards.
+
+1. Keep the current Home hero
+
+Do not redesign the hero.
+
+Keep:
+
+* large Calibration Detector wordmark
+* 2x2 calibration motif
+* dark grid/glow background
+* real Streamlit CTA buttons below the hero
+
+Only minor spacing adjustments are allowed if needed to connect the hero, CTAs, and cards.
+
+2. Improve the CTA area
+
+Keep both buttons as real Streamlit buttons:
+
+* Submit a reflection
+* View analytics
+
+Make the CTA area feel more intentional:
+
+* Keep the `GET STARTED` label.
+* Align the buttons cleanly with the hero content.
+* Make spacing between hero and CTA tight but not cramped.
+* Primary button should stay violet with high-contrast text.
+* Secondary button should stay dark/outlined with high-contrast text.
+* Do not move buttons into custom iframe HTML.
+
+3. Redesign the three lower cards as “product pillars”
+
+Replace the current plain cards with more polished custom HTML cards using `st.markdown(..., unsafe_allow_html=True)`.
+
+Keep the same three concepts:
+
+* What it does
+* How it works
+* Why calibration matters
+
+Make them look like premium product pillars:
+
+* equal height
+* dark elevated panel
+* hairline border
+* subtle hover lift
+* subtle top accent line
+* compact but readable spacing
+* strong title
+* muted but readable body copy
+* small mono eyebrow like `01 · OVERVIEW`, `02 · METHOD`, `03 · IMPACT`
+* no emojis
+
+4. Add small inline SVG icons or abstract marks
+
+Add one small clean inline SVG mark per card, not emoji.
+
+Suggested marks:
+
+* What it does: small signal/radar or document scan icon
+* How it works: small connected nodes or pipeline icon
+* Why calibration matters: small warning/risk target icon
+
+Rules:
+
+* Inline SVG only.
+* No dependency.
+* Keep icons subtle.
+* Do not make them cartoonish.
+* Use semantic accent colors sparingly:
+
+  * violet for overview
+  * blue for method
+  * red or amber for impact/risk
+
+5. Tighten the card copy slightly
+
+Keep meaning, but make the text more polished.
+
+Use this copy if helpful:
+
+Card 1 title:
+`What it does`
+Text:
+`Reads short student reflections and surfaces topics where confidence is high but demonstrated understanding is shaky.`
+
+Card 2 title:
+`How it works`
+Text:
+`Students submit a reflection and confidence rating. The AI assesses understanding, then the app compares the two signals.`
+
+Card 3 title:
+`Why calibration matters`
+Text:
+`Confident-but-wrong students rarely ask for help. Catching that gap early helps instructors address misconceptions before they compound.`
+
+6. Make the bottom section feel connected
+
+Add a subtle section heading above the three cards:
+`WHY IT MATTERS`
+
+Or, if that feels too repetitive, use:
+`SYSTEM OVERVIEW`
+
+Keep it small, mono, and aligned with the card grid.
+
+7. Do not overdo it
+
+Avoid:
+
+* another huge hero section
+* extra iframe
+* neon effects
+* heavy animation
+* giant cards
+* too much purple
+* emojis
+* changing button behavior
+
+Before finishing:
+
+* Run the app.
+* Confirm Home loads.
+* Confirm the hero still renders correctly.
+* Confirm Submit a reflection still navigates correctly.
+* Confirm View analytics still navigates correctly.
+* Confirm the three lower cards look more polished and connected to the hero.
+* Confirm there is no iframe border, white background, clipping, or internal scrollbar in the hero.
+* Confirm Student Reflection form still works.
+* Confirm Faculty Dashboard loads.
+* Confirm all dashboard tabs still work.
+* Confirm About loads.
+* Confirm no dashboard values changed.
+* Summarize which files changed.

@@ -8,16 +8,16 @@ render_nav("about")
 _hero_html = """<!DOCTYPE html>
 <html><head><meta charset="utf-8"><style>
 *{box-sizing:border-box;margin:0;padding:0}
-body{background:#0B0B12;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;overflow:hidden;padding:28px 22px 22px}
+body{background:#0B0B12;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;overflow:hidden;padding:22px 20px 18px}
 .grid{position:fixed;top:0;left:0;width:100%;height:100%;background-image:linear-gradient(rgba(255,255,255,.018) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.018) 1px,transparent 1px);background-size:32px 32px;pointer-events:none;z-index:0}
-.gv{position:fixed;top:65%;left:28%;transform:translate(-50%,-50%);width:520px;height:280px;background:radial-gradient(ellipse,rgba(160,107,255,.09) 0%,transparent 70%);pointer-events:none;z-index:0}
-.gb{position:fixed;top:35%;left:72%;transform:translate(-50%,-50%);width:380px;height:200px;background:radial-gradient(ellipse,rgba(90,169,255,.06) 0%,transparent 70%);pointer-events:none;z-index:0}
-.hero{position:relative;z-index:1;display:flex;gap:36px;align-items:center}
+.gv{position:fixed;top:65%;left:28%;transform:translate(-50%,-50%);width:500px;height:260px;background:radial-gradient(ellipse,rgba(160,107,255,.09) 0%,transparent 70%);pointer-events:none;z-index:0}
+.gb{position:fixed;top:35%;left:72%;transform:translate(-50%,-50%);width:360px;height:190px;background:radial-gradient(ellipse,rgba(90,169,255,.06) 0%,transparent 70%);pointer-events:none;z-index:0}
+.hero{position:relative;z-index:1;display:flex;gap:28px;align-items:center}
 .text{flex:1;min-width:0}
-.eyebrow{font-size:10px;font-weight:700;letter-spacing:1.6px;text-transform:uppercase;color:#6B6B82;margin-bottom:12px;font-family:'SF Mono','Fira Code',monospace}
-.title{font-size:28px;font-weight:800;color:#ECECF2;letter-spacing:-.03em;line-height:1.1;margin-bottom:14px}
-.sub{font-size:13px;color:#8A8A9A;line-height:1.65;max-width:420px}
-.visual{flex:0 0 230px;height:248px}
+.eyebrow{font-size:10px;font-weight:700;letter-spacing:1.6px;text-transform:uppercase;color:#6B6B82;margin-bottom:11px;font-family:'SF Mono','Fira Code',monospace}
+.title{font-size:27px;font-weight:800;color:#ECECF2;letter-spacing:-.03em;line-height:1.1;margin-bottom:13px}
+.sub{font-size:13px;color:#8A8A9A;line-height:1.65;max-width:400px}
+.visual{flex:0 0 290px;height:222px}
 @media(max-width:520px){.hero{flex-direction:column}.visual{width:100%;flex:none;height:200px}}
 @media(prefers-reduced-motion:reduce){}
 </style></head>
@@ -32,36 +32,36 @@ body{background:#0B0B12;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',
     <div class="sub">Calibration Detector turns student reflections into topic-level teaching signals while keeping the focus on privacy, transparency, and instructor judgment.</div>
   </div>
   <div class="visual">
-    <svg viewBox="0 0 230 248" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%">
+    <svg viewBox="0 0 320 222" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%">
       <defs>
-        <radialGradient id="cg" cx="50%" cy="50%" r="42%">
-          <stop offset="0%" stop-color="#A06BFF" stop-opacity=".18"/>
+        <radialGradient id="cg" cx="50%" cy="50%" r="40%">
+          <stop offset="0%" stop-color="#A06BFF" stop-opacity=".16"/>
           <stop offset="100%" stop-color="#A06BFF" stop-opacity="0"/>
         </radialGradient>
       </defs>
-      <ellipse cx="115" cy="124" rx="72" ry="72" fill="url(#cg)"/>
-      <line x1="115" y1="124" x2="115" y2="48" stroke="#252535" stroke-width="1"/>
-      <line x1="115" y1="124" x2="187" y2="96" stroke="#252535" stroke-width="1"/>
-      <line x1="115" y1="124" x2="160" y2="186" stroke="#252535" stroke-width="1"/>
-      <line x1="115" y1="124" x2="70"  y2="186" stroke="#252535" stroke-width="1"/>
-      <line x1="115" y1="124" x2="43"  y2="96"  stroke="#252535" stroke-width="1"/>
-      <path d="M115,96 L134,105 L134,128 Q134,143 115,149 Q96,143 96,128 L96,105 Z" fill="rgba(160,107,255,0.1)" stroke="rgba(160,107,255,0.65)" stroke-width="1.5"/>
-      <polyline points="105,124 112,133 127,114" fill="none" stroke="#A06BFF" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
-      <circle cx="115" cy="48"  r="5" fill="#0D0D18" stroke="#A06BFF" stroke-width="1.5"/>
-      <circle cx="187" cy="96"  r="5" fill="#0D0D18" stroke="#5AA9FF" stroke-width="1.5"/>
-      <circle cx="160" cy="186" r="5" fill="#0D0D18" stroke="#3DDC97" stroke-width="1.5"/>
-      <circle cx="70"  cy="186" r="5" fill="#0D0D18" stroke="#F5B544" stroke-width="1.5"/>
-      <circle cx="43"  cy="96"  r="5" fill="#0D0D18" stroke="#C4B5FD" stroke-width="1.5"/>
-      <text x="115" y="34"  text-anchor="middle" font-size="9.5" fill="#A06BFF" font-family="-apple-system,sans-serif" font-weight="700">Diagnostic</text>
-      <text x="196" y="93"  text-anchor="start"  font-size="9.5" fill="#5AA9FF" font-family="-apple-system,sans-serif" font-weight="700">Topic-level</text>
-      <text x="168" y="204" text-anchor="start"  font-size="9.5" fill="#3DDC97" font-family="-apple-system,sans-serif" font-weight="700">Nicknames</text>
-      <text x="62"  y="204" text-anchor="end"    font-size="9.5" fill="#F5B544" font-family="-apple-system,sans-serif" font-weight="700">Human review</text>
-      <text x="34"  y="93"  text-anchor="end"    font-size="9.5" fill="#C4B5FD" font-family="-apple-system,sans-serif" font-weight="700">Simulated data</text>
+      <ellipse cx="160" cy="111" rx="68" ry="68" fill="url(#cg)"/>
+      <line x1="160" y1="111" x2="160" y2="46"  stroke="#252535" stroke-width="1"/>
+      <line x1="160" y1="111" x2="222" y2="91"  stroke="#252535" stroke-width="1"/>
+      <line x1="160" y1="111" x2="198" y2="164" stroke="#252535" stroke-width="1"/>
+      <line x1="160" y1="111" x2="122" y2="164" stroke="#252535" stroke-width="1"/>
+      <line x1="160" y1="111" x2="98"  y2="91"  stroke="#252535" stroke-width="1"/>
+      <path d="M160,86 L178,94 L178,116 Q178,130 160,136 Q142,130 142,116 L142,94 Z" fill="rgba(160,107,255,0.11)" stroke="rgba(160,107,255,0.65)" stroke-width="1.5"/>
+      <polyline points="150,112 157,121 172,102" fill="none" stroke="#A06BFF" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+      <circle cx="160" cy="46"  r="5" fill="#0D0D18" stroke="#A06BFF" stroke-width="1.5"/>
+      <circle cx="222" cy="91"  r="5" fill="#0D0D18" stroke="#5AA9FF" stroke-width="1.5"/>
+      <circle cx="198" cy="164" r="5" fill="#0D0D18" stroke="#3DDC97" stroke-width="1.5"/>
+      <circle cx="122" cy="164" r="5" fill="#0D0D18" stroke="#F5B544" stroke-width="1.5"/>
+      <circle cx="98"  cy="91"  r="5" fill="#0D0D18" stroke="#C4B5FD" stroke-width="1.5"/>
+      <text x="160" y="33"  text-anchor="middle" font-size="9.5" fill="#A06BFF" font-family="-apple-system,sans-serif" font-weight="700">Diagnostic</text>
+      <text x="230" y="88"  text-anchor="start"  font-size="9.5" fill="#5AA9FF" font-family="-apple-system,sans-serif" font-weight="700">Topic-level</text>
+      <text x="206" y="181" text-anchor="start"  font-size="9.5" fill="#3DDC97" font-family="-apple-system,sans-serif" font-weight="700">Nicknames</text>
+      <text x="114" y="181" text-anchor="end"    font-size="9.5" fill="#F5B544" font-family="-apple-system,sans-serif" font-weight="700">Human review</text>
+      <text x="90"  y="88"  text-anchor="end"    font-size="9.5" fill="#C4B5FD" font-family="-apple-system,sans-serif" font-weight="700">Simulated data</text>
     </svg>
   </div>
 </div>
 </body></html>"""
-components.html(_hero_html, height=380, scrolling=False)
+components.html(_hero_html, height=338, scrolling=False)
 
 # ── Principle cards + note ─────────────────────────────────────────────────
 st.markdown("""

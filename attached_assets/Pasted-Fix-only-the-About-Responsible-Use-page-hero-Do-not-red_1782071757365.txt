@@ -1,0 +1,87 @@
+Fix only the About & Responsible Use page hero. Do not redesign the whole app.
+
+Hard rules:
+
+* Presentation and layout only.
+* Do not change the database.
+* Do not change saved reflections or results.
+* Do not rerun the model.
+* Do not clear any tables.
+* Do not change imported data.
+* Do not change model logic, scoring logic, label rules, action logic, Evidence calculations, Robustness calculations, or any formulas.
+* Do not change navigation logic.
+* Do not add dependencies.
+* Do not break Home, Student Reflection, Faculty Dashboard, Evidence, Robustness Check, or any dashboard tab.
+* Do not remove or weaken any responsible-use text.
+* Run the app and fix every error.
+
+Current issue:
+The About page is mostly strong, but the custom hero visual has label clipping and too much empty space. The governance motif is pushed too far right, and some labels are cut off.
+
+Fix the About hero only:
+
+1. Fix clipped labels
+
+* Make sure all five principle labels are fully visible:
+
+  * Diagnostic
+  * Topic-level
+  * Nicknames
+  * Human review
+  * Simulated data
+* No label should be cut off or partially hidden.
+* If needed, move the motif left, reduce connector length, or shorten labels cleanly.
+* Do not let the visual overflow the iframe.
+
+2. Improve hero composition
+
+* Bring the governance motif closer to the headline.
+* Make the left text and right visual feel like one balanced hero.
+* The right-side visual should not float at the far edge.
+* Keep the shield/checkmark motif, but make it slightly larger and clearer.
+* Keep the five connected principle nodes.
+
+3. Reduce empty space
+
+* Slightly reduce the hero height if possible.
+* Remove excess empty vertical space above and below the hero content.
+* Keep the hero premium and cinematic, but not oversized.
+* Do not create internal iframe scrollbars.
+* Do not show iframe borders or white iframe background.
+
+4. Keep the visual style
+
+* Dark cinematic background
+* Subtle grid
+* Low-opacity violet/blue glow
+* Hairline borders
+* Serious governance/product feel
+* No emoji
+* No neon/cyberpunk excess
+
+5. Do not touch the principle cards unless required
+
+* Keep the five cards and their wording exactly as they are.
+* The cards below the hero already look good.
+* Only minor spacing fixes are allowed if the hero adjustment creates awkward gaps.
+
+6. Full responsible-use note
+
+* Keep the full responsible-use note at the bottom.
+* Keep it readable and secondary.
+* Do not remove it.
+
+Before finishing:
+
+* Run the app.
+* Confirm About page loads.
+* Confirm no hero labels are clipped.
+* Confirm there is no iframe border, white background, clipping, or internal scrollbar.
+* Confirm all five responsible-use principle cards are still present.
+* Confirm the full responsible-use note is still present.
+* Confirm Home loads.
+* Confirm Student Reflection form still works.
+* Confirm Faculty Dashboard loads.
+* Confirm all dashboard tabs still work.
+* Confirm no dashboard values changed.
+* Summarize which files changed.

@@ -1,0 +1,118 @@
+Improve only the About & Responsible Use page.
+
+Goal:
+Bring back a strong visual AI pipeline, or replace it with a better version, so the top of the About page clearly showcases how the AI works.
+
+Hard rules:
+- Do not redesign the whole app.
+- Do not change data, database, metrics, model behavior, scoring, label logic, Evidence calculations, Robustness calculations, navigation, or any page other than About unless unavoidable shared CSS is affected.
+- Do not add dependencies.
+- Do not use em dashes.
+- Keep the current hero at the top.
+- Keep the five principle cards.
+- Keep the full responsible-use note and the real deployment note.
+- Keep all existing facts about the AI accurate.
+- Do not invent capabilities the code does not have.
+
+Current issue:
+The new AI method section is informative, but it lost some of the visual impact. I want a stronger visual pipeline again, or a better version of it, while keeping the page readable and premium.
+
+What to do:
+Refine the AI method section directly below the hero so it has:
+1. A short, readable explanation of how the AI is used
+2. A clearly visual pipeline that is easier to scan than a plain paragraph
+3. A layout that feels premium and not crowded
+
+Preferred structure:
+- Keep the AI method panel below the hero
+- Keep a left-side explanation area
+- Add or restore a more visual pipeline on the right, or as a second row inside the same panel
+
+Pipeline content must stay accurate:
+- The engine calls Claude, model claude-sonnet-4-6, through the built-in Anthropic integration
+- The model receives the selected topic’s correct description and common misconceptions
+- The model judges demonstrated understanding from 1 to 5
+- The model can identify a misconception or return none
+- Confidence comes only from the student’s 1 to 5 slider value
+- The app computes the final calibration label by fixed deterministic rules
+- The model judges understanding only, not the final label
+
+Visual direction for the pipeline:
+Make it feel like a product explainer, not just five plain cards.
+
+Preferred option:
+A horizontal or slightly stepped 4-stage or 5-stage pipeline with:
+- numbered nodes or chips
+- thin connector lines or arrows
+- short titles
+- one-line supporting text
+- subtle glow or accent treatment
+- strong contrast and easy readability
+- responsive stacking on smaller screens
+
+Good stage labels:
+1. Topic context
+2. Understanding score
+3. Misconception check
+4. Student confidence
+5. Fixed-rule label
+
+Design details:
+- Match the existing premium dark style
+- Use the same fonts already in the app
+- Keep labels scannable
+- Reduce paragraph heaviness
+- Use short copy, not dense blocks
+- Use subtle dividers, hairlines, and panel depth
+- No extra buttons inside the pipeline
+- No emoji
+- Avoid making the section too tall
+
+If helpful, you may use custom HTML/CSS for the pipeline because it is presentation-only.
+Use st.markdown(unsafe_allow_html=True), or components.html only if needed for a clearly better visual result.
+Do not move working controls into any iframe.
+
+Suggested left-side copy structure:
+Eyebrow:
+AI METHOD
+
+Title:
+How the AI is used
+
+Intro sentence:
+The AI judges demonstrated understanding, while the app computes the final calibration label using fixed rules.
+
+Then show compact grouped points such as:
+- Model: Claude, claude-sonnet-4-6
+- Input: topic context, misconceptions, reflection text
+- Output: understanding score plus misconception detection
+- Confidence: student-provided only
+- Final label: deterministic app logic
+
+Keep or adapt this note:
+This keeps the AI assessment separate from the final calibration label, which is computed by transparent app logic.
+
+If space allows, add one tiny example line:
+Example: a confident but incorrect explanation can still receive low understanding and become confident_but_wrong.
+
+Do not change:
+- hero section
+- principle cards
+- full responsible-use note
+- real deployment note
+- Home
+- Student Reflection
+- Faculty Dashboard
+- Evidence
+- Robustness Check
+
+Before finishing:
+- Run the app
+- Confirm About loads
+- Confirm the AI method panel still appears directly below the hero
+- Confirm the visual pipeline is back or improved
+- Confirm readability is better than before
+- Confirm there is no duplicate older AI section lower on the page
+- Confirm the five principle cards still appear below
+- Confirm the full responsible-use note and real deployment note still appear
+- Summarize files changed

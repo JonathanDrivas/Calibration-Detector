@@ -67,16 +67,13 @@ components.html(_hero_html, height=328, scrolling=False)
 st.markdown("""
 <style>
 .aim-panel {
-    display: flex; gap: 24px; align-items: flex-start;
-    background: rgba(160,107,255,0.04);
+    background: rgba(13,13,20,0.95);
     border: 1px solid rgba(160,107,255,0.18);
     border-left: 3px solid rgba(160,107,255,0.55);
-    border-radius: 12px;
-    padding: 20px 22px;
+    border-radius: 14px;
+    padding: 20px 22px 18px 22px;
     margin: 0 0 18px 0;
 }
-.aim-left { flex: 1; min-width: 0; }
-.aim-right { flex: 0 0 215px; min-width: 0; }
 .aim-eyebrow {
     font-family: "SF Mono","Fira Code","Courier New",monospace;
     font-size: 9px; font-weight: 700; letter-spacing: 1.4px;
@@ -84,83 +81,110 @@ st.markdown("""
 }
 .aim-title {
     font-size: 15px; font-weight: 800; color: #ECECF2;
-    letter-spacing: -0.02em; margin-bottom: 10px;
+    letter-spacing: -0.02em; margin-bottom: 8px;
 }
-.aim-body {
-    font-size: 12.5px; color: #BCBCCC; line-height: 1.72;
-    margin-bottom: 12px;
+.aim-intro {
+    font-size: 12.5px; color: #BCBCCC; line-height: 1.65; margin-bottom: 11px;
 }
+.aim-kv { display: flex; gap: 10px; margin-bottom: 5px; align-items: flex-start; }
+.aim-kv-key {
+    font-size: 10px; font-weight: 700; color: #6B6B82; letter-spacing: .3px;
+    text-transform: uppercase; font-family: "SF Mono","Fira Code",monospace;
+    white-space: nowrap; flex-shrink: 0; min-width: 68px; padding-top: 1px;
+}
+.aim-kv-val { font-size: 12px; color: #BCBCCC; line-height: 1.5; }
 .aim-note {
     font-size: 11.5px; color: #8A8A9A; line-height: 1.55;
     border-top: 1px solid rgba(255,255,255,0.06);
-    padding-top: 10px;
-    font-style: italic;
+    padding-top: 9px; margin-top: 11px; font-style: italic;
 }
-.aim-step-label {
+.aim-example { font-size: 11px; color: #525268; margin-top: 6px; line-height: 1.5; }
+.aim-cbw { color: #FF5C6C; font-weight: 600; }
+.aim-divider {
+    border: none; border-top: 1px solid rgba(255,255,255,0.06); margin: 16px 0 14px 0;
+}
+.aim-pipe-label {
     font-family: "SF Mono","Fira Code","Courier New",monospace;
     font-size: 9px; font-weight: 700; letter-spacing: 1.2px;
-    text-transform: uppercase; color: #6B6B82; margin-bottom: 10px;
+    text-transform: uppercase; color: #6B6B82; margin-bottom: 14px;
 }
-.aim-step { display: flex; gap: 10px; align-items: flex-start; margin-bottom: 10px; }
-.aim-num {
-    width: 20px; height: 20px; border-radius: 50%;
-    background: rgba(160,107,255,0.12); border: 1px solid rgba(160,107,255,0.32);
-    color: #A06BFF; font-size: 10px; font-weight: 800;
+.aim-pipe { display: flex; align-items: flex-start; }
+.aim-stage {
+    flex: 1; min-width: 0; display: flex; flex-direction: column;
+    align-items: center; text-align: center; padding: 0 4px;
+}
+.aim-node {
+    width: 34px; height: 34px; border-radius: 50%;
+    background: #0D0D18; border: 1.5px solid rgba(160,107,255,0.32);
+    color: #A06BFF; font-size: 12px; font-weight: 800;
     font-family: "SF Mono","Fira Code",monospace;
     display: flex; align-items: center; justify-content: center;
-    flex-shrink: 0; margin-top: 1px;
+    margin-bottom: 9px; flex-shrink: 0;
 }
-.aim-step-title { font-size: 12px; font-weight: 700; color: #ECECF2; line-height: 1.3; margin-bottom: 2px; }
-.aim-step-text { font-size: 11px; color: #8A8A9A; line-height: 1.5; }
-@media(max-width:560px){ .aim-panel{flex-direction:column} .aim-right{flex:none;width:100%} }
+.aim-node-hl {
+    border-color: rgba(160,107,255,0.72);
+    box-shadow: 0 0 14px rgba(160,107,255,0.22);
+    background: rgba(160,107,255,0.08);
+}
+.aim-stage-title {
+    font-size: 11.5px; font-weight: 700; color: #ECECF2;
+    line-height: 1.25; margin-bottom: 4px;
+}
+.aim-stage-text { font-size: 10.5px; color: #8A8A9A; line-height: 1.45; }
+.aim-arrow {
+    flex-shrink: 0; color: #3A3A52; font-size: 14px;
+    padding: 0 1px; margin-top: 9px; align-self: flex-start;
+}
+@media(max-width:600px){
+    .aim-pipe{flex-wrap:wrap; gap:6px}
+    .aim-stage{flex:0 0 44%; align-items:flex-start; text-align:left; flex-direction:row; gap:9px}
+    .aim-node{margin-bottom:0; flex-shrink:0}
+    .aim-arrow{display:none}
+}
 </style>
 
 <div class="aim-panel">
-  <div class="aim-left">
-    <div class="aim-eyebrow">AI METHOD</div>
-    <div class="aim-title">How the AI is used</div>
-    <div class="aim-body">
-      The engine calls Claude (claude-sonnet-4-6) through the built-in Anthropic integration.
-      For each reflection, the model receives the selected topic's correct description and common misconceptions.
-      It judges demonstrated understanding from 1 to 5 and can identify a misconception or return none.
-      The model does not infer student confidence from writing style or tone.
-      Confidence comes only from the student's 1 to 5 slider rating.
-      The final calibration label is computed by a fixed rule from understanding and confidence.
-      The AI judges understanding only. The app makes the categorical label decision deterministically.
+  <div class="aim-eyebrow">AI METHOD</div>
+  <div class="aim-title">How the AI is used</div>
+  <div class="aim-intro">The AI judges demonstrated understanding, while the app computes the final calibration label using fixed rules.</div>
+  <div class="aim-kv"><span class="aim-kv-key">Model</span><span class="aim-kv-val">Claude, claude-sonnet-4-6, via built-in Anthropic integration</span></div>
+  <div class="aim-kv"><span class="aim-kv-key">Input</span><span class="aim-kv-val">Topic description, common misconceptions, and reflection text</span></div>
+  <div class="aim-kv"><span class="aim-kv-key">Output</span><span class="aim-kv-val">Understanding score 1 to 5, plus misconception detected or none</span></div>
+  <div class="aim-kv"><span class="aim-kv-key">Confidence</span><span class="aim-kv-val">Student-provided only, from the 1 to 5 slider, never inferred from text</span></div>
+  <div class="aim-kv"><span class="aim-kv-key">Final label</span><span class="aim-kv-val">Deterministic app logic, not chosen by the AI</span></div>
+  <div class="aim-note">This keeps the AI assessment separate from the final calibration label, which is computed by transparent app logic.</div>
+  <div class="aim-example">Example: a confident but incorrect explanation can still receive a low understanding score and become <span class="aim-cbw">confident_but_wrong</span>.</div>
+  <hr class="aim-divider">
+  <div class="aim-pipe-label">5-STAGE PIPELINE</div>
+  <div class="aim-pipe">
+    <div class="aim-stage">
+      <div class="aim-node aim-node-hl">1</div>
+      <div class="aim-stage-title">Topic context</div>
+      <div class="aim-stage-text">Description and misconceptions sent to the model</div>
     </div>
-    <div class="aim-note">
-      This keeps the AI assessment separate from the final calibration label, which is computed by transparent app logic.
+    <div class="aim-arrow">&#8594;</div>
+    <div class="aim-stage">
+      <div class="aim-node">2</div>
+      <div class="aim-stage-title">Understanding score</div>
+      <div class="aim-stage-text">Model rates demonstrated understanding 1 to 5</div>
     </div>
-  </div>
-  <div class="aim-right">
-    <div class="aim-step-label">PIPELINE</div>
-    <div class="aim-step">
-      <div class="aim-num">1</div>
-      <div class="aim-step-body">
-        <div class="aim-step-title">Topic context</div>
-        <div class="aim-step-text">Description and misconceptions provided to the model</div>
-      </div>
+    <div class="aim-arrow">&#8594;</div>
+    <div class="aim-stage">
+      <div class="aim-node">3</div>
+      <div class="aim-stage-title">Misconception check</div>
+      <div class="aim-stage-text">Main misconception named or none returned</div>
     </div>
-    <div class="aim-step">
-      <div class="aim-num">2</div>
-      <div class="aim-step-body">
-        <div class="aim-step-title">Understanding score</div>
-        <div class="aim-step-text">Model rates 1 to 5, misconception identified or none</div>
-      </div>
+    <div class="aim-arrow">&#8594;</div>
+    <div class="aim-stage">
+      <div class="aim-node">4</div>
+      <div class="aim-stage-title">Student confidence</div>
+      <div class="aim-stage-text">1 to 5 slider value, never inferred from text</div>
     </div>
-    <div class="aim-step">
-      <div class="aim-num">3</div>
-      <div class="aim-step-body">
-        <div class="aim-step-title">Student confidence</div>
-        <div class="aim-step-text">1 to 5 slider value, never inferred from text</div>
-      </div>
-    </div>
-    <div class="aim-step">
-      <div class="aim-num">4</div>
-      <div class="aim-step-body">
-        <div class="aim-step-title">Fixed-rule label</div>
-        <div class="aim-step-text">App computes calibration label deterministically</div>
-      </div>
+    <div class="aim-arrow">&#8594;</div>
+    <div class="aim-stage">
+      <div class="aim-node">5</div>
+      <div class="aim-stage-title">Fixed-rule label</div>
+      <div class="aim-stage-text">App computes calibration label deterministically</div>
     </div>
   </div>
 </div>

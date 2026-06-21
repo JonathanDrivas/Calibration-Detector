@@ -367,60 +367,158 @@ def _heatmap_html(cm_df: pd.DataFrame, labels: list) -> str:
 # ────────────────────────────────────────────────────────────────────────────
 # Topic Outcome Heatmap helper
 # ────────────────────────────────────────────────────────────────────────────
-def _outcome_dist_html(topics: list) -> str:
-    legend_items = ""
-    for lbl in ALL_LABELS:
-        c = LABEL_COLOR[lbl]
-        legend_items += (
-            f'<span style="display:inline-flex;align-items:center;margin-right:14px;'
-            f'margin-bottom:4px;font-size:11px;color:#9A9AAC;">'
-            f'<span style="width:10px;height:10px;border-radius:2px;background:{c};'
-            f'display:inline-block;margin-right:5px;flex-shrink:0;opacity:0.9;"></span>'
-            f'{LABEL_DISPLAY[lbl]}</span>'
+def _risk_map_html(topics: list) -> str:
+    # SVG canvas & margins
+    W, H   = 720, 400
+    ML, MR, MT, MB = 56, 20, 22, 52
+    PW, PH = W - ML - MR, H - MT - MB
+
+    # Axis range (data lives 1-5, add padding)
+    AX_LO, AX_HI = 0.55, 5.45
+    MID = 3.0   # zone midpoint
+
+    _AC = {
+        "Reteach first":     "#FF5C6C",
+        "Reassure students": "#5AA9FF",
+        "Monitor":           "#9A9AAC",
+    }
+
+    def sx(v): return ML + (v - AX_LO) / (AX_HI - AX_LO) * PW
+    def sy(v): return MT + PH - (v - AX_LO) / (AX_HI - AX_LO) * PH
+
+    mx, my = sx(MID), sy(MID)
+    all_data = [(n, d) for n, d in topics if d["_total"] > 0]
+
+    if not all_data:
+        return (
+            '<div style="background:rgba(15,15,22,0.95);border:1px solid rgba(255,255,255,0.06);'
+            'border-radius:12px;padding:20px;margin-bottom:12px;color:#6B6B82;font-size:13px;">'
+            'No analyzed data yet.</div>'
         )
-    legend = (
-        f'<div style="display:flex;flex-wrap:wrap;margin-bottom:12px;">'
-        f'{legend_items}</div>'
+
+    max_cbw = max((d["label_counts"].get("confident_but_wrong", 0) for _, d in all_data), default=0)
+    max_cbw = max(max_cbw, 1)
+
+    def _short(name: str, cap: int = 13) -> str:
+        if len(name) <= cap:
+            return name
+        acc = name.split()[0]
+        for w in name.split()[1:]:
+            cand = acc + " " + w
+            if len(cand) <= cap:
+                acc = cand
+            else:
+                break
+        return acc if len(acc) <= cap else acc[:cap - 1] + "\u2026"
+
+    # Zone fills
+    zones = (
+        f'<rect x="{mx:.1f}" y="{my:.1f}" width="{ML + PW - mx:.1f}" height="{MT + PH - my:.1f}" fill="rgba(255,92,108,0.06)"/>'
+        f'<rect x="{ML}" y="{MT}" width="{mx - ML:.1f}" height="{my - MT:.1f}" fill="rgba(90,169,255,0.04)"/>'
     )
 
-    rows_html = ""
-    for topic_name, d in topics:
-        total = d["_total"]
-        if total == 0:
-            continue
-        segments = ""
-        for lbl in ALL_LABELS:
-            count = d["label_counts"].get(lbl, 0)
-            if count == 0:
-                continue
-            pct = count / total
-            c = LABEL_COLOR[lbl]
-            text = str(count) if pct >= 0.07 else ""
-            segments += (
-                f'<div title="{LABEL_DISPLAY[lbl]}: {count}" style="flex:{count};'
-                f'background:{c};opacity:0.88;display:flex;align-items:center;'
-                f'justify-content:center;font-size:10px;font-weight:800;'
-                f'color:rgba(0,0,0,0.55);white-space:nowrap;overflow:hidden;'
-                f'min-width:0;font-variant-numeric:tabular-nums;">{text}</div>'
-            )
-        rows_html += (
-            f'<div style="display:flex;align-items:center;gap:12px;margin-bottom:5px;">'
-            f'<div title="{topic_name}" style="width:170px;flex-shrink:0;font-size:12px;'
-            f'font-weight:600;color:#ECECF2;text-align:right;padding-right:6px;'
-            f'white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">{topic_name}</div>'
-            f'<div style="flex:1;height:24px;display:flex;border-radius:5px;'
-            f'overflow:hidden;background:#1A1A24;">{segments}</div>'
-            f'<div style="width:26px;flex-shrink:0;font-size:11px;color:#6B6B82;'
-            f'text-align:right;font-variant-numeric:tabular-nums;">{total}</div>'
-            f'</div>'
+    # Grid lines
+    grid = ""
+    for t in [1, 2, 3, 4, 5]:
+        gx, gy = sx(float(t)), sy(float(t))
+        grid += (
+            f'<line x1="{gx:.1f}" y1="{MT}" x2="{gx:.1f}" y2="{MT + PH}" stroke="rgba(255,255,255,0.04)" stroke-width="1"/>'
+            f'<line x1="{ML}" y1="{gy:.1f}" x2="{ML + PW}" y2="{gy:.1f}" stroke="rgba(255,255,255,0.04)" stroke-width="1"/>'
         )
+
+    # Mid-dividers (dashed)
+    dividers = (
+        f'<line x1="{mx:.1f}" y1="{MT}" x2="{mx:.1f}" y2="{MT + PH}" stroke="rgba(255,255,255,0.13)" stroke-width="1" stroke-dasharray="4 3"/>'
+        f'<line x1="{ML}" y1="{my:.1f}" x2="{ML + PW}" y2="{my:.1f}" stroke="rgba(255,255,255,0.13)" stroke-width="1" stroke-dasharray="4 3"/>'
+    )
+
+    # Plot border
+    border = f'<rect x="{ML}" y="{MT}" width="{PW}" height="{PH}" fill="none" stroke="rgba(255,255,255,0.08)" stroke-width="1"/>'
+
+    # Zone labels
+    zs = 'font-size="9" font-weight="600" font-family="SF Mono,Fira Code,monospace"'
+    p  = 7
+    zone_labels = (
+        f'<text x="{ML + PW - p}" y="{MT + 13}" text-anchor="end" {zs} fill="rgba(61,220,151,0.40)">ALIGNED UNDERSTANDING</text>'
+        f'<text x="{ML + PW - p}" y="{MT + PH - p}" text-anchor="end" {zs} fill="rgba(255,92,108,0.55)">HIGH-RISK OVERCONFIDENCE</text>'
+        f'<text x="{ML + p}" y="{MT + 13}" text-anchor="start" {zs} fill="rgba(90,169,255,0.40)">REASSURANCE OPPORTUNITY</text>'
+        f'<text x="{ML + p}" y="{MT + PH - p}" text-anchor="start" {zs} fill="rgba(154,154,172,0.35)">NEEDS SUPPORT</text>'
+    )
+
+    # Tick labels
+    ts = 'font-size="10" fill="#50506A" font-family="SF Mono,Fira Code,monospace"'
+    ticks = ""
+    for t in [1, 2, 3, 4, 5]:
+        gx, gy = sx(float(t)), sy(float(t))
+        ticks += (
+            f'<text x="{gx:.1f}" y="{MT + PH + 16}" text-anchor="middle" {ts}>{t}</text>'
+            f'<text x="{ML - 6}" y="{gy + 4:.1f}" text-anchor="end" {ts}>{t}</text>'
+        )
+
+    # Axis labels
+    als = 'font-size="11" fill="#9A9AAC" font-weight="600" font-family="system-ui,sans-serif"'
+    axis_labels = (
+        f'<text x="{ML + PW // 2}" y="{H - 5}" text-anchor="middle" {als}>Student confidence \u2192</text>'
+        f'<text transform="rotate(-90)" x="{-(MT + PH // 2)}" y="13" text-anchor="middle" {als}>Demonstrated understanding \u2191</text>'
+    )
+
+    # Bubbles then labels (two passes so labels sit on top)
+    circles, lbl_svg = "", ""
+    for topic_name, d in all_data:
+        cbw  = d["label_counts"].get("confident_but_wrong", 0)
+        conf = max(AX_LO, min(AX_HI, d["avg_confidence"]))
+        und  = max(AX_LO, min(AX_HI, d["avg_understanding"]))
+        gap  = d["calibration_gap"]
+        act  = action_label(cbw, gap)
+        col  = _AC.get(act, "#9A9AAC")
+        r    = 8.0 + 18.0 * (cbw / max_cbw) ** 0.5
+        cx, cy = sx(conf), sy(und)
+        tip  = f"{topic_name} | CBW: {cbw} | Gap: {gap:+.2f} | {act}"
+        circles += (
+            f'<circle cx="{cx:.1f}" cy="{cy:.1f}" r="{r:.1f}" '
+            f'fill="{col}" fill-opacity="0.70" stroke="{col}" stroke-width="1.5" stroke-opacity="0.95">'
+            f'<title>{tip}</title></circle>'
+        )
+        short = _short(topic_name)
+        ly    = min(cy + r + 11, MT + PH - 3)
+        lbl_svg += (
+            f'<text x="{cx:.1f}" y="{ly:.1f}" text-anchor="middle" '
+            f'font-size="9" fill="#ECECF2" fill-opacity="0.78" '
+            f'font-family="system-ui,sans-serif" font-weight="500">{short}</text>'
+        )
+
+    # HTML legend above chart
+    leg = ""
+    for act, col in _AC.items():
+        leg += (
+            f'<span style="display:inline-flex;align-items:center;margin-right:16px;'
+            f'margin-bottom:4px;font-size:11px;color:#9A9AAC;">'
+            f'<svg width="12" height="12" style="margin-right:5px;flex-shrink:0;">'
+            f'<circle cx="6" cy="6" r="5" fill="{col}" fill-opacity="0.70" stroke="{col}" stroke-width="1"/>'
+            f'</svg>{act}</span>'
+        )
+    leg += (
+        '<span style="display:inline-flex;align-items:center;font-size:11px;color:#6B6B82;">'
+        '<svg width="22" height="12" style="margin-right:5px;flex-shrink:0;">'
+        '<circle cx="4" cy="6" r="3" fill="rgba(255,255,255,0.28)"/>'
+        '<circle cx="15" cy="6" r="5.5" fill="rgba(255,255,255,0.28)"/>'
+        '</svg>size \u2192 confident-but-wrong count</span>'
+    )
+    legend_html = f'<div style="display:flex;flex-wrap:wrap;margin-bottom:10px;">{leg}</div>'
+
+    svg = (
+        f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {W} {H}" '
+        f'style="width:100%;height:auto;display:block;">'
+        f'<rect width="{W}" height="{H}" fill="transparent"/>'
+        + zones + grid + dividers + border + zone_labels + ticks + axis_labels
+        + circles + lbl_svg
+        + '</svg>'
+    )
 
     return (
         '<div style="background:rgba(15,15,22,0.95);border:1px solid rgba(255,255,255,0.06);'
         'border-radius:12px;padding:16px 20px;margin-bottom:12px;">'
-        + legend
-        + rows_html
-        + '</div>'
+        + legend_html + svg + '</div>'
     )
 
 
@@ -985,16 +1083,16 @@ with tab_overview:
             )
         st.markdown(risk_rows_html, unsafe_allow_html=True)
 
-        # 5b. Topic Outcome Heatmap ─────────────────────────────────────────
+        # 5b. Calibration Risk Map ──────────────────────────────────────────
         st.markdown(
-            '<div class="ds-section-title">Topic Outcome Distribution</div>'
+            '<div class="ds-section-title">Calibration Risk Map</div>'
             '<div class="ds-section-sub">'
-            'Each bar shows how a topic\u2019s analyzed reflections split across calibration outcomes. '
-            'Red segments show confident-but-wrong clusters that may need reteaching.'
+            'Each topic is plotted by average confidence and average demonstrated understanding. '
+            'Larger bubbles show more confident-but-wrong reflections.'
             '</div>',
             unsafe_allow_html=True,
         )
-        st.markdown(_outcome_dist_html(sorted_topics), unsafe_allow_html=True)
+        st.markdown(_risk_map_html(sorted_topics), unsafe_allow_html=True)
 
         # 6. Full Topic Ranking ─────────────────────────────────────────────
         with st.expander("Full topic ranking", expanded=False):

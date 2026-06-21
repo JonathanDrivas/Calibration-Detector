@@ -1,0 +1,114 @@
+Replace the current Topic Outcome Distribution stacked bar chart with a more meaningful visual called `Calibration Risk Map`.
+
+Hard rules:
+
+* Presentation/display only.
+* Do not change the database.
+* Do not change saved reflections or results.
+* Do not rerun the model.
+* Do not clear any tables.
+* Do not change imported data.
+* Do not change model logic, scoring logic, label rules, action logic, Evidence calculations, Robustness calculations, or any formulas.
+* Do not change navigation logic.
+* Do not change any displayed number, count, gap, percentage, ranking, action label, or result label.
+* Read every value live from the existing computed results. Do not hardcode.
+* Do not add dependencies.
+* Do not use matplotlib.
+* Do not add iframes.
+* Do not break the four Faculty Dashboard tabs, Evidence tab, Robustness Check, Home CTAs, or Student Reflection form.
+* Use `st.markdown(..., unsafe_allow_html=True)` for custom visual HTML/CSS/SVG only.
+* Run the app and fix every error.
+
+Current issue:
+The Topic Outcome Distribution stacked bar chart still feels like a colored table. Replace it with a visual that directly explains the project’s main idea: the gap between student confidence and demonstrated understanding.
+
+New visual:
+Create a `Calibration Risk Map`.
+
+Placement:
+
+* Put it below the Instructor Action Plan and above the Full Topic Ranking.
+* Remove the current Topic Outcome Distribution stacked bar chart from this location.
+
+Chart concept:
+
+* Each topic is plotted as a bubble on a 2D map.
+* X-axis = average student confidence.
+* Y-axis = average model-assessed understanding.
+* Both axes should run from low to high.
+* Use the existing per-topic data already available to the dashboard.
+* Use the same understanding values already produced by the model.
+* Use the same student confidence values already saved in reflections.
+* Do not save or modify anything. This is display only.
+
+Bubble encoding:
+
+* Each bubble represents one topic.
+* Bubble size = confident-but-wrong count for that topic.
+* Bubble color = recommended action:
+
+  * Reteach first = red
+  * Reassure students = blue
+  * Monitor = gray
+* The topic name should appear as a short label near the bubble.
+* If labels overlap, use shortened topic names or smaller labels, but keep them readable.
+* Add a tooltip/title on each bubble if possible with:
+
+  * topic name
+  * confident-but-wrong count
+  * calibration gap
+  * recommended action
+
+Visual zones:
+Add subtle quadrant/zone labels:
+
+* Top-right: `Aligned understanding`
+* Bottom-right: `High-risk overconfidence`
+* Top-left: `Reassurance opportunity`
+* Bottom-left: `Needs support`
+
+Make the bottom-right high-risk overconfidence zone subtly red-tinted because that is the main risk area.
+
+Axis labels:
+
+* X-axis: `Student confidence →`
+* Y-axis: `Demonstrated understanding ↑`
+
+Heading:
+`Calibration Risk Map`
+
+Helper text:
+`Each topic is plotted by average confidence and average demonstrated understanding. Larger bubbles show more confident-but-wrong reflections.`
+
+Design:
+
+* Premium dark dashboard style.
+* Use a dark panel with hairline border.
+* Use subtle gridlines inside the chart area.
+* Use no table cells.
+* Use no spreadsheet layout.
+* Keep it compact but readable.
+* It should look like a real analytics chart, not a table.
+* Make sure it works at normal 100% browser zoom.
+
+Important:
+
+* Do not remove the Instructor Action Plan.
+* Do not remove the Full Topic Ranking.
+* Do not alter the Evidence confusion matrix.
+* Do not change the Calibration Grid.
+* This new visual is diagnostic, while Evidence remains validation.
+
+Before finishing:
+
+* Run the app.
+* Confirm Faculty Dashboard loads.
+* Confirm all four dashboard tabs work.
+* Confirm the new Calibration Risk Map renders as a chart, not a table.
+* Confirm bubble positions and sizes come from live existing results.
+* Confirm Instructor Action Plan values are unchanged.
+* Confirm Full Topic Ranking values are unchanged.
+* Confirm Evidence numbers and matrix are unchanged.
+* Confirm Robustness Check still works.
+* Confirm Home, Student Reflection, and About still load.
+* Summarize which files changed.

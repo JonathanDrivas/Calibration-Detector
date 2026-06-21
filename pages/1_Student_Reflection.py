@@ -61,7 +61,7 @@ st.markdown("""
 }
 .sr-step {
     display: flex; gap: 12px; align-items: flex-start;
-    margin-bottom: 14px;
+    margin-bottom: 11px;
 }
 .sr-step-num {
     width: 24px; height: 24px; border-radius: 50%;
@@ -79,7 +79,7 @@ st.markdown("""
     border: 1px solid rgba(124,92,255,0.18);
     border-radius: 10px;
     padding: 12px 14px;
-    margin-top: 18px;
+    margin-top: 14px;
 }
 .sr-privacy-title {
     font-family: "SF Mono","Fira Code","Courier New",monospace;
@@ -97,7 +97,7 @@ st.markdown("""
 .sr-form-title {
     font-family: "Space Grotesk", system-ui, sans-serif;
     font-size: 16px; font-weight: 700; color: #ECECF2;
-    letter-spacing: -0.02em; margin-bottom: 14px;
+    letter-spacing: -0.02em; margin-bottom: 10px;
 }
 
 /* ── Helper text ─────────────────────────────────────────────────── */
@@ -172,7 +172,7 @@ with right_col:
             topic_name = st.selectbox("Topic", options=topics)
             reflection_text = st.text_area(
                 "Reflection",
-                height=150,
+                height=128,
                 placeholder="Explain the concept in your own words…",
             )
             st.markdown(

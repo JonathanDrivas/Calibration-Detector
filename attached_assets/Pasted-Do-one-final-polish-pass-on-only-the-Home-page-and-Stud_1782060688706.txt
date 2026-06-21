@@ -1,0 +1,79 @@
+Do one final polish pass on only the Home page and Student Reflection page. Do not redesign the whole app.
+
+Hard rules:
+
+* Presentation only.
+* Do not change the database.
+* Do not change saved reflections or results.
+* Do not rerun the model.
+* Do not clear any tables.
+* Do not change imported data.
+* Do not change model logic, scoring logic, label rules, action logic, Evidence calculations, Robustness calculations, or any formulas.
+* Do not change navigation logic.
+* Do not break the Home CTAs, topic selectbox, reflection textarea, confidence slider, form submission, dashboard tabs, Evidence tab, or Robustness Check.
+* Do not add dependencies.
+* Do not add more iframes.
+* Keep the Home hero as the only iframe.
+* Keep Home CTAs as real Streamlit buttons outside the iframe.
+* Run the app and fix every error.
+
+Home page fixes:
+
+1. Reduce the Home hero height slightly so the page feels tighter and less empty.
+
+   * Keep the cinematic hero.
+   * Keep the 2x2 calibration motif.
+   * Keep the dark grid/glow background.
+   * Do not add internal iframe scrollbars.
+   * Do not create a visible iframe border.
+   * Do not put CTAs inside the iframe.
+
+2. Improve the hero composition.
+
+   * Bring the wordmark and 2x2 motif slightly closer together.
+   * Make the hero feel like one unified composition, not two objects floating far apart.
+   * Keep the motif readable.
+   * Keep the confident-but-wrong cell softly emphasized.
+
+3. Move the real Streamlit CTA buttons higher on the Home page.
+
+   * Put “Submit a reflection” and “View analytics” immediately below the hero.
+   * Keep them as working Streamlit buttons or page links.
+   * Do not recreate them as fake HTML buttons.
+   * Make the CTA section feel intentional with a small `GET STARTED` label.
+   * The user should see the CTAs without needing to scroll far.
+
+4. Move the three explainer cards below the CTA section.
+
+   * Keep the same three cards:
+
+     * What it does
+     * How it works
+     * Why calibration matters
+   * Make them a little more compact.
+   * Keep equal heights.
+   * Keep the current premium dark styling.
+
+Student Reflection fixes:
+5. Keep the current two-column layout.
+6. Slightly tighten vertical spacing inside the form card.
+7. Reduce the textarea height a little if it feels oversized, but keep it comfortable for 2 to 4 sentences.
+8. Keep the helper text under the textarea and confidence slider.
+9. Make sure the submit button still works and saves a reflection.
+10. Do not replace the topic selectbox, textarea, slider, or submit button with custom HTML.
+
+Before finishing:
+
+* Confirm Home loads.
+* Confirm the Home hero renders correctly.
+* Confirm no iframe border, white iframe background, or internal iframe scrollbar.
+* Confirm Submit a reflection navigates correctly.
+* Confirm View analytics navigates correctly.
+* Confirm Student Reflection loads.
+* Confirm topic selectbox works.
+* Confirm textarea works.
+* Confirm confidence slider works.
+* Confirm submit saves a reflection.
+* Confirm Faculty Dashboard and About still load.
+* Confirm no dashboard numbers changed.
+* Summarize which files changed.

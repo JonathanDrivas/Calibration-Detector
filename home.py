@@ -7,14 +7,14 @@ st.markdown("""
 <style>
 .home-cards {
     display: grid; grid-template-columns: repeat(3, 1fr);
-    gap: 12px; margin: 8px 0 24px 0;
+    gap: 10px; margin: 4px 0 20px 0;
 }
 .home-card {
     background: rgba(20,20,28,0.85);
     border: 1px solid rgba(255,255,255,0.06);
-    border-radius: 14px;
-    padding: 22px 20px;
-    box-shadow: inset 0 1px 0 rgba(255,255,255,0.025), 0 8px 28px rgba(0,0,0,0.4);
+    border-radius: 12px;
+    padding: 18px 16px;
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.025), 0 6px 20px rgba(0,0,0,0.35);
     transition: border-color 0.2s ease;
 }
 .home-card:hover { border-color: rgba(255,255,255,0.10); }
@@ -36,7 +36,7 @@ st.markdown("""
     font-size: 13px; color: #9A9AAC; line-height: 1.65;
 }
 .home-divider {
-    border: none; border-top: 1px solid rgba(255,255,255,0.06); margin: 0 0 20px 0;
+    border: none; border-top: 1px solid rgba(255,255,255,0.06); margin: 18px 0 16px 0;
 }
 </style>
 """, unsafe_allow_html=True)
@@ -118,7 +118,7 @@ html, body {
   align-items: center;
   justify-content: flex-start;
   padding: 0 52px;
-  gap: 52px;
+  gap: 38px;
   animation: fadeUp 0.65s ease both;
 }
 @keyframes fadeUp {
@@ -308,9 +308,26 @@ html, body {
 </body>
 </html>"""
 
-components.html(_hero_html, height=460, scrolling=False)
+components.html(_hero_html, height=390, scrolling=False)
 
-# ── Explainer cards ───────────────────────────────────────────────────────────
+# ── CTA navigation (immediately below hero) ───────────────────────────────────
+st.markdown(
+    '<div style="font-family:\'SF Mono\',\'Fira Code\',\'Courier New\',monospace;'
+    'font-size:10px;color:#A06BFF;margin:4px 0 10px 0;font-weight:600;'
+    'letter-spacing:1.8px;text-transform:uppercase;">Get started</div>',
+    unsafe_allow_html=True,
+)
+
+cta1, cta2, _ = st.columns([1.5, 1.5, 4])
+with cta1:
+    if st.button("Submit a reflection", type="primary", use_container_width=True):
+        st.switch_page("pages/1_Student_Reflection.py")
+with cta2:
+    if st.button("View analytics", use_container_width=True):
+        st.switch_page("pages/2_Faculty_Dashboard.py")
+
+# ── Explainer cards (below CTAs) ──────────────────────────────────────────────
+st.markdown('<hr class="home-divider">', unsafe_allow_html=True)
 st.markdown("""
 <div class="home-cards">
   <div class="home-card">
@@ -341,20 +358,3 @@ st.markdown("""
   </div>
 </div>
 """, unsafe_allow_html=True)
-
-# ── CTA navigation ────────────────────────────────────────────────────────────
-st.markdown(
-    '<hr class="home-divider">'
-    '<div style="font-family:\'SF Mono\',\'Fira Code\',\'Courier New\',monospace;'
-    'font-size:10px;color:#A06BFF;margin-bottom:10px;font-weight:600;'
-    'letter-spacing:1.8px;text-transform:uppercase;">Get started</div>',
-    unsafe_allow_html=True,
-)
-
-cta1, cta2, _ = st.columns([1.5, 1.5, 4])
-with cta1:
-    if st.button("Submit a reflection", type="primary", use_container_width=True):
-        st.switch_page("pages/1_Student_Reflection.py")
-with cta2:
-    if st.button("View analytics", use_container_width=True):
-        st.switch_page("pages/2_Faculty_Dashboard.py")

@@ -115,31 +115,24 @@ st.markdown("""
     align-items: center; text-align: center; padding: 0 2px;
 }
 .aim-conn {
-    flex: 0 0 20px; display: flex; align-items: flex-start;
-    padding-top: 15px;
-}
-.aim-conn-line {
-    flex: 1; height: 1.5px;
-    background: linear-gradient(90deg, rgba(160,107,255,0.45), rgba(160,107,255,0.22));
+    flex: 0 0 24px; display: flex; align-items: flex-start;
+    padding-top: 8px; justify-content: center;
+    color: rgba(160,107,255,0.55); font-size: 18px; font-weight: 400;
+    line-height: 1; user-select: none;
 }
 .aim-node {
     width: 32px; height: 32px; border-radius: 50%;
-    background: #0D0D18; border: 1.5px solid rgba(160,107,255,0.42);
-    color: #A06BFF; font-size: 11px; font-weight: 800;
+    background: rgba(160,107,255,0.07); border: 1.5px solid rgba(160,107,255,0.45);
+    color: #B48EFF; font-size: 11px; font-weight: 800;
     font-family: "SF Mono","Fira Code",monospace;
     display: flex; align-items: center; justify-content: center;
     margin-bottom: 8px; flex-shrink: 0;
-}
-.aim-node-hl {
-    border-color: rgba(160,107,255,0.8);
-    box-shadow: 0 0 12px rgba(160,107,255,0.3);
-    background: rgba(160,107,255,0.1);
 }
 .aim-stage-title {
     font-size: 12px; font-weight: 700; color: #ECECF2;
     line-height: 1.25; margin-bottom: 3px;
 }
-.aim-stage-text { font-size: 11px; color: #9A9AAC; line-height: 1.4; }
+.aim-stage-text { font-size: 11.5px; color: #BCBCCC; line-height: 1.4; }
 @media(max-width:620px){
     .aim-pipe{flex-wrap:wrap; gap:10px}
     .aim-conn{display:none}
@@ -166,29 +159,29 @@ st.markdown("""
   </div>
   <div class="aim-pipe">
     <div class="aim-stage">
-      <div class="aim-node aim-node-hl">1</div>
+      <div class="aim-node">1</div>
       <div class="aim-stage-title">Topic context</div>
       <div class="aim-stage-text">Topic description, misconceptions, reflection</div>
     </div>
-    <div class="aim-conn"><div class="aim-conn-line"></div></div>
+    <div class="aim-conn">&#8594;</div>
     <div class="aim-stage">
       <div class="aim-node">2</div>
       <div class="aim-stage-title">Understanding score</div>
       <div class="aim-stage-text">AI rates demonstrated understanding 1 to 5</div>
     </div>
-    <div class="aim-conn"><div class="aim-conn-line"></div></div>
+    <div class="aim-conn">&#8594;</div>
     <div class="aim-stage">
       <div class="aim-node">3</div>
       <div class="aim-stage-title">Misconception check</div>
       <div class="aim-stage-text">AI returns main misconception or none</div>
     </div>
-    <div class="aim-conn"><div class="aim-conn-line"></div></div>
+    <div class="aim-conn">&#8594;</div>
     <div class="aim-stage">
       <div class="aim-node">4</div>
       <div class="aim-stage-title">Student confidence</div>
       <div class="aim-stage-text">Slider value only, never inferred</div>
     </div>
-    <div class="aim-conn"><div class="aim-conn-line"></div></div>
+    <div class="aim-conn">&#8594;</div>
     <div class="aim-stage">
       <div class="aim-node">5</div>
       <div class="aim-stage-title">Fixed-rule label</div>

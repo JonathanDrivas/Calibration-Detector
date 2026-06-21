@@ -1,0 +1,68 @@
+Refine only the AI METHOD panel on the About page.
+
+Hard rules:
+- Presentation only.
+- Do not change any app logic, AI logic, metrics, labels, navigation, data, or content outside the AI METHOD panel.
+- Keep the current dark premium visual system and overall page layout.
+- Do not add dependencies.
+- Run the app and fix any errors.
+
+Main issues to fix:
+1. The pipeline connectors currently look like they are pointing backward or feel visually confusing.
+2. Step 1 is brighter than the other step numbers even though it is not a selected or active state.
+3. The pipeline is still a little hard to read.
+
+What to change:
+1. Fix the pipeline connectors.
+   - Replace the current connector marks with either:
+     a) clear right-pointing arrows, or
+     b) clean segmented horizontal connector lines with small forward chevrons between steps.
+   - The direction must read clearly from left to right: 1 → 2 → 3 → 4 → 5.
+   - Avoid any connector style that looks like it points backward.
+
+2. Make all five step circles visually consistent.
+   - Remove the extra glow or stronger emphasis from step 1.
+   - All five numbered circles should have the same brightness, border weight, and glow level.
+   - If any emphasis is used, it should be subtle and applied consistently across all steps.
+
+3. Improve readability.
+   - Increase contrast of the pipeline titles and descriptions.
+   - Slightly increase the size and/or weight of the small descriptive text under each step.
+   - Ensure the “5-STAGE PIPELINE” eyebrow and the surrounding text are easy to read on the dark background.
+   - Keep the red confident_but_wrong text readable but tasteful.
+
+4. Improve pipeline layout.
+   - Keep the pipeline visual, but make it cleaner and more deliberate.
+   - Evenly space the five stages across the width.
+   - Keep each step title on one line if possible:
+     Topic context
+     Understanding score
+     Misconception check
+     Student confidence
+     Fixed-rule label
+   - Keep the step descriptions short and readable.
+   - Make sure the connector line/arrows do not overlap the circles.
+
+5. Preserve content accuracy.
+   - Keep the AI METHOD content meaning unchanged:
+     - AI judges demonstrated understanding
+     - app computes final calibration label using fixed rules
+     - confidence comes only from the student slider
+     - confidence is never inferred from the writing
+     - final label is deterministic app logic, not chosen by the AI
+   - Keep the example line about a confident but incorrect explanation becoming confident_but_wrong.
+
+Nice-to-have visual direction:
+- The pipeline should feel polished and premium, almost like a product feature explainer.
+- Use subtle violet accents and clean geometry.
+- Favor clarity over decoration.
+- If helpful, make each step feel like a mini visual node connected in one clean horizontal flow.
+
+Before finishing:
+- Run the app.
+- Confirm the About page loads.
+- Confirm only the AI METHOD panel changed.
+- Confirm the pipeline now clearly reads left to right.
+- Confirm step 1 no longer looks brighter than the others.
+- Confirm the pipeline text is easier to read.
+- Summarize exactly what changed.

@@ -1,0 +1,72 @@
+Refine the AI METHOD panel on the About page for readability and layout polish.
+
+Hard rules:
+- Presentation only.
+- Do not change any database logic, AI logic, labels, metrics, navigation, or any content outside this one AI METHOD panel.
+- Keep the existing page style and dark visual system.
+- Do not remove the About hero above it.
+- Do not add dependencies.
+- Render all custom HTML with st.markdown(unsafe_allow_html=True).
+- Run the app and fix any errors.
+
+Goal:
+Make the AI METHOD section easier to read and more polished.
+
+Required fixes:
+1. Fix the pipeline connector line.
+   - The horizontal line must NOT pass through the numbered circles.
+   - Build the connector as separate line segments between steps, or place the line behind with enough masking so no line visibly crosses any circle.
+   - All five step circles should look clean and intentional.
+
+2. Improve readability.
+   - Increase contrast of the body text and supporting copy.
+   - Increase font size slightly for the small descriptive text under each pipeline step.
+   - Increase contrast of the label/value rows:
+     MODEL
+     INPUT
+     OUTPUT
+     CONFIDENCE
+     FINAL LABEL
+   - Make sure muted text is still clearly readable on the dark background.
+
+3. Improve spacing and alignment.
+   - Give the AI METHOD title, intro sentence, label/value rows, example line, and pipeline more breathing room.
+   - Align the five pipeline steps evenly across the width.
+   - Keep the step titles on one line where possible.
+   - Prevent awkward crowding between the example text and the 5-stage pipeline heading.
+
+4. Make the pipeline visually stronger.
+   - Keep it as a visual pipeline, not just plain text.
+   - Make each numbered circle a little more prominent.
+   - Use cleaner segmented connectors or subtle arrows between steps.
+   - Keep the same premium dark look with violet accents.
+   - Add a subtle glow or emphasis only where tasteful, not flashy.
+
+5. Improve mobile and narrower-width behavior.
+   - On smaller widths, allow the pipeline to wrap into 2 rows or stack cleanly.
+   - Do not let the text become cramped or overlap.
+   - Preserve readability first.
+
+6. Keep the content accurate.
+   - Preserve the meaning of the existing AI METHOD content:
+     - AI judges demonstrated understanding
+     - app computes the final calibration label using fixed rules
+     - confidence comes only from the student slider
+     - confidence is never inferred from the writing
+     - deterministic app logic computes the final label
+   - Keep the example about a confident but incorrect explanation becoming confident_but_wrong.
+
+Visual direction:
+- Keep the current cinematic dark system.
+- Keep the panel background, border, and overall style consistent with the rest of the app.
+- Slightly elevate the pipeline visually so it feels like a feature, not an afterthought.
+- Favor clarity over extra decoration.
+
+Before finishing:
+- Run the app.
+- Confirm the About page loads.
+- Confirm the AI METHOD panel still appears directly below the hero.
+- Confirm the connector line no longer crosses through the first numbered circle or any numbered circle.
+- Confirm the text is more readable.
+- Confirm nothing else on the page changed.
+- Summarize exactly what changed.

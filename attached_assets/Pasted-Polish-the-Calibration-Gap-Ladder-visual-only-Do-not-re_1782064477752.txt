@@ -1,0 +1,98 @@
+Polish the Calibration Gap Ladder visual only. Do not redesign the whole dashboard.
+
+Hard rules:
+
+* Presentation/display only.
+* Do not change the database.
+* Do not change saved reflections or results.
+* Do not rerun the model.
+* Do not clear any tables.
+* Do not change imported data.
+* Do not change model logic, scoring logic, label rules, action logic, Evidence calculations, Robustness calculations, or any formulas.
+* Do not change navigation logic.
+* Do not change any displayed number, count, gap, percentage, ranking, action label, or result label.
+* Read every value live from the existing computed results. Do not hardcode.
+* Do not add dependencies.
+* Do not use matplotlib.
+* Do not add iframes.
+* Do not break the four Faculty Dashboard tabs, Evidence tab, Robustness Check, Home CTAs, or Student Reflection form.
+* Use `st.markdown(..., unsafe_allow_html=True)` for custom visual HTML/CSS/SVG only.
+* Run the app and fix every error.
+
+Current issue:
+The Calibration Gap Ladder is the right visual, but it needs polish. Some topic names are truncated awkwardly, the bubbles are too large, and the action labels are shortened too much.
+
+Make these refinements:
+
+1. Topic labels
+
+* Avoid awkward truncation like `Technology Classificat...` or `Invention, Innovation,...`.
+* Either allow the full topic names to fit, or use cleaner short display labels.
+* If short labels are used, keep them understandable:
+
+  * `Tech Classification`
+  * `Invention & Entrepreneurship`
+  * `Adopt-Transform-Apply`
+  * `Displacement`
+* Do not change the actual topic names in the database or ranking table. This is display-only inside the graph.
+
+2. Action labels
+
+* Use the full action labels in the right-side action column:
+
+  * `Reteach first`
+  * `Reassure students`
+  * `Monitor`
+* Do not shorten them to `Reteach` or `Reassure`.
+* Keep the same action logic and values.
+
+3. Bubble sizing
+
+* Keep bubble size based on confident-but-wrong count.
+* Cap the maximum bubble size so the largest bubbles do not feel cartoonish.
+* Keep the count visible inside the bubble.
+* Use a more refined style:
+
+  * semantic fill color with transparency
+  * crisp border
+  * no oversized glow
+* The chart should feel premium and analytical, not playful.
+
+4. Axis and scale
+
+* Keep the vertical zero line.
+* Add subtle x-axis tick labels or range markers so the gap scale is easier to read.
+* Keep bottom labels:
+
+  * `← Underconfidence`
+  * `Calibrated`
+  * `Overconfidence risk →`
+* Make these labels more readable but still secondary.
+
+5. Row spacing
+
+* Slightly tighten row height so the chart is not too tall.
+* Keep rows readable.
+* Keep horizontal guide lines subtle.
+* Do not make the graph cramped.
+
+6. Visual balance
+
+* Keep the dark premium panel.
+* Keep the red/blue/gray action color language.
+* Align topic label, marker area, gap label, and action badge cleanly.
+* Make the chart feel like a polished analytics visualization, not a table.
+
+Before finishing:
+
+* Run the app.
+* Confirm Faculty Dashboard loads.
+* Confirm all four dashboard tabs work.
+* Confirm the Calibration Gap Ladder still renders correctly.
+* Confirm marker positions still come from live calibration gap values.
+* Confirm bubble sizes still come from live confident-but-wrong counts.
+* Confirm action labels still come from live recommended action labels.
+* Confirm Evidence numbers and matrix are unchanged.
+* Confirm Robustness Check still works.
+* Confirm Home, Student Reflection, and About still load.
+* Summarize which files changed.

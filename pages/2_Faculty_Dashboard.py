@@ -1031,8 +1031,19 @@ with tab_overview:
                             "— no action needed.")
             + _legend_entry("#F5B544", "Low conf · low understanding",
                             "— support and reteach.")
-            + _legend_entry("#C4B5FD", "Partial",
-                            "— mixed signals. Clarify with examples.")
+            + (
+                '<div style="display:flex;align-items:flex-start;gap:8px;margin-bottom:9px;'
+                'padding-top:9px;border-top:1px solid rgba(196,181,253,0.10);">'
+                '<span style="width:8px;height:8px;border-radius:2px;background:#C4B5FD;'
+                'flex-shrink:0;margin-top:3px;"></span>'
+                '<span style="font-size:11px;color:#9A9AAC;line-height:1.5;">'
+                '<strong style="color:#C4B5FD;">Partial</strong>'
+                f'<span style="margin-left:6px;font-size:13px;font-weight:700;color:#C4B5FD;'
+                f'font-variant-numeric:tabular-nums;">{_gc["partial"]}</span>'
+                ' \u2014 mixed signals\u2002\u00b7\u2002clarify with examples'
+                '</span>'
+                '</div>'
+            )
             + '</div>'
         )
         _cal_html = (
@@ -1044,7 +1055,6 @@ with tab_overview:
             + _inner_grid + _x_label
             + '</div>'
             + '</div>'
-            + _partial_horiz
             + '</div>'
             + _legend
             + '</div>'

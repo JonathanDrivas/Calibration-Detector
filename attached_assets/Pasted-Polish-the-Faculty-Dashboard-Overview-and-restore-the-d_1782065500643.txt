@@ -1,0 +1,115 @@
+Polish the Faculty Dashboard Overview and restore the diagnostic visual without making the page cluttered.
+
+Hard rules:
+
+* Presentation and layout only.
+* Do not change the database.
+* Do not change saved reflections or results.
+* Do not rerun the model.
+* Do not clear any tables.
+* Do not change imported data.
+* Do not change model logic, scoring logic, label rules, action logic, Evidence calculations, Robustness calculations, or any formulas.
+* Do not change navigation logic.
+* Do not change any displayed number, count, gap, percentage, ranking, action label, or result label.
+* Read every value live. Do not hardcode.
+* Do not add dependencies.
+* Do not add iframes.
+* Do not break the four Faculty Dashboard tabs, Evidence tab, Robustness Check, Home CTAs, or Student Reflection form.
+* Use `st.markdown(..., unsafe_allow_html=True)` for custom visual HTML/CSS only.
+* Run the app and fix every error.
+
+Current issues:
+
+* The Partial box under the Calibration Grid is too large and visually awkward.
+* It gives Partial the same visual weight as the four main calibration quadrants, even though Partial is a mixed-signal category.
+* The deeper diagnostic visual disappeared from the Overview. We still need a visual way to explore topic-level calibration gaps, but it should not overwhelm the executive summary.
+
+1. Fix the Partial display.
+
+Do not show Partial as a large full-width box under the grid.
+
+Change Partial into a smaller, secondary element.
+
+Preferred option:
+
+* Move Partial into the right-side “How to read this” panel as a compact stat row:
+
+  * label: `Partial`
+  * live count
+  * text: `Mixed signals · clarify with examples`
+* Use the lavender semantic color.
+* Keep it readable but visually secondary.
+
+Alternative option:
+
+* Put Partial as a small compact pill/card below the 2x2 grid, aligned left, not spanning the full width.
+* It should look like a secondary note, not a fifth major quadrant.
+
+Keep the live Partial count exactly the same. Do not change any calculations.
+
+2. Keep the main Calibration Grid focused on the four true quadrants.
+
+The 2x2 grid should visually emphasize:
+
+* Underconfident
+* Understands
+* Knows confused
+* Confident but wrong
+
+Do not make the grid wider just to accommodate Partial.
+
+3. Restore a deeper diagnostic visual.
+
+Bring back the `Calibration Gap Ladder`, not the colored heatmap table.
+
+Placement:
+
+* Preferred: put the Calibration Gap Ladder in the Topic Details tab near the top, before the individual topic expanders.
+* Also acceptable: put it on the Overview inside a collapsed expander called `Explore calibration gaps`.
+
+Do not place the full ladder directly on the Overview as an always-visible section unless it is compact. The Overview should stay clean.
+
+The Calibration Gap Ladder should:
+
+* use live calibration gap values
+* use live confident-but-wrong counts for marker size
+* use live recommended action labels for color
+* keep the polished version with readable topic labels and full action labels
+* remain display-only
+
+4. Do not bring back the colored heatmap table.
+
+The colored topic outcome heatmap looked too much like another table. Do not restore that version.
+
+5. Full Topic Ranking.
+
+Keep the Full Topic Ranking collapsed by default if possible. It should remain the complete reference, not the main visual.
+
+6. Overview hierarchy.
+
+The Overview should now show:
+
+* Header
+* Key Risk Signal
+* KPI cards
+* Calibration Grid
+* Top Insight
+* Instructor Action Plan
+* Full Topic Ranking collapsed
+
+If the Calibration Gap Ladder is placed on Overview, it must be inside a collapsed expander after the Instructor Action Plan.
+
+Before finishing:
+
+* Run the app.
+* Confirm Faculty Dashboard loads.
+* Confirm all four dashboard tabs work.
+* Confirm Partial is no longer a large awkward box.
+* Confirm the Partial count is unchanged.
+* Confirm the Calibration Grid counts are unchanged.
+* Confirm the Calibration Gap Ladder exists either in Topic Details or in a collapsed Overview expander.
+* Confirm Full Topic Ranking is still available.
+* Confirm Evidence numbers and matrix are unchanged.
+* Confirm Robustness Check still works.
+* Confirm Home, Student Reflection, and About still load.
+* Summarize which files changed.

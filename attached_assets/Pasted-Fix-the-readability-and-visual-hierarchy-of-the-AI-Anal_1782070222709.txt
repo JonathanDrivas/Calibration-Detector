@@ -1,0 +1,158 @@
+Fix the readability and visual hierarchy of the AI Analysis Pipeline on the Faculty Dashboard Robustness Check tab.
+
+Hard rules:
+
+* Presentation and layout only.
+* Do not change the database.
+* Do not change saved reflections or results.
+* Do not rerun the model automatically.
+* Do not clear any tables.
+* Do not change imported data.
+* Do not change model logic, scoring logic, label rules, action logic, Evidence calculations, Robustness calculations, or any formulas.
+* Do not change navigation logic.
+* Do not change any displayed dashboard number, count, gap, percentage, ranking, action label, or result label.
+* Do not add dependencies.
+* Do not add additional iframes beyond the existing AI Analysis Pipeline iframe.
+* Do not break the four Faculty Dashboard tabs, Evidence tab, Robustness Check button, Home CTAs, or Student Reflection form.
+* The Run adversarial robustness check button must remain a real Streamlit button outside the iframe.
+* Run the app and fix every error.
+
+Current issue:
+The AI Analysis Pipeline is visually interesting, but it is too hard to read. The cards are too small, the body text is too faint, the spacing is too spread out, and the button text is still low contrast.
+
+Goal:
+Make the Robustness Check tab easier to read and more demo-friendly. The pipeline should look like a clear AI workflow diagram that someone can understand in 5 seconds.
+
+1. Pipeline iframe readability
+
+Keep the AI Analysis Pipeline as a custom `components.html(...)` visual, but redesign it for readability.
+
+Fix:
+
+* Increase the pipeline title size.
+* Increase step card width and height.
+* Increase card title font size.
+* Increase card body font size.
+* Increase text contrast.
+* Use fewer words inside each card.
+* Make the cards feel connected and aligned, not floating.
+* Reduce excess empty space above and below the pipeline.
+* No internal iframe scrollbars.
+* No visible iframe border.
+* No white iframe background.
+
+Recommended desktop iframe height:
+
+* around 300px to 360px if the five cards remain horizontal
+* only taller if needed to prevent clipping
+
+2. Make the step cards simpler
+
+Use shorter card text.
+
+Step 1:
+Title: `Read reflection`
+Text: `Topic, reflection text, and confidence enter the AI engine.`
+
+Step 2:
+Title: `Score understanding`
+Text: `The AI rates demonstrated understanding from 1 to 5.`
+
+Step 3:
+Title: `Find misconception`
+Text: `The AI identifies the misconception or marks none.`
+
+Step 4:
+Title: `Compare confidence`
+Text: `The app compares confidence against understanding.`
+
+Step 5:
+Title: `Assign label`
+Text: `The result becomes a calibration label such as confident_but_wrong.`
+
+Keep the meaning the same. This is wording simplification only.
+
+3. Pipeline layout
+
+Preferred:
+
+* Keep the five-step horizontal flow on desktop.
+* Make each card large enough to read.
+* Use clear arrow connectors between steps.
+* Keep the step number badge prominent.
+* Use violet as the main accent.
+* Use red only for `confident_but_wrong`.
+
+If five cards do not fit well:
+
+* Use a 3-over-2 layout inside the iframe.
+* Keep the visual polished and readable.
+* Do not let text overlap.
+
+On narrow screens:
+
+* Stack cards vertically or use a compact 2-column layout.
+* Do not create horizontal scroll.
+
+4. Reduce crowding below the pipeline
+
+The note under the pipeline is hard to read and adds clutter.
+
+Replace the note with a compact callout right under the pipeline or below the three cards:
+
+`AI supports instructor judgment. It is diagnostic, not grading, and topic-level patterns matter more than any single model judgment.`
+
+Make it readable, not faint.
+
+5. Explanation cards
+
+The three explanation cards are okay, but make them more readable:
+
+* Increase contrast slightly.
+* Reduce body copy if needed.
+* Keep titles:
+
+  * `Adversarial inputs`
+  * `Same AI path`
+  * `Pass condition`
+* Keep them compact and secondary to the pipeline.
+
+6. Button contrast
+
+Fix the `Run adversarial robustness check` button.
+
+The button must:
+
+* have a violet background
+* have white or near-white text
+* have readable contrast
+* have a clear hover state
+* remain a real Streamlit button
+* not be inside the iframe
+
+7. General spacing
+
+Tighten the vertical spacing on the Robustness Check tab:
+
+* header/subtitle
+* pipeline
+* explanation cards
+* run button
+
+Make the tab feel organized, not crowded.
+
+Before finishing:
+
+* Run the app.
+* Confirm Faculty Dashboard loads.
+* Confirm all four dashboard tabs work.
+* Confirm Robustness Check tab shows a readable AI Analysis Pipeline.
+* Confirm the pipeline appears only once.
+* Confirm there is no iframe border, white background, clipping, or internal scrollbar.
+* Confirm the Run adversarial robustness check button remains outside the iframe.
+* Confirm the button text is clearly readable.
+* Confirm the button still works.
+* Confirm robustness cases are not saved to the database.
+* Confirm Overview, Evidence, and Topic Details values are unchanged.
+* Confirm Home, Student Reflection, and About still load.
+* Summarize which files changed.

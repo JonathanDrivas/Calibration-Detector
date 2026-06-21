@@ -373,11 +373,6 @@ def _gap_ladder_html(topics: list) -> str:
         "Reassure students": "#5AA9FF",
         "Monitor":           "#9A9AAC",
     }
-    _AC_SHORT = {
-        "Reteach first":     "Reteach",
-        "Reassure students": "Reassure",
-        "Monitor":           "Monitor",
-    }
 
     all_data = [(n, d) for n, d in topics if d["_total"] > 0]
     if not all_data:
@@ -391,18 +386,18 @@ def _gap_ladder_html(topics: list) -> str:
     max_cbw = max(max_cbw, 1)
 
     # Auto-range axis; always bracket 0 by at least 0.5
-    gaps   = [d["calibration_gap"] for _, d in all_data]
+    gaps  = [d["calibration_gap"] for _, d in all_data]
     g_lo, g_hi = min(gaps), max(gaps)
-    pad    = max(0.5, (g_hi - g_lo) * 0.18)
-    ax_lo  = min(g_lo - pad, -0.5)
-    ax_hi  = max(g_hi + pad,  0.5)
+    pad   = max(0.5, (g_hi - g_lo) * 0.18)
+    ax_lo = min(g_lo - pad, -0.5)
+    ax_hi = max(g_hi + pad,  0.5)
 
-    # SVG layout
-    ROW_H = 38
+    # SVG layout — tighter rows, wider right margin for full action labels
+    ROW_H = 34
     N     = len(all_data)
-    ML, TW, MR = 180, 390, 112
+    ML, TW, MR = 176, 382, 140
     W  = ML + TW + MR
-    MT, MB = 22, 38
+    MT, MB = 22, 50
     H  = MT + N * ROW_H + MB
 
     def tx(v):
@@ -410,11 +405,25 @@ def _gap_ladder_html(topics: list) -> str:
 
     zero_x = tx(0.0)
 
+    # Smart topic label: break cleanly at word boundaries, strip trailing commas
+    def _display(name: str, cap: int = 28) -> str:
+        if len(name) <= cap:
+            return name
+        words = name.split()
+        acc = ""
+        for w in words:
+            cand = (acc + " " + w).strip() if acc else w
+            if len(cand) <= cap:
+                acc = cand
+            else:
+                break
+        return acc.rstrip(",;") if acc else name[:cap - 1] + "\u2026"
+
     # Alternating row fills
     row_bg = ""
     for i in range(N):
         ry   = MT + i * ROW_H
-        fill = "rgba(255,255,255,0.018)" if i % 2 == 0 else "transparent"
+        fill = "rgba(255,255,255,0.016)" if i % 2 == 0 else "transparent"
         row_bg += f'<rect x="0" y="{ry}" width="{W}" height="{ROW_H}" fill="{fill}"/>'
 
     # Vertical gridlines at integers (except 0)
@@ -424,13 +433,13 @@ def _gap_ladder_html(topics: list) -> str:
             gx = tx(float(v))
             vgrid += (
                 f'<line x1="{gx:.1f}" y1="{MT}" x2="{gx:.1f}" y2="{MT + N * ROW_H}" '
-                f'stroke="rgba(255,255,255,0.04)" stroke-width="1"/>'
+                f'stroke="rgba(255,255,255,0.045)" stroke-width="1"/>'
             )
 
-    # Zero line
+    # Zero line (prominent center reference)
     zero_line = (
-        f'<line x1="{zero_x:.1f}" y1="{MT - 4}" x2="{zero_x:.1f}" y2="{MT + N * ROW_H + 4}" '
-        f'stroke="rgba(255,255,255,0.22)" stroke-width="1.5"/>'
+        f'<line x1="{zero_x:.1f}" y1="{MT - 4}" x2="{zero_x:.1f}" y2="{MT + N * ROW_H + 8}" '
+        f'stroke="rgba(255,255,255,0.25)" stroke-width="1.5"/>'
     )
 
     # Horizontal track per row
@@ -439,10 +448,25 @@ def _gap_ladder_html(topics: list) -> str:
         cy = MT + i * ROW_H + ROW_H // 2
         track += (
             f'<line x1="{ML}" y1="{cy}" x2="{ML + TW}" y2="{cy}" '
-            f'stroke="rgba(255,255,255,0.05)" stroke-width="1"/>'
+            f'stroke="rgba(255,255,255,0.06)" stroke-width="1"/>'
         )
 
-    # Data: names | bubbles | badges
+    # X-axis tick marks + numeric labels
+    tick_y0 = MT + N * ROW_H + 8
+    tick_y1 = MT + N * ROW_H + 14
+    tick_lbl_y = MT + N * ROW_H + 24
+    ticks_svg = ""
+    for v in range(int(ax_lo) - 1, int(ax_hi) + 2):
+        if ax_lo <= v <= ax_hi:
+            gx = tx(float(v))
+            ticks_svg += (
+                f'<line x1="{gx:.1f}" y1="{tick_y0}" x2="{gx:.1f}" y2="{tick_y1}" '
+                f'stroke="rgba(255,255,255,0.20)" stroke-width="1"/>'
+                f'<text x="{gx:.1f}" y="{tick_lbl_y}" text-anchor="middle" font-size="9" '
+                f'fill="#525268" font-family="SF Mono,Fira Code,monospace">{v:+d}</text>'
+            )
+
+    # Data: names | bubbles | gap value | action labels
     names_svg, bubbles_svg, badge_svg = "", "", ""
     for i, (topic_name, d) in enumerate(all_data):
         cy   = int(MT + i * ROW_H + ROW_H / 2)
@@ -450,61 +474,63 @@ def _gap_ladder_html(topics: list) -> str:
         gap  = d["calibration_gap"]
         act  = action_label(cbw, gap)
         col  = _AC.get(act, "#9A9AAC")
-        r    = 7.0 + 12.0 * (cbw / max_cbw) ** 0.5
+        # Capped radius: base 5, max 13 (refined, not cartoonish)
+        r    = 5.0 + 8.0 * (cbw / max_cbw) ** 0.5
         bx   = tx(max(ax_lo, min(ax_hi, gap)))
 
-        # Topic name (right-aligned, left column)
-        short = topic_name if len(topic_name) <= 24 else topic_name[:22] + "\u2026"
+        # Topic name (right-aligned, left column, smart truncation)
+        label = _display(topic_name)
         names_svg += (
             f'<text x="{ML - 10}" y="{cy + 4}" text-anchor="end" font-size="11" '
-            f'fill="#D0D0E0" font-family="system-ui,sans-serif" font-weight="500">{short}</text>'
+            f'fill="#CECEDE" font-family="system-ui,sans-serif" font-weight="500">{label}</text>'
         )
 
-        # Bubble + count + gap label
+        # Bubble with crisp border
         tip = f"{topic_name} | Gap: {gap:+.2f} | CBW: {cbw} | {act}"
         bubbles_svg += (
-            f'<circle cx="{bx:.1f}" cy="{cy}" r="{r:.1f}" fill="{col}" fill-opacity="0.72" '
-            f'stroke="{col}" stroke-width="1.5" stroke-opacity="0.9">'
+            f'<circle cx="{bx:.1f}" cy="{cy}" r="{r:.1f}" fill="{col}" fill-opacity="0.65" '
+            f'stroke="{col}" stroke-width="1.5" stroke-opacity="1.0">'
             f'<title>{tip}</title></circle>'
         )
+        # Count inside bubble when cbw > 0
         if cbw > 0:
             bubbles_svg += (
                 f'<text x="{bx:.1f}" y="{cy + 4}" text-anchor="middle" font-size="9" '
-                f'font-weight="800" fill="rgba(0,0,0,0.55)">{cbw}</text>'
+                f'font-weight="800" fill="rgba(0,0,0,0.60)">{cbw}</text>'
             )
-        # Gap value beside bubble
-        offset    = r + 5
-        gx_lbl    = bx + offset if gap >= 0 else bx - offset
+        # Gap numeric label beside bubble (left of bubble for negative, right for positive)
+        lbl_offset = r + 5
+        gx_lbl    = bx + lbl_offset if gap >= 0 else bx - lbl_offset
         g_anchor  = "start" if gap >= 0 else "end"
         bubbles_svg += (
             f'<text x="{gx_lbl:.1f}" y="{cy + 4}" text-anchor="{g_anchor}" font-size="9" '
-            f'fill="#50506A" font-family="SF Mono,Fira Code,monospace">{gap:+.2f}</text>'
+            f'fill="#4A4A62" font-family="SF Mono,Fira Code,monospace">{gap:+.2f}</text>'
         )
 
-        # Action badge (right column)
+        # Full action label (right column)
         badge_svg += (
             f'<text x="{ML + TW + 14}" y="{cy + 4}" text-anchor="start" font-size="10" '
-            f'font-weight="700" fill="{col}">{_AC_SHORT.get(act, act)}</text>'
+            f'font-weight="700" fill="{col}">{act}</text>'
         )
 
-    # Bottom axis labels
-    bottom_y = MT + N * ROW_H + 24
+    # Bottom axis direction labels (below tick labels)
+    bottom_y = MT + N * ROW_H + 40
     axis_lbl = (
         f'<text x="{ML + 2}" y="{bottom_y}" text-anchor="start" font-size="10" '
-        f'fill="rgba(90,169,255,0.65)" font-weight="600" font-family="system-ui,sans-serif">'
+        f'fill="rgba(90,169,255,0.60)" font-weight="600" font-family="system-ui,sans-serif">'
         f'\u2190 Underconfidence</text>'
         f'<text x="{zero_x:.1f}" y="{bottom_y}" text-anchor="middle" font-size="10" '
-        f'fill="rgba(255,255,255,0.30)" font-weight="600" font-family="system-ui,sans-serif">'
+        f'fill="rgba(255,255,255,0.28)" font-weight="600" font-family="system-ui,sans-serif">'
         f'Calibrated</text>'
         f'<text x="{ML + TW - 2}" y="{bottom_y}" text-anchor="end" font-size="10" '
-        f'fill="rgba(255,92,108,0.65)" font-weight="600" font-family="system-ui,sans-serif">'
+        f'fill="rgba(255,92,108,0.60)" font-weight="600" font-family="system-ui,sans-serif">'
         f'Overconfidence risk \u2192</text>'
     )
 
-    # Zero marker at top of zero line
+    # Zero label at top of zero line
     zero_top = (
         f'<text x="{zero_x:.1f}" y="{MT - 6}" text-anchor="middle" font-size="9" '
-        f'fill="rgba(255,255,255,0.28)" font-family="SF Mono,Fira Code,monospace">0</text>'
+        f'fill="rgba(255,255,255,0.25)" font-family="SF Mono,Fira Code,monospace">0</text>'
     )
 
     svg = (
@@ -513,7 +539,7 @@ def _gap_ladder_html(topics: list) -> str:
         f'<rect width="{W}" height="{H}" fill="transparent"/>'
         + row_bg + vgrid + zero_line + track
         + names_svg + bubbles_svg + badge_svg
-        + axis_lbl + zero_top
+        + ticks_svg + axis_lbl + zero_top
         + '</svg>'
     )
 

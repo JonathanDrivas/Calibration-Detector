@@ -1,0 +1,167 @@
+Improve only the Faculty Dashboard visual layout. Do not redesign the whole app.
+
+Hard rules:
+
+* Presentation only.
+* Do not change the database.
+* Do not change saved reflections or results.
+* Do not rerun the model.
+* Do not clear any tables.
+* Do not change imported data.
+* Do not change model logic, scoring logic, label rules, action logic, Evidence calculations, Robustness calculations, or any formulas.
+* Do not change navigation logic.
+* Do not change any displayed number, count, gap, percentage, ranking, action label, or result label.
+* Read every value live from the existing computed results. Do not hardcode.
+* Do not break the four Faculty Dashboard tabs, Evidence tab, Robustness Check, Home CTAs, or Student Reflection form.
+* Do not add dependencies.
+* Do not add any iframe to the Faculty Dashboard.
+* The Home hero remains the only iframe.
+* Use `st.markdown(..., unsafe_allow_html=True)` for custom dashboard HTML/CSS.
+* Keep all interactive dashboard elements as Streamlit-rendered elements where they need to remain interactive.
+* Run the app and fix every error.
+
+Goal:
+Make the Faculty Dashboard feel like the same premium product as the Home hero, but keep it functional and data-driven. It should look like an analytics command center, not a stretched Streamlit report.
+
+1. Dashboard hero/header
+   Replace the current plain Faculty Dashboard header with a compact dashboard hero built with custom HTML through `st.markdown`.
+
+Do not use an iframe.
+
+The hero should:
+
+* visually match the Home hero language
+* use the same dark background, hairline grid feel, and subtle violet/blue glow
+* stay compact, not huge
+* include:
+
+  * eyebrow: `ANALYTICS · FACULTY VIEW`
+  * title: `Faculty Dashboard`
+  * tagline: `Confidence vs. demonstrated understanding across student reflections`
+  * live badge for analyzed reflection count
+  * badge for simulated dataset
+* Keep the analyzed count live from the existing query. Do not hardcode it.
+
+2. KPI cards
+   Keep the four KPI cards, but make them tighter and more aligned.
+
+Cards:
+
+* Total analyzed
+* Confident but wrong
+* Avg calibration gap
+* Underconfidence topics
+
+Fix:
+
+* same height
+* same width
+* no awkward spacing
+* consistent top accent line
+* large numbers with tabular font
+* captions readable but secondary
+* reduce vertical dead space around the card row
+
+Do not change any values.
+
+3. Calibration Grid layout
+   The current Calibration Grid is too wide, flat, and the Partial box feels disconnected. Rebuild the presentation of this section only.
+
+Keep all live counts and labels exactly the same.
+
+Make the Calibration Grid look like a real 2x2 instrument:
+
+* Use a contained grid panel instead of stretching across the whole page.
+* The four main cells should be closer to square or balanced rectangles, not extremely wide.
+* Add clear but subtle axis labels:
+
+  * vertical: `Demonstrated understanding ↑`
+  * horizontal: `Student confidence →`
+* The four quadrants stay:
+
+  * Underconfident
+  * Understands
+  * Knows confused
+  * Confident but wrong
+* The confident-but-wrong cell should keep a restrained red glow and `Highest risk` badge.
+* Semantic colors stay:
+
+  * understands green
+  * confident-but-wrong red
+  * underconfident blue
+  * knows-confused amber
+  * partial lavender
+
+4. Partial card
+   Fix the Partial card.
+
+Current issue:
+The Partial card is too tall and awkward on the right side.
+
+Change it to one of these cleaner options:
+
+* Preferred: place Partial as a horizontal card directly below the 2x2 grid, spanning the same width as the grid.
+* Alternative: place Partial as a compact side card with the same height rhythm as the grid, not a tall stretched column.
+
+It should show:
+
+* label: `Partial`
+* live count
+* response: `Review examples`
+
+Do not change the count or meaning.
+
+5. Key Risk Signal and Top Insight
+   These two sections currently feel like separate blocks that compete with the grid.
+
+Keep both, but make them visually lighter:
+
+* Key Risk Signal should be a compact callout above KPI cards.
+* Top Insight should be a compact insight strip below the Calibration Grid.
+* Both should use thin violet left bars and dark panels.
+* Do not make them giant blocks.
+* Do not change their wording unless only needed for spacing.
+
+6. Instructor Action Plan
+   Keep the Instructor Action Plan showing only topics whose action is `Reteach first`, as currently implemented.
+
+Improve the visual list:
+
+* keep rows compact
+* align rank, topic, CBW count, gap, and action badge cleanly
+* reduce excessive row height
+* make the left red stripe thinner and more refined
+* keep action badges readable but not oversized
+
+Do not change which rows appear, values, sorting, or action logic.
+
+7. Full topic ranking
+   The Full Topic Ranking repeats the action plan and should feel secondary.
+
+Change the expander to be collapsed by default if possible.
+If Streamlit makes that difficult, keep it open but visually reduce its dominance:
+
+* smaller heading
+* tighter table spacing
+* less visual weight
+* still readable
+* no horizontal scrolling
+
+Do not change columns, values, sorting, or labels.
+
+8. Evidence and Robustness tabs
+   Do not redesign them in this task, but make sure any shared CSS changes do not make them worse.
+
+Before finishing:
+
+* Run the app.
+* Confirm Faculty Dashboard loads.
+* Confirm all four dashboard tabs work.
+* Confirm KPI numbers are unchanged.
+* Confirm Calibration Grid counts are unchanged.
+* Confirm Instructor Action Plan rows and values are unchanged.
+* Confirm Full Topic Ranking values are unchanged.
+* Confirm Evidence numbers and matrix are unchanged.
+* Confirm Robustness Check still works.
+* Confirm Home, Student Reflection, and About still load.
+* Summarize which files changed.

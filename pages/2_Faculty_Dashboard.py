@@ -84,7 +84,7 @@ st.markdown("""
 /* ── Section headings ────────────────────────────────────────────── */
 .ds-section-title {
     font-size: 13px; font-weight: 700; color: #ECECF2;
-    letter-spacing: .1px; margin: 20px 0 3px 0;
+    letter-spacing: .1px; margin: 14px 0 3px 0;
     text-transform: uppercase; letter-spacing: .5px;
 }
 .ds-section-sub {
@@ -93,35 +93,35 @@ st.markdown("""
 
 /* ── KPI metric cards ────────────────────────────────────────────── */
 .ds-kpi-card {
-    background: #14141C;
-    border: 1px solid #262633;
-    border-radius: 14px;
-    padding: 16px 20px;
-    box-shadow: inset 0 1px 0 rgba(255,255,255,0.03), 0 8px 24px rgba(0,0,0,0.35);
-    height: 100%; min-height: 108px;
+    background: rgba(15,15,22,0.95);
+    border: 1px solid rgba(255,255,255,0.07);
+    border-radius: 12px;
+    padding: 14px 18px;
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.025), 0 6px 20px rgba(0,0,0,0.4);
+    height: 100%; min-height: 92px;
     box-sizing: border-box;
     display: flex; flex-direction: column;
 }
 .ds-kpi-label {
     font-size: 10px; font-weight: 700; text-transform: uppercase;
-    letter-spacing: .6px; margin-bottom: 6px;
+    letter-spacing: .6px; margin-bottom: 5px;
 }
 .ds-kpi-value {
     font-size: 32px; font-weight: 800; line-height: 1;
     flex: 1; display: flex; align-items: center;
     font-variant-numeric: tabular-nums;
 }
-.ds-kpi-caption { font-size: 11px; color: #9A9AAC; margin-top: 6px; }
+.ds-kpi-caption { font-size: 11px; color: #9A9AAC; margin-top: 5px; }
 
 /* ── Callout cards ───────────────────────────────────────────────── */
 .ds-callout {
-    background: #14141C;
-    border: 1px solid #262633;
-    border-left: 4px solid #A06BFF;
+    background: rgba(15,15,22,0.95);
+    border: 1px solid rgba(255,255,255,0.06);
+    border-left: 3px solid #A06BFF;
     border-radius: 0 10px 10px 0;
-    padding: 12px 16px;
-    margin: 12px 0;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    padding: 11px 16px;
+    margin: 10px 0;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.25);
 }
 .ds-callout-title {
     font-size: 11px; font-weight: 700; color: #A06BFF;
@@ -187,20 +187,20 @@ st.markdown("""
 /* ── Instructor Action Plan rows ─────────────────────────────────── */
 .ds-risk-row {
     display: flex; align-items: center;
-    background: #14141C;
-    border: 1px solid #262633;
-    border-radius: 10px;
-    margin-bottom: 6px; overflow: hidden;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.25);
+    background: rgba(15,15,22,0.95);
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 8px;
+    margin-bottom: 4px; overflow: hidden;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.2);
 }
-.ds-risk-stripe { width: 4px; align-self: stretch; flex-shrink: 0; }
+.ds-risk-stripe { width: 3px; align-self: stretch; flex-shrink: 0; }
 .ds-risk-rank {
     font-size: 12px; font-weight: 700; color: #3A3A50;
-    width: 36px; text-align: center; flex-shrink: 0;
+    width: 34px; text-align: center; flex-shrink: 0;
 }
 .ds-risk-name {
     flex: 1; font-size: 13px; font-weight: 600; color: #ECECF2;
-    padding: 11px 10px; min-width: 0;
+    padding: 8px 10px; min-width: 0;
 }
 .ds-risk-cbw {
     font-size: 14px; font-weight: 800;
@@ -283,6 +283,33 @@ st.markdown("""
     overflow: hidden !important;
     background: #14141C !important;
     box-shadow: 0 4px 12px rgba(0,0,0,0.3) !important;
+}
+
+/* ── Dashboard hero panel ────────────────────────────────────────── */
+.ds-hero-panel {
+    position: relative;
+    background-color: #0B0B12;
+    border: 1px solid rgba(255,255,255,0.07);
+    border-radius: 16px;
+    padding: 26px 30px 22px 30px;
+    margin-bottom: 16px;
+    overflow: hidden;
+    background-image:
+        radial-gradient(ellipse 65% 90% at -10% -20%, rgba(124,92,255,0.15) 0%, transparent 65%),
+        radial-gradient(ellipse 55% 70% at 115% 120%, rgba(90,169,255,0.09) 0%, transparent 65%),
+        linear-gradient(rgba(255,255,255,0.018) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.018) 1px, transparent 1px);
+    background-size: auto, auto, 52px 52px, 52px 52px;
+}
+
+/* ── Calibration Grid panel ──────────────────────────────────────── */
+.ds-cal-panel { max-width: 720px; margin-bottom: 12px; }
+.ds-cal-partial-horiz {
+    background: rgba(196,181,253,0.04);
+    border: 1px solid rgba(196,181,253,0.22);
+    border-radius: 12px;
+    padding: 11px 16px;
+    margin-top: 5px;
 }
 
 /* ── Misc ────────────────────────────────────────────────────────── */
@@ -578,16 +605,14 @@ _analyzed_badge = (
 ) if total_analyzed else ""
 
 st.markdown(f"""
-<div class="ds-page-header">
+<div class="ds-hero-panel">
   <div class="ds-ph-eyebrow">Analytics &middot; Faculty View</div>
   <div class="ds-ph-title">Faculty Dashboard</div>
   <div class="ds-ph-meta">
     <span class="ds-ph-tagline">Confidence vs. demonstrated understanding across student reflections</span>
     <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;">
       {_analyzed_badge}
-      <span class="ds-hbadge" style="background:rgba(255,255,255,0.04);color:#9A9AAC;border:1px solid rgba(255,255,255,0.08);">
-        Simulated dataset
-      </span>
+      <span class="ds-hbadge" style="background:rgba(255,255,255,0.04);color:#9A9AAC;border:1px solid rgba(255,255,255,0.08);">Simulated dataset</span>
     </div>
   </div>
 </div>
@@ -762,21 +787,27 @@ with tab_overview:
             + _cell_uc + _cell_un + _cell_kc + _cell_cbw
             + '</div>'
         )
-        _partial = (
-            '<div class="ds-cal-partial" style="border-color:rgba(196,181,253,0.22);background:rgba(196,181,253,0.04);min-width:140px;">'
+        _partial_horiz = (
+            '<div class="ds-cal-partial-horiz">'
+            '<div style="display:flex;align-items:center;gap:20px;">'
+            '<div>'
             '<div class="ds-cal-quadrant">Mixed signals</div>'
-            '<div class="ds-cal-name" style="color:#C4B5FD;">Partial</div>'
-            f'<div class="ds-cal-count" style="color:#C4B5FD;">{_gc["partial"]}</div>'
-            '<div class="ds-cal-response" style="color:#C4B5FD;opacity:0.7;">Review examples</div>'
+            '<div style="font-size:13px;font-weight:700;color:#C4B5FD;">Partial</div>'
+            '</div>'
+            f'<div style="font-family:\'SF Mono\',\'Fira Code\',monospace;font-size:22px;font-weight:800;color:#C4B5FD;font-variant-numeric:tabular-nums;">{_gc["partial"]}</div>'
+            '<div style="font-family:\'SF Mono\',monospace;font-size:10px;color:#C4B5FD;opacity:0.7;margin-left:auto;letter-spacing:.2px;">Review examples</div>'
+            '</div>'
             '</div>'
         )
         _cal_html = (
-            '<div style="display:flex;gap:10px;align-items:stretch;margin-bottom:8px;">'
+            '<div class="ds-cal-panel">'
+            '<div style="display:flex;gap:8px;align-items:stretch;">'
             + _y_label
-            + '<div style="flex:1;display:flex;flex-direction:column;gap:6px;">'
+            + '<div style="flex:1;display:flex;flex-direction:column;gap:5px;">'
             + _inner_grid + _x_label
             + '</div>'
-            + _partial
+            + '</div>'
+            + _partial_horiz
             + '</div>'
         )
         st.markdown(_cal_html, unsafe_allow_html=True)
@@ -847,7 +878,7 @@ with tab_overview:
         st.markdown(risk_rows_html, unsafe_allow_html=True)
 
         # 6. Full Topic Ranking ─────────────────────────────────────────────
-        with st.expander("Full topic ranking", expanded=True):
+        with st.expander("Full topic ranking", expanded=False):
             st.caption(
                 "Sorted by confident-but-wrong count. "
                 "Calibration gap = avg student confidence − avg understanding."

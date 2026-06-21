@@ -1,0 +1,117 @@
+Improve only the Robustness Check tab on the Faculty Dashboard.
+
+Hard rules:
+- Presentation and explanatory text only, unless needed to display the existing robustness results.
+- Do not change the database.
+- Do not change saved reflections or results.
+- Do not rerun the model automatically.
+- Do not clear any tables.
+- Do not change imported data.
+- Do not change model logic, scoring logic, label rules, action logic, Evidence calculations, Robustness calculations, or any formulas.
+- Do not change navigation logic.
+- Do not change any displayed dashboard number, count, gap, percentage, ranking, action label, or result label.
+- Do not add dependencies.
+- Do not add iframes.
+- Do not break the four Faculty Dashboard tabs, Evidence tab, Robustness Check button, Home CTAs, or Student Reflection form.
+- Use `st.markdown(..., unsafe_allow_html=True)` for custom visual HTML/CSS only.
+- Run the app and fix every error.
+
+Goal:
+Make the Robustness Check tab clearly explain what the test is doing, why it matters, and how to interpret the result. It should feel like a serious AI validation/safety panel, not just a button.
+
+1. Add a compact header section
+
+At the top of the Robustness Check tab, add:
+
+Eyebrow:
+`ROBUSTNESS · ADVERSARIAL TEST`
+
+Heading:
+`Adversarial Robustness Check`
+
+Subtitle:
+`Tests whether the AI analysis engine can catch reflections that sound confident and use course keywords but still contain weak or wrong understanding.`
+
+Keep it compact and visually consistent with the dark premium design.
+
+2. Add three explanation cards before the button
+
+Create three compact dark cards in one row if space allows, stacked on smaller screens.
+
+Card 1:
+Title: `What is being tested`
+Text:
+`Six built-in test reflections are intentionally written to sound confident while containing misconceptions. Each uses student confidence = 5.`
+
+Card 2:
+Title: `How it runs`
+Text:
+`When you click the button, the app sends each test reflection through the same AI analysis engine/API used for normal submissions. The cases are temporary and are not saved to the database.`
+
+Card 3:
+Title: `What pass means`
+Text:
+`A pass means the model labels the case as confident_but_wrong, showing it did not mistake confident wording for real understanding.`
+
+Do not hardcode provider names unless the app already displays the provider elsewhere. If the provider is not available from the code, use “AI analysis engine/API” instead of naming Claude directly.
+
+3. Improve the existing intro text
+
+Replace the current paragraph with clearer wording:
+
+`These tests are designed to catch a common AI failure mode: over-crediting confident language and course vocabulary. The reflections are deliberately wrong or incomplete, but written as if the student is sure. Passing the check means the model identifies them as confident_but_wrong instead of treating them as understood.`
+
+Also include:
+`Robustness checks are not saved to the database and do not affect Overview, Evidence, or Topic Details metrics.`
+
+4. Button styling
+
+Keep the existing button behavior exactly the same.
+
+Button label:
+`Run adversarial robustness check`
+
+Make it look like a primary action but not oversized.
+
+5. Result interpretation
+
+After the check runs, make the result easier to understand.
+
+If it passes all cases, show a success panel:
+`Passed 6 of 6 adversarial cases. The model caught every confident-but-wrong test case.`
+
+If not all pass, show:
+`Passed X of 6 adversarial cases. Review failed cases below to see where the model over-trusted confident wording.`
+
+Use the actual existing result values. Do not change how pass rate is calculated.
+
+6. Results table / examples
+
+Keep the existing table and expanders, but add clearer column/helper wording if possible:
+- Topic
+- Model understanding score
+- Detected misconception
+- Model label
+- Pass/fail
+
+For each expanded reflection, add a small label:
+`Test reflection, not saved to database`
+
+Do not change the actual adversarial reflection text or expected labels.
+
+7. Add a short limitation note at the bottom
+
+Add a compact muted note:
+
+`This is a targeted smoke test, not a full safety evaluation. It checks whether the model catches obvious confident-but-wrong cases, but real validation still requires instructor-labeled student reflections.`
+
+Before finishing:
+- Run the app.
+- Confirm Faculty Dashboard loads.
+- Confirm all four dashboard tabs work.
+- Confirm Robustness Check tab renders the new explanation.
+- Confirm the Run adversarial robustness check button still works.
+- Confirm robustness cases are not saved to the database.
+- Confirm Overview, Evidence, and Topic Details values are unchanged after running the check.
+- Confirm Home, Student Reflection, and About still load.
+- Summarize which files changed.

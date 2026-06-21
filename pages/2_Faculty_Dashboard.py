@@ -1432,11 +1432,65 @@ with tab_evidence:
 # TAB 4 — Robustness Check
 # ════════════════════════════════════════════════════════════════════════════
 with tab_robustness:
-    st.caption(
-        "Six built-in reflections that sound confident and use course keywords but contain "
-        "weak or wrong understanding. All have student confidence = 5. "
-        "Pass means the model correctly labels them confident_but_wrong. "
-        "These cases are never saved to the database and do not affect any other metric."
+    st.markdown(
+        '<div style="margin-bottom:18px;">'
+        '<div style="font-size:10px;font-weight:700;letter-spacing:.6px;'
+        'text-transform:uppercase;color:#6B6B82;margin-bottom:5px;">'
+        'ROBUSTNESS\u2002\u00b7\u2002ADVERSARIAL TEST</div>'
+        '<div style="font-size:20px;font-weight:800;color:#ECECF2;'
+        'letter-spacing:-0.02em;margin-bottom:5px;">Adversarial Robustness Check</div>'
+        '<div style="font-size:13px;color:#8A8A9A;line-height:1.5;">'
+        'Tests whether the AI analysis engine can catch reflections that sound confident '
+        'and use course keywords but still contain weak or wrong understanding.'
+        '</div>'
+        '</div>',
+        unsafe_allow_html=True,
+    )
+    st.markdown(
+        '<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:16px;">'
+        '<div style="background:#14141C;border:1px solid #262633;border-radius:12px;padding:14px 16px;">'
+        '<div style="font-size:9px;font-weight:800;letter-spacing:.5px;text-transform:uppercase;'
+        'color:#A06BFF;margin-bottom:7px;">WHAT IS BEING TESTED</div>'
+        '<div style="font-size:12px;color:#9A9AAC;line-height:1.55;">'
+        'Six built-in test reflections are intentionally written to sound confident '
+        'while containing misconceptions. Each uses student confidence\u202f=\u202f5.'
+        '</div>'
+        '</div>'
+        '<div style="background:#14141C;border:1px solid #262633;border-radius:12px;padding:14px 16px;">'
+        '<div style="font-size:9px;font-weight:800;letter-spacing:.5px;text-transform:uppercase;'
+        'color:#5AA9FF;margin-bottom:7px;">HOW IT RUNS</div>'
+        '<div style="font-size:12px;color:#9A9AAC;line-height:1.55;">'
+        'When you click the button, the app sends each test reflection through the same '
+        'AI analysis engine used for normal submissions. The cases are temporary and are '
+        'not saved to the database.'
+        '</div>'
+        '</div>'
+        '<div style="background:#14141C;border:1px solid #262633;border-radius:12px;padding:14px 16px;">'
+        '<div style="font-size:9px;font-weight:800;letter-spacing:.5px;text-transform:uppercase;'
+        'color:#3DDC97;margin-bottom:7px;">WHAT PASS MEANS</div>'
+        '<div style="font-size:12px;color:#9A9AAC;line-height:1.55;">'
+        'A pass means the model labels the case as '
+        '<strong style="color:#FF5C6C;">confident_but_wrong</strong>, showing it did not '
+        'mistake confident wording for real understanding.'
+        '</div>'
+        '</div>'
+        '</div>',
+        unsafe_allow_html=True,
+    )
+    st.markdown(
+        '<div style="font-size:12px;color:#8A8A9A;line-height:1.65;margin-bottom:16px;'
+        'padding:12px 16px;background:rgba(255,255,255,0.02);border-radius:10px;'
+        'border:1px solid rgba(255,255,255,0.05);">'
+        'These tests are designed to catch a common AI failure mode: over-crediting confident '
+        'language and course vocabulary. The reflections are deliberately wrong or incomplete, '
+        'but written as if the student is sure. Passing the check means the model identifies them '
+        'as <strong style="color:#FF5C6C;">confident_but_wrong</strong> instead of treating '
+        'them as understood.'
+        '<br><br>'
+        '<span style="color:#525268;">Robustness checks are not saved to the database and '
+        'do not affect Overview, Evidence, or Topic Details metrics.</span>'
+        '</div>',
+        unsafe_allow_html=True,
     )
 
     if st.button("Run adversarial robustness check", type="primary", key="adv_btn"):
@@ -1495,20 +1549,30 @@ with tab_robustness:
         else:
             rate_color = "#FF5C6C"
 
-        st.markdown(f"""
-<div class="ds-pass-card" style="border-top:3px solid {rate_color};">
-  <div style="font-size:10px;font-weight:700;text-transform:uppercase;
-              letter-spacing:.5px;color:{rate_color};margin-bottom:4px;">
-    Robustness pass rate
-  </div>
-  <div style="font-size:34px;font-weight:800;line-height:1;color:{rate_color};
-              font-variant-numeric:tabular-nums;">
-    {passes}/{total_adv}
-  </div>
-  <div style="font-size:11px;color:#9A9AAC;margin-top:5px;">
-    adversarial cases correctly labeled confident_but_wrong
-  </div>
-</div>""", unsafe_allow_html=True)
+        if passes == total_adv:
+            _adv_verdict = (
+                f"Passed {passes} of {total_adv} adversarial cases. "
+                "The model caught every confident-but-wrong test case."
+            )
+        else:
+            _adv_verdict = (
+                f"Passed {passes} of {total_adv} adversarial cases. "
+                "Review failed cases below to see where the model over-trusted confident wording."
+            )
+        st.markdown(
+            f'<div class="ds-pass-card" style="border-top:3px solid {rate_color};">'
+            f'<div style="font-size:10px;font-weight:700;text-transform:uppercase;'
+            f'letter-spacing:.5px;color:{rate_color};margin-bottom:4px;">'
+            f'Robustness pass rate</div>'
+            f'<div style="font-size:34px;font-weight:800;line-height:1;color:{rate_color};'
+            f'font-variant-numeric:tabular-nums;">{passes}/{total_adv}</div>'
+            f'<div style="font-size:11px;color:#9A9AAC;margin-top:5px;margin-bottom:8px;">'
+            f'adversarial cases correctly labeled confident_but_wrong</div>'
+            f'<div style="font-size:12px;color:{rate_color};opacity:0.9;line-height:1.5;">'
+            f'{_adv_verdict}</div>'
+            f'</div>',
+            unsafe_allow_html=True,
+        )
 
         compact_df = pd.DataFrame([
             {
@@ -1523,8 +1587,28 @@ with tab_robustness:
         ])
         st.dataframe(compact_df, use_container_width=True, hide_index=True)
 
-        st.markdown("**Reflection text per case:**")
+        st.markdown(
+            '<div style="font-size:12px;font-weight:600;color:#9A9AAC;margin:14px 0 4px 0;">'
+            'Reflection text per case:</div>',
+            unsafe_allow_html=True,
+        )
         for r in adv_results:
-            icon = "✓" if r["Result"] == "Pass" else "✗"
+            icon = "\u2713" if r["Result"] == "Pass" else "\u2717"
             with st.expander(f"{icon} {r['Topic']}"):
+                st.markdown(
+                    '<div style="font-size:10px;font-weight:700;letter-spacing:.4px;'
+                    'text-transform:uppercase;color:#525268;margin-bottom:6px;">'
+                    'Test reflection \u00b7 not saved to database</div>',
+                    unsafe_allow_html=True,
+                )
                 st.write(r["Reflection"])
+        st.markdown(
+            '<div style="margin-top:18px;font-size:11px;color:#525268;padding:9px 14px;'
+            'background:rgba(255,255,255,0.02);border-radius:8px;'
+            'border:1px solid rgba(255,255,255,0.04);line-height:1.6;">'
+            'This is a targeted smoke test, not a full safety evaluation. It checks whether '
+            'the model catches obvious confident-but-wrong cases, but real validation still '
+            'requires instructor-labeled student reflections.'
+            '</div>',
+            unsafe_allow_html=True,
+        )

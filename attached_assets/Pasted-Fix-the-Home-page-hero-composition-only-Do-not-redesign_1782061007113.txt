@@ -1,0 +1,95 @@
+Fix the Home page hero composition only. Do not redesign the whole app.
+
+Hard rules:
+
+* Presentation only.
+* Do not change the database.
+* Do not change saved reflections or results.
+* Do not rerun the model.
+* Do not clear any tables.
+* Do not change imported data.
+* Do not change model logic, scoring logic, label rules, action logic, Evidence calculations, Robustness calculations, or any formulas.
+* Do not change navigation logic.
+* Do not break the Home CTAs.
+* Do not break Student Reflection, Faculty Dashboard, Evidence, Robustness Check, or About.
+* Do not add dependencies.
+* Do not add more iframes.
+* Keep the Home hero as the only iframe.
+* Keep “Submit a reflection” and “View analytics” as real Streamlit buttons outside the iframe.
+* Do not put CTAs inside the iframe.
+* Run the app and fix every error.
+
+Current issue:
+The Home page hero has too much empty space. The wordmark and 2x2 calibration motif are too small and feel like they are floating. The top part should feel bigger, stronger, and more intentional.
+
+Hero changes:
+
+1. Make the hero content larger and more prominent.
+
+   * Increase the “Calibration Detector” wordmark size significantly.
+   * Target desktop wordmark size around 64px to 76px, with tight line-height.
+   * Keep the eyebrow above it.
+   * Keep the tagline below it.
+   * Make the tagline slightly larger and more readable.
+
+2. Make the 2x2 calibration motif larger.
+
+   * Increase the motif cell sizes so the grid feels like a real signature visual.
+   * Target the full motif around 360px to 420px wide on desktop.
+   * Make cell labels more readable.
+   * Keep all labels on clean lines:
+
+     * Underconfident
+     * Understands
+     * Knows confused
+     * Confident but wrong
+   * Keep the confident-but-wrong cell softly emphasized.
+
+3. Improve the hero layout.
+
+   * Use a balanced two-column composition.
+   * Left column: wordmark and tagline.
+   * Right column: calibration motif.
+   * Bring the two columns closer together so they feel connected.
+   * Do not push the motif too far right.
+   * Center the hero content vertically inside the hero.
+   * Reduce unused empty space above, below, and between the columns.
+
+4. Adjust hero height carefully.
+
+   * Keep the hero cinematic, but avoid a giant empty stage.
+   * Desktop height should be around 430px to 500px, whichever makes the enlarged content fit best.
+   * Do not create internal iframe scrollbars.
+   * Do not let content clip.
+   * Do not show a visible iframe border or white iframe background.
+
+5. Make the CTAs feel connected to the hero.
+
+   * Keep the real Streamlit buttons outside the iframe.
+   * Keep them immediately below the hero.
+   * Reduce the gap between the hero and the GET STARTED section.
+   * The user should see the CTA buttons without scrolling on a normal laptop screen.
+
+6. Keep the explainer cards below the CTA section.
+
+   * Do not move cards above the CTAs.
+   * Do not make the explainer cards larger.
+   * If needed, reduce the vertical gap between CTA and explainer cards slightly.
+
+Responsive behavior:
+
+* On narrow screens, stack the wordmark above the motif.
+* Reduce wordmark and motif sizes proportionally.
+* Ensure nothing clips or creates horizontal scroll.
+
+Before finishing:
+
+* Run the app.
+* Confirm Home loads.
+* Confirm the hero looks larger and more balanced.
+* Confirm the calibration motif is readable.
+* Confirm there is no iframe border, white iframe background, clipping, or internal iframe scrollbar.
+* Confirm “Submit a reflection” navigates correctly.
+* Confirm “View analytics” navigates correctly.
+* Confirm Student Reflection, Faculty Dashboard, Evidence, Robustness Check, and About still load.
+* Summarize which files changed.

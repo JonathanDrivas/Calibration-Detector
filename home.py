@@ -116,9 +116,9 @@ html, body {
   width: 100%;
   display: flex;
   align-items: center;
-  justify-content: flex-start;
-  padding: 0 52px;
-  gap: 38px;
+  justify-content: center;
+  padding: 0 44px;
+  gap: 48px;
   animation: fadeUp 0.65s ease both;
 }
 @keyframes fadeUp {
@@ -127,28 +127,28 @@ html, body {
 }
 
 /* ── Left: text ─────────────────────────────────────────────────────────── */
-.left { flex-shrink: 0; max-width: 400px; }
+.left { flex-shrink: 0; max-width: 380px; }
 
 .eyebrow {
   font-family: "SF Mono", "Fira Code", "Courier New", monospace;
   font-size: 10px; font-weight: 600; letter-spacing: 1.8px;
   text-transform: uppercase;
   color: #A06BFF;
-  margin-bottom: 12px;
+  margin-bottom: 14px;
 }
 
 .wordmark {
   font-family: "Space Grotesk", system-ui, -apple-system, sans-serif;
-  font-size: 46px; font-weight: 800; line-height: 1.0;
+  font-size: 70px; font-weight: 800; line-height: 0.95;
   color: #ECECF2;
   letter-spacing: -0.04em;
-  margin-bottom: 14px;
+  margin-bottom: 18px;
 }
 
 .tagline {
-  font-size: 14px; font-weight: 400; line-height: 1.6;
+  font-size: 15px; font-weight: 400; line-height: 1.6;
   color: #6B6B82;
-  max-width: 320px;
+  max-width: 310px;
 }
 
 /* ── Right: calibration motif ───────────────────────────────────────────── */
@@ -164,7 +164,7 @@ html, body {
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 258px;
+  height: 302px;
 }
 .axis-y-label {
   writing-mode: vertical-rl;
@@ -182,20 +182,20 @@ html, body {
 .cal-row + .cal-row { margin-top: 5px; }
 
 .cal-cell {
-  width: 138px; height: 126px;
+  width: 172px; height: 148px;
   border: 1px solid rgba(255,255,255,0.07);
-  border-radius: 10px;
+  border-radius: 12px;
   background: rgba(255,255,255,0.022);
   display: flex; flex-direction: column;
   justify-content: flex-end;
-  padding: 12px 14px;
+  padding: 14px 16px;
   position: relative;
   overflow: hidden;
 }
 
 .cell-label {
   font-family: "SF Mono", "Fira Code", "Courier New", monospace;
-  font-size: 10px; font-weight: 600; letter-spacing: 0.2px;
+  font-size: 11px; font-weight: 600; letter-spacing: 0.2px;
   line-height: 1.4;
   position: relative; z-index: 1;
 }
@@ -236,12 +236,12 @@ html, body {
   .content {
     flex-direction: column;
     align-items: flex-start;
-    padding: 30px 28px;
-    gap: 26px;
+    padding: 28px 24px;
+    gap: 24px;
   }
-  .wordmark { font-size: 34px; }
-  .cal-cell { width: 108px; height: 96px; }
-  .axis-y-wrap { height: 205px; }
+  .wordmark { font-size: 40px; }
+  .cal-cell { width: 116px; height: 102px; }
+  .axis-y-wrap { height: 212px; }
 }
 
 /* ── Reduced motion ─────────────────────────────────────────────────────── */
@@ -308,7 +308,7 @@ html, body {
 </body>
 </html>"""
 
-components.html(_hero_html, height=390, scrolling=False)
+components.html(_hero_html, height=460, scrolling=False)
 
 # ── CTA navigation (immediately below hero) ───────────────────────────────────
 st.markdown(

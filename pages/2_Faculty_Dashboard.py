@@ -1450,24 +1450,26 @@ with tab_robustness:
     _pipe_html = """<!DOCTYPE html>
 <html><head><meta charset="utf-8"><style>
 *{box-sizing:border-box;margin:0;padding:0}
-body{background:#0B0B12;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;overflow:hidden;padding:20px 12px 16px}
-.glow{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);width:800px;height:240px;background:radial-gradient(ellipse at center,rgba(160,107,255,0.08) 0%,transparent 70%);pointer-events:none}
-.wrap{position:relative;z-index:1;text-align:center}
-.ttl{font-size:16px;font-weight:800;letter-spacing:-.02em;color:#ECECF2;margin-bottom:4px}
-.sub{font-size:12px;color:#8A8A9A;line-height:1.5;max-width:600px;margin:0 auto 18px}
+body{background:#0B0B12;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;overflow:hidden;padding:6px 8px 6px}
+.panel{background:rgba(13,13,20,0.97);border:1px solid rgba(255,255,255,0.08);border-radius:12px;padding:16px 14px 14px;position:relative;overflow:hidden}
+.glow{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:700px;height:180px;background:radial-gradient(ellipse at center,rgba(160,107,255,0.09) 0%,transparent 70%);pointer-events:none}
+.inner{position:relative;z-index:1;text-align:center}
+.ttl{font-size:16px;font-weight:800;letter-spacing:-.02em;color:#ECECF2;margin-bottom:3px}
+.sub{font-size:12px;color:#8A8A9A;line-height:1.45;max-width:600px;margin:0 auto 14px}
 .flow{display:flex;align-items:stretch;justify-content:center;gap:0}
-.step{flex:1;min-width:0;background:#14141C;border:1px solid #2C2C3A;border-radius:10px;padding:14px 13px;text-align:left;transition:border-color .2s}
+.step{flex:1;min-width:0;background:#0F0F1A;border:1px solid #2C2C3A;border-radius:8px;padding:12px 11px;text-align:left;transition:border-color .2s}
 @media(prefers-reduced-motion:reduce){.step{transition:none}}
 .step:hover{border-color:rgba(160,107,255,.35)}
-.num{width:22px;height:22px;border-radius:50%;background:#A06BFF;color:#fff;font-size:11px;font-weight:800;font-family:'SF Mono','Fira Code',monospace;display:flex;align-items:center;justify-content:center;margin-bottom:8px;flex-shrink:0}
-.sttl{font-size:13px;font-weight:700;color:#ECECF2;margin-bottom:5px;line-height:1.3}
-.sbod{font-size:12px;color:#C0C0D0;line-height:1.5}
+.num{width:22px;height:22px;border-radius:50%;background:#A06BFF;color:#fff;font-size:11px;font-weight:800;font-family:'SF Mono','Fira Code',monospace;display:flex;align-items:center;justify-content:center;margin-bottom:7px;flex-shrink:0}
+.sttl{font-size:13px;font-weight:700;color:#ECECF2;margin-bottom:4px;line-height:1.3}
+.sbod{font-size:12px;color:#C0C0D0;line-height:1.45}
 .cbw{color:#FF5C6C;font-weight:600}
-.arr{align-self:center;padding:0 5px;color:#44445A;font-size:16px;flex-shrink:0;margin-bottom:22px}
+.arr{align-self:center;padding:0 4px;color:#44445A;font-size:16px;flex-shrink:0;margin-bottom:20px}
 </style></head>
 <body>
+<div class="panel">
 <div class="glow"></div>
-<div class="wrap">
+<div class="inner">
 <div class="ttl">AI Analysis Pipeline</div>
 <div class="sub">The model reads meaning first, then the app compares demonstrated understanding against student confidence.</div>
 <div class="flow">
@@ -1482,14 +1484,9 @@ body{background:#0B0B12;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',
 <div class="step"><div class="num">5</div><div class="sttl">Assign label</div><div class="sbod">The result becomes a calibration label such as <span class="cbw">confident_but_wrong</span>.</div></div>
 </div>
 </div>
+</div>
 </body></html>"""
-    components.html(_pipe_html, height=308, scrolling=False)
-    st.markdown(
-        '<p style="font-size:12px;color:#8A8A9A;margin:4px 0 12px 0;line-height:1.55;">'
-        'AI supports instructor judgment. It is diagnostic, not grading, and '
-        'topic-level patterns matter more than any single model judgment.</p>',
-        unsafe_allow_html=True,
-    )
+    components.html(_pipe_html, height=256, scrolling=False)
     st.markdown(
         '<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:14px;">'
         '<div style="background:#14141C;border:1px solid #2C2C3A;border-radius:10px;padding:12px 14px;">'
@@ -1520,17 +1517,30 @@ body{background:#0B0B12;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',
         '</div>',
         unsafe_allow_html=True,
     )
+    st.markdown(
+        '<p style="font-size:12px;color:#8A8A9A;margin:2px 0 14px 0;line-height:1.55;">'
+        'AI supports instructor judgment. It is diagnostic, not grading, and '
+        'topic-level patterns matter more than any single model judgment.</p>',
+        unsafe_allow_html=True,
+    )
     st.markdown("""<style>
-div[data-testid="stButton"] button[data-testid="baseButton-primary"] {
+div[data-testid="stButton"] button[data-testid="baseButton-primary"],
+div[data-testid="stButton"] button[kind="primary"],
+.stButton > button[data-testid*="primary"] {
     background-color: #A06BFF !important;
     color: #FFFFFF !important;
     border: none !important;
     font-weight: 600 !important;
+    opacity: 1 !important;
+    text-shadow: none !important;
 }
-div[data-testid="stButton"] button[data-testid="baseButton-primary"]:hover {
+div[data-testid="stButton"] button[data-testid="baseButton-primary"]:hover,
+div[data-testid="stButton"] button[kind="primary"]:hover,
+.stButton > button[data-testid*="primary"]:hover {
     background-color: #8B50F5 !important;
     color: #FFFFFF !important;
     border: none !important;
+    opacity: 1 !important;
 }
 </style>""", unsafe_allow_html=True)
 

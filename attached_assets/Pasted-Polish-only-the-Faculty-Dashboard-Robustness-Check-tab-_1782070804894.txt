@@ -1,0 +1,121 @@
+Polish only the Faculty Dashboard Robustness Check tab for spacing, readability, and button contrast.
+
+Hard rules:
+
+* Presentation and layout only.
+* Do not change the database.
+* Do not change saved reflections or results.
+* Do not rerun the model automatically.
+* Do not clear any tables.
+* Do not change imported data.
+* Do not change model logic, scoring logic, label rules, action logic, Evidence calculations, Robustness calculations, or any formulas.
+* Do not change navigation logic.
+* Do not change any displayed dashboard number, count, gap, percentage, ranking, action label, or result label.
+* Do not add dependencies.
+* Do not add new iframes.
+* Do not break the four Faculty Dashboard tabs, Evidence tab, Robustness Check button, Home CTAs, or Student Reflection form.
+* The Run adversarial robustness check button must remain a real Streamlit button outside the iframe.
+* Run the app and fix every error.
+
+Current issues:
+
+* The AI Analysis Pipeline is readable now, but it has too much empty vertical space around it.
+* The pipeline feels detached from the three explanation cards.
+* The button text is still too faint and low contrast.
+
+1. Tighten the AI Analysis Pipeline iframe
+
+Keep the current custom pipeline iframe, but reduce wasted space.
+
+Fix:
+
+* Reduce the iframe height if possible.
+* Remove excessive empty space above the pipeline title.
+* Remove excessive empty space below the pipeline cards.
+* Keep the cards readable.
+* Keep the five-step horizontal flow.
+* Do not create clipping or internal scrollbars.
+* Do not show an iframe border or white iframe background.
+
+Target:
+The pipeline should feel like a compact visual module, not a large empty hero section.
+
+2. Put the pipeline inside a stronger visual container
+
+Make the AI Analysis Pipeline feel like one intentional panel:
+
+* subtle dark panel background
+* hairline border
+* faint radial glow or grid consistent with the Home hero
+* compact title and subtitle
+* five connected step cards inside the panel
+
+Do not make the panel taller than needed.
+
+3. Move the diagnostic note below the explanation cards
+
+The note:
+`AI supports instructor judgment. It is diagnostic, not grading, and topic-level patterns matter more than any single model judgment.`
+
+Move it below the three explanation cards as a compact muted note, or place it at the bottom of the tab. It should not interrupt the flow between the pipeline and the cards.
+
+4. Explanation cards
+
+Keep the three explanation cards:
+
+* Adversarial inputs
+* Same AI path
+* Pass condition
+
+Make them visually connected to the pipeline:
+
+* same card style
+* same border radius
+* same spacing rhythm
+* slightly stronger text contrast
+* compact body text
+
+5. Fix Streamlit button contrast
+
+The `Run adversarial robustness check` button text is too faint.
+
+Update the CSS for primary Streamlit buttons so:
+
+* background is violet
+* text is white or near-white
+* text is clearly readable
+* hover state keeps high contrast
+* disabled state, if present, is visibly disabled but still readable
+* button is not oversized
+
+This should also improve other primary buttons if they use the same style, but do not change their behavior.
+
+6. Button placement
+
+Place the Run button directly under the explanation cards or under the final note, with clean spacing.
+
+It should feel like the next action after reading the tab.
+
+7. Do not change results behavior
+
+After the check runs:
+
+* keep the existing pass rate logic
+* keep the existing table/expanders
+* keep all adversarial cases temporary
+* do not save robustness cases to the database
+
+Before finishing:
+
+* Run the app.
+* Confirm Faculty Dashboard loads.
+* Confirm all four dashboard tabs work.
+* Confirm Robustness Check tab looks tighter and less empty.
+* Confirm the AI Analysis Pipeline appears once.
+* Confirm there is no iframe border, white background, clipping, or internal scrollbar.
+* Confirm the Run adversarial robustness check button text is clearly readable.
+* Confirm the button still works.
+* Confirm robustness cases are not saved to the database.
+* Confirm Overview, Evidence, and Topic Details values are unchanged.
+* Confirm Home, Student Reflection, and About still load.
+* Summarize which files changed.

@@ -1,0 +1,64 @@
+Do a final pre-GitHub QA pass on the app. Do not add new features and do not redesign anything.
+
+Hard rules:
+
+* Do not change the database schema.
+* Do not change saved results unless explicitly required to remove a manual test row.
+* Do not rerun the model unless needed to verify a test submission.
+* Do not clear benchmark data.
+* Do not change model logic, scoring logic, label rules, action logic, Evidence calculations, Robustness calculations, or formulas.
+* Do not change navigation behavior.
+* Do not add dependencies unless a missing dependency is already required by the current app.
+* Do not change dashboard numbers except if removing the manual live test row is explicitly needed.
+* Run the app and fix only actual errors.
+
+QA checklist:
+
+1. Confirm Home loads.
+2. Confirm Home hero has no iframe border, white background, clipping, or internal scrollbar.
+3. Confirm Home buttons work:
+
+   * Submit a reflection
+   * View analytics
+4. Confirm Student Reflection loads.
+5. Confirm topic selectbox works.
+6. Confirm textarea works.
+7. Confirm confidence slider works.
+8. Confirm Submit reflection saves a row and shows the expected success state.
+9. Confirm Faculty Dashboard loads.
+10. Confirm all four dashboard tabs work:
+
+* Overview
+* Topic Details
+* Evidence
+* Robustness Check
+
+11. Confirm CSV export button downloads a CSV.
+12. Confirm CSV export is topic-level only and does not include nicknames or reflection text.
+13. Confirm Evidence still shows the expected validation metrics.
+14. Confirm Evidence confusion matrix values are unchanged.
+15. Confirm Robustness Check runs.
+16. Confirm robustness test cases are not saved to the database.
+17. Confirm About page loads.
+18. Confirm no Python errors appear in logs.
+
+Security / GitHub safety checklist:
+
+1. Confirm no API keys or secrets are hardcoded in source files.
+2. Confirm `.env` is ignored.
+3. Confirm `.streamlit/secrets.toml` is ignored if it exists.
+4. Confirm `.venv`, `__pycache__`, and local cache files are ignored.
+5. Confirm README can safely say the current project uses simulated data.
+6. Confirm any deployment instructions mention that real use would require consent language, access controls, and approved data handling.
+
+If a manual live test row is still present:
+
+* Report whether the app currently shows the clean benchmark state or includes a live test submission.
+* Do not delete it unless I explicitly say to delete the live test row.
+
+At the end, summarize:
+
+* whether the app passed QA
+* any files changed
+* any issues still remaining
+* whether it is ready for README and GitHub

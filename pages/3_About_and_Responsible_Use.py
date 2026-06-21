@@ -206,7 +206,7 @@ st.markdown("""
   <div class="ab-ai-row"><div class="ab-ai-dot"></div><div class="ab-ai-text">The model judges demonstrated understanding only. It does not make calibration decisions.</div></div>
   <div class="ab-ai-row"><div class="ab-ai-dot"></div><div class="ab-ai-text">The model used is Claude (claude-sonnet-4-6) through the built-in Anthropic integration.</div></div>
   <div class="ab-ai-row"><div class="ab-ai-dot"></div><div class="ab-ai-text">The calibration label is computed by a fixed rule from model-rated understanding and student-provided confidence.</div></div>
-  <div class="ab-ai-row"><div class="ab-ai-dot"></div><div class="ab-ai-text">Confidence is the student's own 1-5 slider value. It is never inferred from writing style or tone.</div></div>
+  <div class="ab-ai-row"><div class="ab-ai-dot"></div><div class="ab-ai-text">Confidence is the student's own 1 to 5 slider value. It is never inferred from writing style or tone.</div></div>
   <div class="ab-ai-row"><div class="ab-ai-dot"></div><div class="ab-ai-text">Low-certainty reads are surfaced for human review, not acted on automatically.</div></div>
   <div class="ab-ai-row"><div class="ab-ai-dot"></div><div class="ab-ai-text">Current validation uses simulated labels. A real deployment would need instructor-labeled student reflections for stronger validation.</div></div>
 </div>

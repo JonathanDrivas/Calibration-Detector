@@ -1,0 +1,112 @@
+Polish only the Faculty Dashboard Overview layout. Do not redesign the whole app.
+
+Hard rules:
+
+* Presentation only.
+* Do not change the database.
+* Do not change saved reflections or results.
+* Do not rerun the model.
+* Do not clear any tables.
+* Do not change imported data.
+* Do not change model logic, scoring logic, label rules, action logic, Evidence calculations, Robustness calculations, or any formulas.
+* Do not change navigation logic.
+* Do not change any displayed number, count, gap, percentage, ranking, action label, or result label.
+* Read every value live. Do not hardcode.
+* Do not add dependencies.
+* Do not add iframes.
+* Do not break the four Faculty Dashboard tabs, Evidence tab, Robustness Check, Home CTAs, or Student Reflection form.
+* Use `st.markdown(..., unsafe_allow_html=True)` for custom visual HTML/CSS only.
+* Run the app and fix every error.
+
+Current issues:
+
+* The Calibration Grid is too far left and leaves too much empty space on the right.
+* The grid feels disconnected from the rest of the dashboard.
+* The Instructor Action Plan rows are too wide and flat.
+* The Full topic ranking is too visually dominant and makes the page feel like a table report again.
+
+1. Calibration Grid layout
+   Improve the Calibration Grid placement.
+
+Preferred layout:
+
+* Put the Calibration Grid inside a centered panel or section with a max width around 900px to 1000px.
+* Center the grid horizontally within the page.
+* Do not let it sit awkwardly on the far left with empty space on the right.
+* Keep the live counts, labels, axis labels, and semantic colors exactly the same.
+
+Alternative layout if it looks better:
+
+* Use a two-column layout:
+
+  * left: Calibration Grid
+  * right: a compact “How to read this” panel
+* The right panel should explain:
+
+  * high confidence + low understanding = highest risk
+  * low confidence + high understanding = reassurance opportunity
+  * partial = review examples
+* Keep this panel short and visual, not text-heavy.
+
+2. Partial card
+   Make the Partial card feel attached to the grid.
+
+Preferred:
+
+* Put Partial as a horizontal card below the 2x2 grid, spanning the same width as the grid.
+* It should not look like a disconnected extra block.
+* Keep the live count and “Review examples” text unchanged.
+
+3. Instructor Action Plan
+   Make the Instructor Action Plan feel like an action list, not a stretched table.
+
+* Keep only topics whose action is “Reteach first,” as currently implemented.
+* Keep the same values, ordering, and action labels.
+* Make the rows more compact.
+* Reduce excessive horizontal dead space.
+* Align the columns cleanly:
+
+  * rank
+  * topic
+  * CBW count
+  * gap
+  * action badge
+* Make the red left stripe thinner and more refined.
+* Consider limiting the visible list to the first 5 Reteach first rows and adding a small note if additional Reteach first topics exist, but only do this if it does not change the underlying data or Full ranking. The Full topic ranking must remain the complete reference.
+
+4. Full topic ranking
+   Make the Full topic ranking clearly secondary.
+
+* Set the Full topic ranking expander to collapsed by default if possible.
+* If collapsed by default is difficult, visually reduce its dominance:
+
+  * smaller table text
+  * tighter row height
+  * less heavy border
+  * less vertical padding
+* Keep all ten topics, all values, all columns, sorting, and action labels unchanged.
+* No horizontal scrolling at normal 100% zoom.
+
+5. Overview spacing
+   Tighten the vertical rhythm:
+
+* Reduce unnecessary gaps between KPI cards, Calibration Grid, Top Insight, and Instructor Action Plan.
+* Keep enough breathing room so the dashboard still feels premium.
+* Do not make the page cramped.
+
+6. Dashboard header
+   Keep the current header style. Do not add a hero iframe. Only make minor spacing polish if needed.
+
+Before finishing:
+
+* Run the app.
+* Confirm Faculty Dashboard loads.
+* Confirm all four dashboard tabs work.
+* Confirm KPI numbers are unchanged.
+* Confirm Calibration Grid counts are unchanged.
+* Confirm Instructor Action Plan rows and values are unchanged.
+* Confirm Full Topic Ranking values are unchanged.
+* Confirm Evidence numbers and matrix are unchanged.
+* Confirm Robustness Check still works.
+* Confirm Home, Student Reflection, and About still load.
+* Summarize which files changed.

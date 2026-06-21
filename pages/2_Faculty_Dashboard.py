@@ -263,15 +263,15 @@ st.markdown("""
 }
 
 /* ── Full topic ranking table ────────────────────────────────────── */
-.ds-rank-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+.ds-rank-table { width: 100%; border-collapse: collapse; font-size: 12px; }
 .ds-rank-table th {
-    text-align: left; padding: 8px 12px;
-    font-weight: 600; font-size: 11px;
+    text-align: left; padding: 6px 10px;
+    font-weight: 600; font-size: 10px;
     text-transform: uppercase; letter-spacing: .4px; color: #9A9AAC;
-    border-bottom: 1px solid #262633; background: #1A1A24;
+    border-bottom: 1px solid rgba(38,38,51,0.7); background: #1A1A24;
 }
 .ds-rank-table td {
-    padding: 9px 12px; border-bottom: 1px solid rgba(38,38,51,0.8);
+    padding: 7px 10px; border-bottom: 1px solid rgba(38,38,51,0.5);
     vertical-align: middle; color: #ECECF2; word-break: break-word;
 }
 .ds-rank-table tbody tr:hover td { background: #1A1A24; }
@@ -303,7 +303,17 @@ st.markdown("""
 }
 
 /* ── Calibration Grid panel ──────────────────────────────────────── */
-.ds-cal-panel { max-width: 720px; margin-bottom: 12px; }
+.ds-cal-panel { margin-bottom: 0; }
+.ds-cal-two-col { display: flex; gap: 16px; align-items: flex-start; margin-bottom: 12px; }
+.ds-cal-legend {
+    flex: 1; min-width: 150px;
+    background: rgba(15,15,22,0.95);
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 12px;
+    padding: 16px;
+    align-self: stretch;
+    display: flex; flex-direction: column; justify-content: center;
+}
 .ds-cal-partial-horiz {
     background: rgba(196,181,253,0.04);
     border: 1px solid rgba(196,181,253,0.22);
@@ -799,8 +809,33 @@ with tab_overview:
             '</div>'
             '</div>'
         )
+        _legend_entry = lambda dot_color, label_html, body: (
+            '<div style="display:flex;align-items:flex-start;gap:8px;margin-bottom:9px;">'
+            f'<span style="width:8px;height:8px;border-radius:2px;background:{dot_color};'
+            f'flex-shrink:0;margin-top:3px;"></span>'
+            f'<span style="font-size:11px;color:#9A9AAC;line-height:1.5;">'
+            f'<strong style="color:{dot_color};">{label_html}</strong> {body}</span>'
+            '</div>'
+        )
+        _legend = (
+            '<div class="ds-cal-legend">'
+            '<div style="font-size:10px;font-weight:700;text-transform:uppercase;'
+            'letter-spacing:.5px;color:#6B6B82;margin-bottom:12px;">How to read this</div>'
+            + _legend_entry("#FF5C6C", "High conf · low understanding",
+                            "— highest risk. These students won\u2019t ask for help.")
+            + _legend_entry("#5AA9FF", "Low conf · high understanding",
+                            "— reassurance, not reteaching.")
+            + _legend_entry("#3DDC97", "High conf · high understanding",
+                            "— no action needed.")
+            + _legend_entry("#F5B544", "Low conf · low understanding",
+                            "— support and reteach.")
+            + _legend_entry("#C4B5FD", "Partial",
+                            "— mixed signals. Review individual examples.")
+            + '</div>'
+        )
         _cal_html = (
-            '<div class="ds-cal-panel">'
+            '<div class="ds-cal-two-col">'
+            '<div style="flex:3;min-width:0;">'
             '<div style="display:flex;gap:8px;align-items:stretch;">'
             + _y_label
             + '<div style="flex:1;display:flex;flex-direction:column;gap:5px;">'
@@ -808,6 +843,8 @@ with tab_overview:
             + '</div>'
             + '</div>'
             + _partial_horiz
+            + '</div>'
+            + _legend
             + '</div>'
         )
         st.markdown(_cal_html, unsafe_allow_html=True)
@@ -856,8 +893,12 @@ with tab_overview:
         ]
         _action_plan_topics = _reteach_topics if _reteach_topics else list(sorted_topics)[:3]
 
+        _PLAN_LIMIT = 5
+        _plan_display  = _action_plan_topics[:_PLAN_LIMIT]
+        _plan_overflow = len(_action_plan_topics) - _PLAN_LIMIT
+
         risk_rows_html = ""
-        for _rank, (_tname, _td) in enumerate(_action_plan_topics, start=1):
+        for _rank, (_tname, _td) in enumerate(_plan_display, start=1):
             _cbw  = _td["label_counts"]["confident_but_wrong"]
             _gap  = _td["calibration_gap"]
             _act  = action_label(_cbw, _gap)
@@ -874,6 +915,13 @@ with tab_overview:
                 f'<div class="ds-risk-gap">{_gap:+.2f}</div>'
                 f'<div class="ds-risk-action">{_chip}</div>'
                 f'</div>'
+            )
+        if _plan_overflow > 0:
+            _s = "s" if _plan_overflow > 1 else ""
+            risk_rows_html += (
+                f'<div style="font-size:11px;color:#6B6B82;padding:5px 4px 2px 4px;">'
+                f'+ {_plan_overflow} more topic{_s} also need reteaching'
+                f' \u2014 see Full topic ranking below.</div>'
             )
         st.markdown(risk_rows_html, unsafe_allow_html=True)
 

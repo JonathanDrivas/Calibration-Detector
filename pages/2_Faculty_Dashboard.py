@@ -365,6 +365,66 @@ def _heatmap_html(cm_df: pd.DataFrame, labels: list) -> str:
 
 
 # ────────────────────────────────────────────────────────────────────────────
+# Topic Outcome Heatmap helper
+# ────────────────────────────────────────────────────────────────────────────
+def _outcome_heatmap_html(topics: list) -> str:
+    def _hex_rgb(h: str) -> tuple:
+        h = h.lstrip("#")
+        return int(h[0:2], 16), int(h[2:4], 16), int(h[4:6], 16)
+
+    def _cell_style(lbl: str, count: int) -> str:
+        if count == 0:
+            return "background:#111118;color:#3A3A50;"
+        r, g, b = _hex_rgb(LABEL_COLOR[lbl])
+        if count == 1:   alpha = 0.13
+        elif count <= 3: alpha = 0.27
+        elif count <= 6: alpha = 0.45
+        else:            alpha = 0.64
+        return f"background:rgba({r},{g},{b},{alpha});color:{LABEL_COLOR[lbl]};"
+
+    _th_corner = (
+        "padding:6px 10px;font-size:10px;font-weight:600;color:#6B6B82;"
+        "border:1px solid rgba(38,38,51,0.6);background:#14141C;white-space:nowrap;"
+    )
+    _th_col = (
+        "padding:6px 10px;font-size:10px;font-weight:700;text-transform:uppercase;"
+        "letter-spacing:.3px;border:1px solid rgba(38,38,51,0.6);background:#1A1A24;"
+        "white-space:nowrap;text-align:center;"
+    )
+    _td_topic = (
+        "padding:6px 10px;font-size:12px;font-weight:600;color:#ECECF2;"
+        "border:1px solid rgba(38,38,51,0.6);background:#14141C;"
+        "white-space:nowrap;max-width:200px;overflow:hidden;text-overflow:ellipsis;"
+    )
+    _td_cell = (
+        "padding:6px 10px;text-align:center;font-size:13px;font-weight:700;"
+        "font-variant-numeric:tabular-nums;border:1px solid rgba(38,38,51,0.6);"
+    )
+
+    header = f'<th style="{_th_corner}">Topic</th>'
+    for lbl in ALL_LABELS:
+        c = LABEL_COLOR[lbl]
+        header += f'<th style="{_th_col}color:{c};">{LABEL_DISPLAY[lbl]}</th>'
+
+    body = ""
+    for topic_name, d in topics:
+        cells = f'<td style="{_td_topic}" title="{topic_name}">{topic_name}</td>'
+        for lbl in ALL_LABELS:
+            count = d["label_counts"].get(lbl, 0)
+            display = str(count) if count > 0 else "\u2014"
+            cells += f'<td style="{_cell_style(lbl, count)}{_td_cell}">{display}</td>'
+        body += f"<tr>{cells}</tr>"
+
+    return (
+        '<div class="ds-data-panel" style="overflow-x:auto;padding:12px 16px;">'
+        '<table style="border-collapse:collapse;width:100%;font-family:inherit;">'
+        f"<thead><tr>{header}</tr></thead>"
+        f"<tbody>{body}</tbody>"
+        "</table></div>"
+    )
+
+
+# ────────────────────────────────────────────────────────────────────────────
 # Constants  (dark semantic colors)
 # ────────────────────────────────────────────────────────────────────────────
 ALL_LABELS = ["understands", "underconfident", "partial", "knows_confused", "confident_but_wrong"]
@@ -805,7 +865,7 @@ with tab_overview:
             '<div style="font-size:13px;font-weight:700;color:#C4B5FD;">Partial</div>'
             '</div>'
             f'<div style="font-family:\'SF Mono\',\'Fira Code\',monospace;font-size:22px;font-weight:800;color:#C4B5FD;font-variant-numeric:tabular-nums;">{_gc["partial"]}</div>'
-            '<div style="font-family:\'SF Mono\',monospace;font-size:10px;color:#C4B5FD;opacity:0.7;margin-left:auto;letter-spacing:.2px;">Review examples</div>'
+            '<div style="font-family:\'SF Mono\',monospace;font-size:10px;color:#C4B5FD;opacity:0.7;margin-left:auto;letter-spacing:.2px;">Clarify with examples</div>'
             '</div>'
             '</div>'
         )
@@ -830,7 +890,7 @@ with tab_overview:
             + _legend_entry("#F5B544", "Low conf · low understanding",
                             "— support and reteach.")
             + _legend_entry("#C4B5FD", "Partial",
-                            "— mixed signals. Review individual examples.")
+                            "— mixed signals. Clarify with examples.")
             + '</div>'
         )
         _cal_html = (
@@ -924,6 +984,17 @@ with tab_overview:
                 f' \u2014 see Full topic ranking below.</div>'
             )
         st.markdown(risk_rows_html, unsafe_allow_html=True)
+
+        # 5b. Topic Outcome Heatmap ─────────────────────────────────────────
+        st.markdown(
+            '<div class="ds-section-title">Topic Outcome Heatmap</div>'
+            '<div class="ds-section-sub">'
+            'Shows how calibration outcomes are distributed across topics. '
+            'Red cells point to confident-but-wrong clusters that may need reteaching.'
+            '</div>',
+            unsafe_allow_html=True,
+        )
+        st.markdown(_outcome_heatmap_html(sorted_topics), unsafe_allow_html=True)
 
         # 6. Full Topic Ranking ─────────────────────────────────────────────
         with st.expander("Full topic ranking", expanded=False):

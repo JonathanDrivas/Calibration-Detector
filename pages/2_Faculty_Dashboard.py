@@ -1,3 +1,6 @@
+import datetime
+import random
+
 import pandas as pd
 import streamlit as st
 import streamlit.components.v1 as components
@@ -575,6 +578,7 @@ LABEL_DISPLAY = {
 }
 
 ADVERSARIAL_CASES = [
+    # ── Crossing the Chasm ────────────────────────────────────────────────
     {
         "topic_name": "Crossing the Chasm",
         "reflection_text": (
@@ -585,7 +589,33 @@ ADVERSARIAL_CASES = [
         ),
         "student_confidence": 5,
         "expected_label": "confident_but_wrong",
+        "_misconception": "Equates the chasm with the Rogers S-curve; misses that the chasm is a specific gap between visionaries and pragmatists.",
     },
+    {
+        "topic_name": "Crossing the Chasm",
+        "reflection_text": (
+            "The chasm is really just a marketing challenge. If you lower your price enough or "
+            "run a sufficiently large advertising campaign, you can pull the early majority across "
+            "regardless of whether you have a complete whole-product solution. Crossing the Chasm "
+            "is fundamentally about price sensitivity and broad awareness."
+        ),
+        "student_confidence": 5,
+        "expected_label": "confident_but_wrong",
+        "_misconception": "Thinks price and advertising alone bridge the chasm; misses the whole-product and niche beachhead strategy.",
+    },
+    {
+        "topic_name": "Crossing the Chasm",
+        "reflection_text": (
+            "Moore's key insight is that you should target as many market segments as possible "
+            "simultaneously. Spreading your product across many verticals creates enough total "
+            "momentum to carry the innovation across the chasm into mainstream adoption. "
+            "Focusing on a single niche just slows you down."
+        ),
+        "student_confidence": 5,
+        "expected_label": "confident_but_wrong",
+        "_misconception": "Inverts the bowling-alley strategy; Moore explicitly argues for a single beachhead niche, not broad simultaneous targeting.",
+    },
+    # ── Diffusion of Innovation ───────────────────────────────────────────
     {
         "topic_name": "Diffusion of Innovation",
         "reflection_text": (
@@ -595,7 +625,33 @@ ADVERSARIAL_CASES = [
         ),
         "student_confidence": 5,
         "expected_label": "confident_but_wrong",
+        "_misconception": "Reverses early adopters and early majority; also ignores social systems, communication channels, and change agents.",
     },
+    {
+        "topic_name": "Diffusion of Innovation",
+        "reflection_text": (
+            "The S-curve of diffusion proves that if you build something good enough, adoption "
+            "happens automatically over time. The rate of adoption is basically a function of "
+            "product quality—better products always diffuse faster. That is why companies invest "
+            "so much in R&D rather than in distribution or influencer relationships."
+        ),
+        "student_confidence": 5,
+        "expected_label": "confident_but_wrong",
+        "_misconception": "Misattributes diffusion speed solely to product quality; Rogers identifies observability, trialability, and social influence as key drivers.",
+    },
+    {
+        "topic_name": "Diffusion of Innovation",
+        "reflection_text": (
+            "Critical mass in diffusion theory means that once 50 percent of the market has "
+            "adopted an innovation, the remaining half will follow automatically without any "
+            "further marketing or effort. The innovation becomes self-sustaining at that point "
+            "because social pressure forces laggards to comply."
+        ),
+        "student_confidence": 5,
+        "expected_label": "confident_but_wrong",
+        "_misconception": "Critical mass is not 50% and adoption does not become purely automatic; ongoing social system dynamics and change agents remain relevant.",
+    },
+    # ── User-Led Adoption ─────────────────────────────────────────────────
     {
         "topic_name": "User-Led Adoption",
         "reflection_text": (
@@ -605,7 +661,33 @@ ADVERSARIAL_CASES = [
         ),
         "student_confidence": 5,
         "expected_label": "confident_but_wrong",
+        "_misconception": "Confuses passive feedback collection with Von Hippel's lead user method; lead users innovate ahead of the market, not just buy first.",
     },
+    {
+        "topic_name": "User-Led Adoption",
+        "reflection_text": (
+            "The lead user methodology is fundamentally a qualitative research technique where "
+            "you interview early adopters about their experience after launch. The main advantage "
+            "over surveys is that you get richer language to improve your marketing copy. "
+            "Lead users do not actually co-design products—they just articulate pain points."
+        ),
+        "student_confidence": 5,
+        "expected_label": "confident_but_wrong",
+        "_misconception": "Lead users are identified before launch, not post-launch, and they actively prototype solutions—not just articulate pain points.",
+    },
+    {
+        "topic_name": "User-Led Adoption",
+        "reflection_text": (
+            "User-Led Adoption is really just another term for beta testing. You release an early "
+            "version, collect NPS scores, and ship updates accordingly. Lead users in this model "
+            "are your most active beta testers who give the most detailed feature requests and "
+            "usage data that the product team can act on."
+        ),
+        "student_confidence": 5,
+        "expected_label": "confident_but_wrong",
+        "_misconception": "Conflates beta testing with the Von Hippel lead user method; lead users are selected for high-need expertise and existing solutions, not NPS feedback.",
+    },
+    # ── Technology Creation ───────────────────────────────────────────────
     {
         "topic_name": "Technology Creation",
         "reflection_text": (
@@ -615,7 +697,33 @@ ADVERSARIAL_CASES = [
         ),
         "student_confidence": 5,
         "expected_label": "confident_but_wrong",
+        "_misconception": "Undervalues recombination as a primary mechanism of innovation; most technology creation is recombinatory, not ex nihilo.",
     },
+    {
+        "topic_name": "Technology Creation",
+        "reflection_text": (
+            "Recombination is just a fancy word for imitation. When companies combine existing "
+            "technologies, they are essentially copying ideas that already exist and therefore not "
+            "creating anything truly new. Real innovation only counts when it introduces a "
+            "technology that has never existed in any form anywhere in the world before."
+        ),
+        "student_confidence": 5,
+        "expected_label": "confident_but_wrong",
+        "_misconception": "Equates recombination with imitation; novel recombination creates genuine new functionality and is the dominant mode of technological progress.",
+    },
+    {
+        "topic_name": "Technology Creation",
+        "reflection_text": (
+            "Disruptive innovation means dramatically improving an existing product's core "
+            "performance through sustained R&D investment until incumbents cannot keep up. "
+            "It is really a matter of engineering effort and budget. Sustaining and disruptive "
+            "innovations are the same thing—the only difference is the magnitude of improvement."
+        ),
+        "student_confidence": 5,
+        "expected_label": "confident_but_wrong",
+        "_misconception": "Conflates sustaining and disruptive innovation; disruptive innovations start by underperforming on mainstream metrics and serving overlooked segments.",
+    },
+    # ── Creative Destruction ──────────────────────────────────────────────
     {
         "topic_name": "Creative Destruction",
         "reflection_text": (
@@ -625,7 +733,33 @@ ADVERSARIAL_CASES = [
         ),
         "student_confidence": 5,
         "expected_label": "confident_but_wrong",
+        "_misconception": "Reduces Creative Destruction to price competition; Schumpeter's concept centers on innovation replacing entire industries, not just competitive price pressure.",
     },
+    {
+        "topic_name": "Creative Destruction",
+        "reflection_text": (
+            "Creative Destruction in business means that successful companies should proactively "
+            "plan to retire their own product lines on a regular schedule so that competitors "
+            "cannot do it for them. Apple demonstrates this perfectly by designing new iPhone "
+            "models to intentionally obsolete the previous generation on a fixed annual cycle."
+        ),
+        "student_confidence": 5,
+        "expected_label": "confident_but_wrong",
+        "_misconception": "Confuses planned obsolescence with Schumpeter's macro-level, innovation-driven economic transformation driven by entrepreneurs, not product-cycle management.",
+    },
+    {
+        "topic_name": "Creative Destruction",
+        "reflection_text": (
+            "Schumpeter's Creative Destruction is essentially the same concept as Porter's "
+            "competitive rivalry. Industries improve because firms compete aggressively on price "
+            "and features, and the weakest firms are eliminated. The creative part just means "
+            "that new jobs are eventually created to replace the ones that were destroyed."
+        ),
+        "student_confidence": 5,
+        "expected_label": "confident_but_wrong",
+        "_misconception": "Conflates Schumpeterian innovation-driven disruption with Porterian competitive rivalry; the mechanisms and units of analysis are fundamentally different.",
+    },
+    # ── Adopt-Transform-Apply ─────────────────────────────────────────────
     {
         "topic_name": "Adopt-Transform-Apply",
         "reflection_text": (
@@ -635,6 +769,31 @@ ADVERSARIAL_CASES = [
         ),
         "student_confidence": 5,
         "expected_label": "confident_but_wrong",
+        "_misconception": "Collapses the Transform and Apply steps into simple copying and launching; both require deep recontextualization and organizational integration.",
+    },
+    {
+        "topic_name": "Adopt-Transform-Apply",
+        "reflection_text": (
+            "In the Adopt-Transform-Apply framework, the Transform step means translating the "
+            "external practice into your company's native language and simplifying it so your "
+            "team can understand it. The main skill involved is communication and change "
+            "management, not any conceptual rethinking of the underlying idea."
+        ),
+        "student_confidence": 5,
+        "expected_label": "confident_but_wrong",
+        "_misconception": "Reduces Transform to communication work; the step requires genuine conceptual reframing to fit the new organizational context, not just translation.",
+    },
+    {
+        "topic_name": "Adopt-Transform-Apply",
+        "reflection_text": (
+            "The Adopt-Transform-Apply model works best when you identify the exact same practice "
+            "at a direct competitor, because then the context is already closely aligned to your "
+            "own. Borrowing from unrelated industries is generally too risky because the ideas "
+            "are untested in your sector and customization costs cancel out any learning advantage."
+        ),
+        "student_confidence": 5,
+        "expected_label": "confident_but_wrong",
+        "_misconception": "Inverts the key value proposition; cross-industry borrowing is central to ATA because it surfaces non-obvious solutions not yet used by direct competitors.",
     },
 ]
 
@@ -1601,13 +1760,24 @@ div[data-testid="stButton"] button[kind="primary"]:hover,
     opacity: 1 !important;
 }
 </style>""", unsafe_allow_html=True)
+    st.markdown(
+        '<p style="font-size:12px;color:#6B6B82;margin:0 0 10px 0;line-height:1.55;">'
+        'Each run samples 6 cases from a fixed local bank of '
+        f'{len(ADVERSARIAL_CASES)}\u202fadversarial reflections. '
+        'These tests are temporary and are not saved to the database.'
+        '</p>',
+        unsafe_allow_html=True,
+    )
 
     if st.button("Run adversarial robustness check", type="primary", key="adv_btn"):
+        _run_id      = datetime.datetime.utcnow().strftime("%Y%m%d-%H%M%S")
+        _run_cases   = random.sample(ADVERSARIAL_CASES, 6)
+        _run_total   = len(_run_cases)
         adv_progress = st.progress(0, text="Starting…")
         adv_results: list[dict] = []
         adv_errors:  list[str]  = []
 
-        for i, case in enumerate(ADVERSARIAL_CASES):
+        for i, case in enumerate(_run_cases):
             topic = get_topic_info(case["topic_name"])
             try:
                 analysis = analyze_reflection(
@@ -1641,16 +1811,23 @@ div[data-testid="stButton"] button[kind="primary"]:hover,
                     "Result":         "Error",
                 })
             adv_progress.progress(
-                (i + 1) / len(ADVERSARIAL_CASES),
-                text=f"Checked {i + 1} of {len(ADVERSARIAL_CASES)}",
+                (i + 1) / _run_total,
+                text=f"Checked {i + 1} of {_run_total}",
             )
 
         adv_progress.empty()
+        st.markdown(
+            f'<p style="font-size:11px;color:#525268;margin:0 0 10px 0;">'
+            f'Run\u202f<code style="font-size:11px;color:#6B6B82;">{_run_id}</code>'
+            f'\u2002\u00b7\u2002sampled {_run_total}\u202fof\u202f{len(ADVERSARIAL_CASES)}'
+            f'\u202fcases</p>',
+            unsafe_allow_html=True,
+        )
         if adv_errors:
             st.warning("Errors during check:\n" + "\n".join(adv_errors))
 
         passes    = sum(1 for r in adv_results if r["Result"] == "Pass")
-        total_adv = len(ADVERSARIAL_CASES)
+        total_adv = _run_total
         if passes == total_adv:
             rate_color = "#3DDC97"
         elif passes >= total_adv // 2:

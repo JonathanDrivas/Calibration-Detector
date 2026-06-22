@@ -1,0 +1,98 @@
+Improve the Robustness Check so it does not feel like the same six adversarial reflections are being rerun every time.
+
+Hard rules:
+
+* Do not change model logic.
+* Do not change scoring logic.
+* Do not change label rules.
+* Do not change Evidence calculations.
+* Do not change saved benchmark data.
+* Do not change database schema.
+* Do not save robustness test cases to the database.
+* Do not call the AI to generate adversarial cases.
+* Do not make randomness affect Evidence metrics.
+* Do not redesign the whole dashboard.
+* Keep the current Robustness Check visual style.
+
+Current issue:
+The Robustness Check appears to run the same six adversarial cases every time. That is valid as a fixed regression test, but it makes the demo feel less dynamic.
+
+Goal:
+Use a larger local fixed bank of adversarial reflections, then sample six cases per run. This makes each run feel like a fresh challenge while keeping the test controlled, repeatable, and not database-backed.
+
+Implementation:
+
+1. Create a fixed local bank of adversarial robustness cases.
+
+   * Use 15 to 20 total cases.
+   * Each case should have:
+
+     * topic
+     * reflection text
+     * forced confidence value of 5
+     * expected label: confident_but_wrong
+     * short explanation of the intended misconception
+   * Cases should sound confident and use course vocabulary, but contain a real misconception.
+   * Do not generate these with AI at runtime.
+   * Do not store these in the database.
+
+2. On each button click:
+
+   * Select 6 cases from the local bank.
+   * Run each selected case through the same `analyze_reflection` path used by normal submissions.
+   * Compute the label using the same `compute_label` rule.
+   * Display the six selected cases and results.
+   * Do not save anything to `reflections` or `results`.
+
+3. Make the UI honest:
+
+   * Add a small note near the button:
+     `Each run samples 6 cases from a fixed local bank of adversarial reflections. These tests are temporary and are not saved to the database.`
+   * Keep or update the existing cards:
+
+     * Adversarial inputs
+     * Same AI path
+     * Pass condition
+
+4. Preserve pass logic:
+
+   * A case passes if the computed label is `confident_but_wrong`.
+   * Show pass rate as selected cases passed out of 6.
+   * If all 6 pass, keep the success card.
+   * If some fail, make the failed cases visible.
+
+5. Keep results readable:
+
+   * The table should show:
+
+     * Topic
+     * Understanding
+     * Misconception
+     * Computed
+     * Expected
+     * Result
+   * If possible, add the reflection text in an expandable row or compact detail area, so the instructor can see what was tested without making the table too wide.
+
+6. Optional but useful:
+
+   * Add a small `Run ID` or timestamp for the current robustness run.
+   * This should be display-only and not saved.
+
+7. Verify:
+
+   * Run the app.
+   * Click Robustness Check multiple times.
+   * Confirm the selected cases can differ between runs.
+   * Confirm only 6 cases run each time.
+   * Confirm no robustness cases are saved to the database.
+   * Confirm Evidence metrics are unchanged.
+   * Confirm Dashboard Overview values are unchanged.
+   * Confirm Student Reflection still works.
+   * Confirm Home and About still load.
+
+At the end, summarize:
+
+* how many adversarial cases are in the local bank
+* whether each run samples six
+* whether anything is saved to the database
+* which files changed

@@ -1,0 +1,59 @@
+Fix Replit deployment so the published app runs the Streamlit app, not the generated Node artifact server.
+
+Problem:
+The live deployment logs show Replit is starting:
+
+`artifact=artifacts/api-server`
+`args=[node --enable-source-maps artifacts/api-server/dist/index.mjs]`
+`port=8080`
+
+But this project is a Python Streamlit app. The correct runtime is:
+
+`streamlit run app.py --server.address 0.0.0.0 --server.port 5000 --server.headless true --server.enableCORS=false --server.enableWebsocketCompression=false`
+
+Current `.replit` has:
+
+* modules: nodejs-24, python-3.11, postgresql-16
+* `[deployment] router = "application"`
+* `[deployment] deploymentTarget = "autoscale"`
+* a workflow run command that runs Streamlit on port 5000
+* ports for 5000, 8080, 8081
+* `[agent] stack = "PNPM_WORKSPACE"`
+* generated artifact directories under `artifacts/`
+
+Task:
+Make the published deployment run the Streamlit app on port 5000, not `artifacts/api-server`.
+
+Hard rules:
+
+* Do not change Python app code.
+* Do not change UI, pages, database logic, AI logic, metrics, labels, or data.
+* Do not remove the actual Streamlit app.
+* Do not remove the simulated dataset.
+* Do not change README.
+* Only edit deployment/config files needed for publishing.
+
+Steps:
+
+1. Inspect `.replit`, `replit.nix` if present, `pyproject.toml`, `requirements.txt`, `package.json`, `pnpm-workspace.yaml`, and the `artifacts/` folder.
+2. Determine why Replit publishing is detecting `artifacts/api-server` as the runnable artifact.
+3. Update `.replit` so deployment explicitly runs Streamlit on port 5000.
+4. If needed, remove or neutralize generated artifact deployment metadata so the Node artifact is not selected as the published runnable.
+5. Keep the normal Replit Run button working.
+6. Keep the existing Python/Streamlit dependencies working.
+7. Do not delete dependency files unless they are proven unnecessary for this project and deletion will not break Replit.
+
+Desired deployment behavior:
+
+* Published app starts with:
+  `streamlit run app.py --server.address 0.0.0.0 --server.port 5000 --server.headless true --server.enableCORS=false --server.enableWebsocketCompression=false`
+* Published app exposes port 5000.
+* Logs should mention Streamlit, not `artifacts/api-server`.
+* The live URL should open the Streamlit app.
+
+After edits:
+
+* Run the app in Preview.
+* Confirm Preview loads on port 5000.
+* Commit the config changes.
+* Summarize exactly what files changed and why.

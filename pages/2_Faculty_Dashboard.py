@@ -694,12 +694,31 @@ def stacked_bar_html(raw_counts: dict) -> tuple[str, list[str]]:
 
 
 # ────────────────────────────────────────────────────────────────────────────
-# Fetch data once (shared across tabs)
+# Cached data loaders — read-only queries; TTL 60 s so new submissions appear
+# within one minute without needing a manual refresh.
+# ────────────────────────────────────────────────────────────────────────────
+@st.cache_data(ttl=60)
+def _load_topic_summaries():
+    return get_topic_summaries()
+
+
+@st.cache_data(ttl=60)
+def _load_cbw_details():
+    return get_cbw_details()
+
+
+@st.cache_data(ttl=60)
+def _load_evidence_rows():
+    return get_evidence_rows()
+
+
+# ────────────────────────────────────────────────────────────────────────────
+# Fetch data once (shared across sections)
 # ────────────────────────────────────────────────────────────────────────────
 unanalyzed    = get_unanalyzed_reflections()
-summary_rows  = get_topic_summaries()
-cbw_rows      = get_cbw_details()
-evidence_rows = get_evidence_rows()
+summary_rows  = _load_topic_summaries()
+cbw_rows      = _load_cbw_details()
+evidence_rows = _load_evidence_rows()
 
 topic_data: dict = defaultdict(lambda: {
     "label_counts": {l: 0 for l in ALL_LABELS},
@@ -823,15 +842,20 @@ st.markdown(f"""
 # ────────────────────────────────────────────────────────────────────────────
 # Tabs
 # ────────────────────────────────────────────────────────────────────────────
-tab_overview, tab_topics, tab_evidence, tab_robustness = st.tabs([
-    "Overview", "Topic Details", "Evidence", "Robustness Check"
-])
+_section = st.segmented_control(
+    "Dashboard section",
+    options=["Overview", "Topic Details", "Evidence", "Robustness Check"],
+    default="Overview",
+    label_visibility="hidden",
+)
+if _section is None:
+    _section = "Overview"
 
 
 # ════════════════════════════════════════════════════════════════════════════
-# TAB 1 — Overview
+# SECTION 1 — Overview
 # ════════════════════════════════════════════════════════════════════════════
-with tab_overview:
+if _section == "Overview":
 
     # 1. Key Risk Signal ────────────────────────────────────────────────────
     st.markdown("""
@@ -881,6 +905,7 @@ with tab_overview:
                 st.warning("Finished with errors:\n" + "\n".join(errors))
             else:
                 st.success(f"Done. {len(unanalyzed)} reflection(s) analyzed.")
+            st.cache_data.clear()
             st.rerun()
     else:
         st.markdown(
@@ -1211,9 +1236,9 @@ with tab_overview:
 
 
 # ════════════════════════════════════════════════════════════════════════════
-# TAB 2 — Topic Details
+# SECTION 2 — Topic Details
 # ════════════════════════════════════════════════════════════════════════════
-with tab_topics:
+elif _section == "Topic Details":
     if not summary_rows:
         st.info("No results yet. Run the analysis in the Overview tab.")
     else:
@@ -1274,9 +1299,9 @@ with tab_topics:
 
 
 # ════════════════════════════════════════════════════════════════════════════
-# TAB 3 — Evidence
+# SECTION 3 — Evidence
 # ════════════════════════════════════════════════════════════════════════════
-with tab_evidence:
+elif _section == "Evidence":
     st.markdown(
         '<div style="margin-bottom:16px;">'
         '<div style="font-size:10px;font-weight:700;letter-spacing:.6px;'
@@ -1438,9 +1463,9 @@ with tab_evidence:
 
 
 # ════════════════════════════════════════════════════════════════════════════
-# TAB 4 — Robustness Check
+# SECTION 4 — Robustness Check
 # ════════════════════════════════════════════════════════════════════════════
-with tab_robustness:
+elif _section == "Robustness Check":
     st.markdown(
         '<div style="margin-bottom:18px;">'
         '<div style="font-size:10px;font-weight:700;letter-spacing:.6px;'

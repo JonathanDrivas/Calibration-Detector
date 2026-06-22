@@ -1,0 +1,102 @@
+Investigate and improve Faculty Dashboard load time.
+
+Hard rules:
+
+* Do not change model logic.
+* Do not change scoring logic.
+* Do not change label rules.
+* Do not change Evidence calculations.
+* Do not change Robustness calculations.
+* Do not change dashboard values.
+* Do not change database schema unless absolutely necessary and explained first.
+* Do not rerun AI analysis on page load.
+* Do not change visual design except tiny loading/performance improvements.
+* Do not remove any dashboard tabs or features.
+* Do not add dependencies unless already available and clearly needed.
+
+Problem:
+The Faculty Dashboard takes too long to load on the deployed app.
+
+Goal:
+Make the dashboard load faster while preserving the exact same numbers, labels, charts, and logic.
+
+Tasks:
+
+1. Profile what runs on dashboard load
+
+* Add temporary timing checks or inspect the code to identify slow sections.
+* Determine whether Overview, Topic Details, Evidence, and Robustness Check are all computed immediately on page load.
+* Determine whether any AI calls happen on page load. They must not.
+* Determine whether any large database queries are repeated unnecessarily.
+* Determine whether production database connection setup is slow.
+
+2. Cache safe read-only data
+   Use Streamlit caching for read-only dashboard data where safe:
+
+* `st.cache_data` for aggregate query results
+* `st.cache_data` for benchmark/evidence calculations if they are based on saved database rows
+* `st.cache_data` for topic summary data
+* use a short or reasonable TTL if needed
+
+Do not cache anything that would prevent a newly submitted reflection from appearing after refresh unless there is a clear refresh button.
+
+3. Avoid recomputing inactive heavy tabs if possible
+   If Streamlit tabs are causing all tabs to render at once, replace dashboard tabs with a safe selected-view pattern that renders only the selected section.
+
+Acceptable approach:
+
+* Use `st.segmented_control`, `st.radio`, or existing navigation state to select:
+
+  * Overview
+  * Topic Details
+  * Evidence
+  * Robustness Check
+* Render only the selected section.
+* Keep the visual appearance as close as possible to the current tabs.
+* Do not remove any tab content.
+* Do not change any calculations.
+
+4. Keep AI calls off dashboard load
+   Confirm:
+
+* Dashboard load does not call `analyze_reflection`
+* Evidence tab does not call the AI
+* Robustness Check calls the AI only when the user presses the robustness button
+* Student submissions call AI only when the student submits, if that is current behavior
+
+5. Add lightweight loading feedback
+   If a section takes time, show a small spinner or status line:
+   `Loading dashboard data...`
+   Do not make it visually heavy.
+
+6. Verify correctness
+   After optimization, compare before/after values:
+
+* total analyzed
+* confident-but-wrong count
+* Evidence accuracy
+* Evidence precision
+* Evidence recall
+* topic counts
+* calibration labels
+* CSV export columns and values
+
+The values must remain unchanged.
+
+7. Test
+
+* Run the app locally/Preview.
+* Open Faculty Dashboard.
+* Confirm load time is improved.
+* Confirm all dashboard sections still work.
+* Confirm Robustness Check still only runs when clicked.
+* Confirm Student Reflection still works.
+* Confirm Home and About still load.
+
+At the end, summarize:
+
+* what was slow
+* what changed
+* which files changed
+* whether any calculations changed
+* whether dashboard values stayed the same

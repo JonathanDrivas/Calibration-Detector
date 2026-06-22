@@ -88,7 +88,7 @@ div[data-testid="stPageLink"][data-active="true"] a {
 </div>""", unsafe_allow_html=True)
 
     with h_col:
-        st.page_link("home.py", label="Home",
+        st.page_link("app.py", label="Home",
                      disabled=(current == "home"))
     with r_col:
         st.page_link("pages/1_Student_Reflection.py", label="Reflection",

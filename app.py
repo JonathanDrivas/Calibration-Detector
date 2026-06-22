@@ -7,6 +7,7 @@ st.set_page_config(
     page_title="Calibration Detector",
     page_icon="🎯",
     layout="wide",
+    initial_sidebar_state="collapsed",
 )
 
 st.markdown("""
@@ -46,28 +47,15 @@ html, body, [class*="css"], button, input, textarea, select {
     margin: 0 auto !important;
 }
 
-/* ── Sidebar ─────────────────────────────────────────────────────── */
-[data-testid="stSidebar"] {
-    background-color: #14141C !important;
-    border-right: 1px solid #262633 !important;
+/* ── Sidebar: completely hidden (custom top nav is used instead) ──── */
+[data-testid="stSidebar"],
+section[data-testid="stSidebar"] {
+    display: none !important;
 }
-[data-testid="stSidebarNav"] a {
-    color: #9A9AAC !important;
-    border-radius: 0 8px 8px 0 !important;
-    transition: all 0.15s !important;
-    font-size: 14px !important;
+[data-testid="collapsedControl"] {
+    display: none !important;
 }
-[data-testid="stSidebarNav"] a:hover {
-    color: #ECECF2 !important;
-    background: rgba(255,255,255,0.04) !important;
-}
-[data-testid="stSidebarNav"] a[aria-current="page"] {
-    color: #ECECF2 !important;
-    background: rgba(160,107,255,0.10) !important;
-    border-left: 3px solid #A06BFF !important;
-    font-weight: 700 !important;
-}
-[data-testid="stSidebarNav"] a[aria-current="page"] span { color: #ECECF2 !important; }
+[data-testid="stSidebarNav"] { display: none !important; }
 
 /* ── Tabs ────────────────────────────────────────────────────────── */
 [data-testid="stTabs"] [role="tablist"] { border-bottom: 1px solid #262633 !important; }

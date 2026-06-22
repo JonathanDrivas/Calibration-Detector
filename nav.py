@@ -9,8 +9,11 @@ def render_nav(current: str = "") -> None:
     """
     st.markdown("""
 <style>
-/* ── Hide sidebar nav links (top nav replaces them) ─────────────── */
-[data-testid="stSidebarNav"] { display: none !important; }
+/* ── Hide sidebar completely (top nav replaces it) ───────────────── */
+[data-testid="stSidebar"],
+section[data-testid="stSidebar"] { display: none !important; }
+[data-testid="collapsedControl"]  { display: none !important; }
+[data-testid="stSidebarNav"]      { display: none !important; }
 
 /* ── Align nav columns vertically ───────────────────────────────── */
 [data-testid="stHorizontalBlock"]:first-of-type [data-testid="column"] {
